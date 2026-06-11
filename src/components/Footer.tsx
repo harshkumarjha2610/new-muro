@@ -46,7 +46,7 @@ const Footer = () => {
           </div>
 
           {/* Right Block: Links Grid */}
-          <div className="w-full lg:w-[60%] grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="w-full lg:w-[50%] grid grid-cols-2 md:grid-cols-4 gap-2">
             {/* Column 1: SHOP */}
             <div className="text-left flex flex-col gap-5">
               <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">
@@ -166,11 +166,10 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center border-t border-[#EBEBEB] pt-12 mt-12">
           <Link to="/" className="inline-block mb-5">
             <span 
-              className="text-[34px] tracking-[1px] lowercase text-black"
+              className="text-[34px] tracking-[2px] text-black"
               style={{ fontFamily: '"Coolvetica", "Coolvetica Regular", Arial, sans-serif' }}
             >
-              muro poster
-            </span>
+MURO POSTER            </span>
           </Link>
           <p className="text-center text-[11px] leading-[1.8] text-[#888888] max-w-[600px] px-4">
             Copyright © 2026 MURO Poster. Operated by Saar Graphics, India. All rights reserved.
@@ -181,24 +180,59 @@ const Footer = () => {
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mt-8 pt-6 border-t border-[#EBEBEB] text-[#888888] text-[11px]">
           {/* Payment Icons */}
           <div className="flex flex-wrap items-center gap-2">
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              Visa
-            </span>
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              MasterCard
-            </span>
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              RuPay
-            </span>
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              UPI
-            </span>
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              Paytm
-            </span>
-            <span className="px-2.5 py-1 text-[10px] uppercase font-bold tracking-wider bg-[#F4F4F2] text-black/60 rounded-md border border-[#EBEBEB]">
-              AMEX
-            </span>
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg"
+                alt="Visa"
+                className="max-h-[60%] max-w-[80%] object-contain"
+                loading="lazy"
+              />
+            </div>
+            
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg"
+                alt="MasterCard"
+                className="max-h-[60%] max-w-[80%] object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Rupay-Logo.png"
+                alt="RuPay"
+                className="max-h-[60%] max-w-[80%] object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/6/6f/UPI_logo.svg"
+                alt="UPI"
+                className="max-h-[65%] max-w-[85%] object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg"
+                alt="Paytm"
+                className="max-h-[55%] max-w-[80%] object-contain"
+                loading="lazy"
+              />
+            </div>
+
+            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                alt="American Express"
+                className="max-h-[60%] max-w-[80%] object-contain"
+                loading="lazy"
+              />
+            </div>
           </div>
 
           {/* Country Selector */}

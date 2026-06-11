@@ -891,7 +891,7 @@ const ProductDetails: React.FC = () => {
                     trailing={formatPrice(productPrice)}
                   />
 
-                  <div className="rounded-[22px] border border-[#C9C9C9] p-3">
+                  {/* <div className="rounded-[22px] border border-[#C9C9C9] p-3">
                     <div className="flex items-center gap-2">
                       <input
                         value={couponCode}
@@ -925,7 +925,7 @@ const ProductDetails: React.FC = () => {
                             : "Coupon is not valid")}
                       </p>
                     )}
-                  </div>
+                  </div> */}
                 </div>
 
                 <button

@@ -368,7 +368,7 @@ const PostcardDetails: React.FC = () => {
                 </div>
               )}
 
-              <div className="rounded-[20px] bg-white/65 border border-[#1C1C1C]/8 p-4 md:p-5 mb-7">
+              {/* <div className="rounded-[20px] bg-white/65 border border-[#1C1C1C]/8 p-4 md:p-5 mb-7">
                 <p className="text-[12px] uppercase tracking-[0.22em] font-semibold mb-3 text-[#1C1C1C]">
                   Coupon Code
                 </p>
@@ -398,7 +398,7 @@ const PostcardDetails: React.FC = () => {
                     {couponResult.message || (couponResult.valid ? "Coupon applied" : "Coupon is not valid")}
                   </p>
                 )}
-              </div>
+              </div> */}
 
               <div className="rounded-[22px] bg-white/65 border border-[#1C1C1C]/8 p-6 md:p-7 mb-7 space-y-4">
                 {product.quality_of_paper && (
