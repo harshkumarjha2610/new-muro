@@ -1,7 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, SlidersHorizontal } from "lucide-react";
+import { Heart, SlidersHorizontal, ChevronDown } from "lucide-react";
 import { API } from "@/services/api";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
@@ -208,6 +208,34 @@ const Products: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 40;
 
+  const [isFilterOpen, setIsFilterOpen] = useState<boolean>(false);
+  const [isSortOpen, setIsSortOpen] = useState<boolean>(false);
+  const [sortBy, setSortBy] = useState<string>("default");
+  const [selectedSize, setSelectedSize] = useState<string>("ALL");
+
+  const sortDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (sortDropdownRef.current && !sortDropdownRef.current.contains(event.target as Node)) {
+        setIsSortOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const handleClearFilters = () => {
+    setSelectedCategory("ALL");
+    setSelectedSubCategory("ALL");
+    setSelectedSize("ALL");
+    setSortBy("default");
+    setCurrentPage(1);
+    setSearchParams({});
+  };
+
   useEffect(() => {
     if (urlCategory !== selectedCategory || urlSubcategory !== selectedSubCategory) {
       setSelectedCategory(urlCategory);
@@ -301,20 +329,64 @@ const Products: React.FC = () => {
       });
   }, [currentCatObj, selectedCategory, subcategories]);
 
+  const allSizes = useMemo(() => {
+    const sizesSet = new Set<string>();
+    products.forEach((product) => {
+      const rawSizes = Array.isArray(product.size_prices)
+        ? product.size_prices
+        : Array.isArray(product.sizes)
+        ? product.sizes
+        : [];
+      rawSizes.forEach((sz: any) => {
+        const name = String(sz.size_name || sz.name || sz.size_code || sz.code || "").trim();
+        if (name) sizesSet.add(name);
+      });
+    });
+    return Array.from(sizesSet).sort((a, b) => {
+      const aNum = parseInt(a, 10) || 0;
+      const bNum = parseInt(b, 10) || 0;
+      return aNum - bNum;
+    });
+  }, [products]);
+
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
       const matchCat = selectedCategory === "ALL" || product.category?.toUpperCase() === selectedCategory;
       const matchSubCat = selectedSubCategory === "ALL" || product.subcategory?.toUpperCase() === selectedSubCategory;
 
-      return matchCat && matchSubCat && Boolean(getUploadedProductImage(product));
+      let matchSize = true;
+      if (selectedSize !== "ALL") {
+        const rawSizes = Array.isArray(product.size_prices)
+          ? product.size_prices
+          : Array.isArray(product.sizes)
+          ? product.sizes
+          : [];
+        matchSize = rawSizes.some((sz: any) => {
+          const name = String(sz.size_name || sz.name || sz.size_code || sz.code || "").trim().toUpperCase();
+          return name === selectedSize.toUpperCase();
+        });
+      }
+
+      return matchCat && matchSubCat && matchSize && Boolean(getUploadedProductImage(product));
     });
-  }, [products, selectedCategory, selectedSubCategory]);
+  }, [products, selectedCategory, selectedSubCategory, selectedSize]);
+
+  const sortedProducts = useMemo(() => {
+    const items = [...filteredProducts];
+    if (sortBy === "price-asc") {
+      return items.sort((a, b) => getLowestProductPrice(a) - getLowestProductPrice(b));
+    }
+    if (sortBy === "price-desc") {
+      return items.sort((a, b) => getLowestProductPrice(b) - getLowestProductPrice(a));
+    }
+    return items;
+  }, [filteredProducts, sortBy]);
 
   const totalItems = filteredProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
 
   const pageHeading =
     selectedSubCategory !== "ALL"
@@ -378,10 +450,112 @@ const Products: React.FC = () => {
       </section>
 
       <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
-        <div className="mb-6 flex items-center justify-between text-[11px] uppercase tracking-[0.18em] text-[#A19D96]">
-          <span>{totalItems} Products</span>
-          <span className="hidden sm:inline">Dynamic master size pricing</span>
-        </div>
+        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#E2E2DF] pb-4">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setIsFilterOpen(!isFilterOpen)}
+              className={`flex items-center gap-2 border px-4 py-2.5 rounded-full text-[11px] font-semibold uppercase tracking-[0.16em] transition-all duration-205 ${
+                isFilterOpen
+                  ? "bg-[#101010] border-[#101010] text-white"
+                  : "bg-white border-[#E2E2DF] text-[#101010] hover:border-[#101010]"
+              }`}
+            >
+              <SlidersHorizontal className="h-3.5 w-3.5" strokeWidth={1.5} />
+              <span>Filters</span>
+              {(selectedCategory !== "ALL" || selectedSubCategory !== "ALL" || selectedSize !== "ALL") && (
+                <span className={`ml-1 flex h-4.5 w-4.5 items-center justify-center rounded-full text-[9px] font-bold ${isFilterOpen ? "bg-white text-[#101010]" : "bg-[#006039] text-white"}`}>
+                  {[
+                    selectedCategory !== "ALL" ? 1 : 0,
+                    selectedSubCategory !== "ALL" ? 1 : 0,
+                    selectedSize !== "ALL" ? 1 : 0,
+                  ].reduce((a, b) => a + b, 0)}
+                </span>
+              )}
+            </button>
+          </div>
+          </div>
+                <motion.div
+          initial={false}
+          animate={{ height: isFilterOpen ? "auto" : 0, opacity: isFilterOpen ? 1 : 0 }}
+          transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
+          className="overflow-hidden"
+        >
+          <div className="border-b border-[#E2E2DF] pb-8 mb-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-left">
+            <div>
+              <h4 className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A19D96] mb-4">Categories</h4>
+              <div className="flex flex-col gap-2.5">
+                <button
+                  onClick={() => handleCategoryClick("ALL")}
+                  className={`text-[13px] text-left hover:underline tracking-wide transition-colors ${
+                    selectedCategory === "ALL" ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
+                  }`}
+                >
+                  All Categories
+                </button>
+                {uniqueCategories.map((cat) => {
+                  const name = cat.name || "";
+                  const nameUpper = name.toUpperCase();
+                  return (
+                    <button
+                      key={cat.id || name}
+                      onClick={() => handleCategoryClick(nameUpper)}
+                      className={`text-[13px] text-left hover:underline tracking-wide transition-colors ${
+                        selectedCategory === nameUpper ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
+                      }`}
+                    >
+                      {toTitleCase(name)}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <div>
+              <h4 className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#A19D96] mb-4">Subcategories</h4>
+              {selectedCategory === "ALL" ? (
+                <p className="text-[12px] text-[#A19D96] italic font-medium">Select a category to view subcategories</p>
+              ) : availableSubcats.length === 0 ? (
+                <p className="text-[12px] text-[#A19D96] italic font-medium">No subcategories available</p>
+              ) : (
+                <div className="flex flex-col gap-2.5 max-h-[200px] overflow-y-auto pr-2 animate-none">
+                  <button
+                    onClick={() => handleSubCategoryClick("ALL")}
+                    className={`text-[13px] text-left hover:underline tracking-wide transition-colors ${
+                      selectedSubCategory === "ALL" ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
+                    }`}
+                  >
+                    All {toTitleCase(selectedCategory)}
+                  </button>
+                  {availableSubcats.map((sub) => {
+                    const name = sub.name || "";
+                    const nameUpper = name.toUpperCase();
+                    return (
+                      <button
+                        key={sub.id || name}
+                        onClick={() => handleSubCategoryClick(nameUpper)}
+                        className={`text-[13px] text-left hover:underline tracking-wide transition-colors ${
+                          selectedSubCategory === nameUpper ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
+                        }`}
+                      >
+                        {toTitleCase(name)}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+
+            
+              {(selectedCategory !== "ALL" || selectedSubCategory !== "ALL" || selectedSize !== "ALL") && (
+                <button
+                  onClick={handleClearFilters}
+                  className="mt-6 inline-block text-[11px] font-bold uppercase tracking-[0.14em] text-[#006039] hover:underline"
+                >
+                  Clear All Filters
+                </button>
+              )}
+          </div>
+        </motion.div>
 
         {loading ? (
           <div className="flex min-h-[45vh] items-center justify-center">

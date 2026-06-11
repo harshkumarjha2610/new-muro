@@ -8,7 +8,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-white text-black border-t border-[#EBEBEB] font-sans">
+    <footer className="bg-[#F1F1F1] text-[#111111] border-t border-[#E4E4E4] font-sans">
       <div className="max-w-[1400px] mx-auto px-6 pt-16 pb-8">
         {/* Main Footer Row */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
@@ -166,10 +166,10 @@ const Footer = () => {
         <div className="flex flex-col items-center justify-center border-t border-[#EBEBEB] pt-12 mt-12">
           <Link to="/" className="inline-block mb-5">
             <span 
-              className="text-[34px] tracking-[0.05em] lowercase text-black"
+              className="text-[34px] tracking-[1px] lowercase text-black"
               style={{ fontFamily: '"Coolvetica", "Coolvetica Regular", Arial, sans-serif' }}
             >
-              muro
+              muro poster
             </span>
           </Link>
           <p className="text-center text-[11px] leading-[1.8] text-[#888888] max-w-[600px] px-4">

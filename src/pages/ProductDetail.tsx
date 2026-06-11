@@ -958,7 +958,7 @@ const ProductDetails: React.FC = () => {
                 </div>
 
                 {activeOffer && productOfferPrice.hasOffer && (
-                  <div className="mb-5 rounded-[22px] bg-[#F2FF67] px-5 py-3 text-center">
+                  <div className="mb-5 rounded-[22px] bg-[#F1F1F1] px-5 py-3 text-center">
                     <p className="text-[15px] font-extrabold leading-tight">
                       {activeOffer.discount_percent}% off all prints
                     </p>
