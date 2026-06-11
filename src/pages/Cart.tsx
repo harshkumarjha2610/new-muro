@@ -84,7 +84,7 @@ const COLORS = {
   ink: "#111111",
   muted: "#8B8B8B",
   line: "#E6E6E6",
-  accent: "#ECFF66",
+  accent: "#F1F1F1",
   green: "#006039",
 };
 
@@ -127,7 +127,7 @@ const loadRazorpayScript = () => {
     }
 
     const existingScript = document.querySelector(
-      'script[src="https://checkout.razorpay.com/v1/checkout.js"]'
+      'script[src="https://checkout.razorpay.com/v1/checkout.js"]',
     );
 
     if (existingScript) {
@@ -159,13 +159,13 @@ const emitCartUpdated = (itemCount?: number) => {
       detail: {
         item_count: Number(itemCount || 0),
       },
-    })
+    }),
   );
 };
 
 const getRazorpayAmountInPaise = (
   paymentData: any,
-  fallbackAmountInRupees: number
+  fallbackAmountInRupees: number,
 ) => {
   const possiblePaise =
     paymentData?.amount_paise ??
@@ -222,7 +222,8 @@ const Cart: React.FC = () => {
   const gstAmount = cartSummary.gst_amount || sgstAmount + cgstAmount;
   const payableAmount = cartSummary.grand_total || subtotal + gstAmount;
   const itemCount =
-    cartSummary.item_count || cartItems.reduce((acc, item) => acc + item.qty, 0);
+    cartSummary.item_count ||
+    cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   const fetchCartData = async () => {
     const token = localStorage.getItem("token");
@@ -263,7 +264,7 @@ const Cart: React.FC = () => {
           line_gst_amount: toNumber(item.line_gst_amount),
           line_total_with_gst: toNumber(
             item.line_total_with_gst,
-            toNumber(item.line_total, price * qty)
+            toNumber(item.line_total, price * qty),
           ),
 
           sgst_percent: toNumber(item.sgst_percent),
@@ -320,7 +321,7 @@ const Cart: React.FC = () => {
   const updateQuantity = async (
     productId: number,
     sizeId: number | undefined,
-    newQty: number
+    newQty: number,
   ) => {
     if (newQty < 1) return;
 
@@ -421,7 +422,7 @@ const Cart: React.FC = () => {
 
       const razorpayAmountInPaise = getRazorpayAmountInPaise(
         paymentData,
-        payableAmount
+        payableAmount,
       );
 
       const options = {
@@ -508,7 +509,7 @@ const Cart: React.FC = () => {
           </div>
 
           <div className="flex flex-wrap items-center gap-3 text-[12px] font-semibold text-[#111111]">
-            <span className="inline-flex items-center gap-2 rounded-full bg-[#ECFF66] px-4 py-2">
+            <span className="inline-flex items-center gap-2 rounded-full bg-[#F1F1F1] px-4 py-2">
               <ShieldCheck size={15} strokeWidth={1.8} />
               Secure checkout
             </span>
@@ -606,7 +607,9 @@ const Cart: React.FC = () => {
 
                             <button
                               type="button"
-                              onClick={() => removeItem(item.product_id, item.size_id)}
+                              onClick={() =>
+                                removeItem(item.product_id, item.size_id)
+                              }
                               disabled={actionLoading}
                               className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#F2F2F2] text-[#777777] transition-colors hover:bg-white hover:text-red-600 disabled:opacity-50 sm:hidden"
                               aria-label="Remove item"
@@ -618,11 +621,17 @@ const Cart: React.FC = () => {
                           <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#777777]">
                             {(item.size_name || item.size_code) && (
                               <span>
-                                Size: <span className="text-[#111111]">{item.size_name || item.size_code}</span>
+                                Size:{" "}
+                                <span className="text-[#111111]">
+                                  {item.size_name || item.size_code}
+                                </span>
                               </span>
                             )}
                             <span>
-                              Price: <span className="text-[#111111]">{formatPrice(item.price)}</span>
+                              Price:{" "}
+                              <span className="text-[#111111]">
+                                {formatPrice(item.price)}
+                              </span>
                             </span>
                           </div>
 
@@ -635,7 +644,7 @@ const Cart: React.FC = () => {
                                   updateQuantity(
                                     item.product_id,
                                     item.size_id,
-                                    item.qty - 1
+                                    item.qty - 1,
                                   )
                                 }
                                 className="flex h-full w-10 items-center justify-center rounded-l-full hover:bg-[#F2F2F2] disabled:opacity-40"
@@ -655,7 +664,7 @@ const Cart: React.FC = () => {
                                   updateQuantity(
                                     item.product_id,
                                     item.size_id,
-                                    item.qty + 1
+                                    item.qty + 1,
                                   )
                                 }
                                 className="flex h-full w-10 items-center justify-center rounded-r-full hover:bg-[#F2F2F2] disabled:opacity-40"
@@ -666,7 +675,9 @@ const Cart: React.FC = () => {
                             </div>
 
                             <div className="sm:hidden">
-                              <p className="text-[11px] text-[#A0A0A0]">Item total</p>
+                              <p className="text-[11px] text-[#A0A0A0]">
+                                Item total
+                              </p>
                               <p className="text-[15px] font-bold text-[#111111]">
                                 {formatPrice(itemTotal)}
                               </p>
@@ -677,7 +688,9 @@ const Cart: React.FC = () => {
                         <div className="col-span-2 flex items-center justify-between border-t border-[#EEEEEE] pt-3 sm:col-span-1 sm:flex-col sm:items-end sm:justify-between sm:border-t-0 sm:pt-2">
                           <button
                             type="button"
-                            onClick={() => removeItem(item.product_id, item.size_id)}
+                            onClick={() =>
+                              removeItem(item.product_id, item.size_id)
+                            }
                             disabled={actionLoading}
                             className="hidden h-9 w-9 items-center justify-center rounded-full bg-[#F2F2F2] text-[#777777] transition-colors hover:bg-white hover:text-red-600 disabled:opacity-50 sm:flex"
                             aria-label="Remove item"
@@ -686,7 +699,9 @@ const Cart: React.FC = () => {
                           </button>
 
                           <div className="text-left sm:text-right">
-                            <p className="text-[12px] text-[#A0A0A0]">Item total</p>
+                            <p className="text-[12px] text-[#A0A0A0]">
+                              Item total
+                            </p>
                             <p className="text-[18px] font-bold text-[#111111] md:text-[20px]">
                               {formatPrice(itemTotal)}
                             </p>
@@ -701,7 +716,7 @@ const Cart: React.FC = () => {
 
             <aside className="lg:sticky lg:top-28 lg:self-start">
               <div className="overflow-hidden rounded-[22px] border border-[#E7E7E7] bg-white">
-                <div className="bg-[#ECFF66] px-7 py-5">
+                <div className="bg-[#F1F1F1] px-7 py-5">
                   <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#111111]">
                     Order summary
                   </p>
@@ -929,7 +944,7 @@ const Cart: React.FC = () => {
                   />
                 </div>
 
-                <div className="flex justify-between rounded-[16px] bg-[#ECFF66] p-4 text-[14px] font-bold text-[#111111]">
+                <div className="flex justify-between rounded-[16px] bg-[#F1F1F1] p-4 text-[14px] font-bold text-[#111111]">
                   <span>Payable Amount</span>
                   <span>{formatPrice(payableAmount)}</span>
                 </div>

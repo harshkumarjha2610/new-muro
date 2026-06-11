@@ -73,7 +73,7 @@ const COLORS = {
   ink: "#111111",
   muted: "#777777",
   line: "#E6E6E6",
-  accent: "#ECFF66",
+  accent: "#F1F1F1",
   green: "#006039",
 };
 
@@ -130,7 +130,7 @@ const statusClass = (status?: string) => {
   }
 
   if (["PENDING", "PROCESSING", "SHIPPED"].includes(s)) {
-    return "border-[#ECFF66] bg-[#ECFF66] text-[#111111]";
+    return "border-[#F1F1F1] bg-[#F1F1F1] text-[#111111]";
   }
 
   if (["FAILED", "CANCELLED", "CANCELED", "REJECTED"].includes(s)) {
@@ -175,13 +175,13 @@ const Profile: React.FC = () => {
 
   const paidOrders = useMemo(() => {
     return orders.filter(
-      (order) => String(order.payment_status || "").toUpperCase() === "PAID"
+      (order) => String(order.payment_status || "").toUpperCase() === "PAID",
     ).length;
   }, [orders]);
 
   const pendingOrders = useMemo(() => {
     return orders.filter(
-      (order) => String(order.payment_status || "").toUpperCase() !== "PAID"
+      (order) => String(order.payment_status || "").toUpperCase() !== "PAID",
     ).length;
   }, [orders]);
 
@@ -272,7 +272,10 @@ const Profile: React.FC = () => {
               transition={{ duration: 0.45 }}
             >
               <div className="mb-5 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.18em] text-[#8B8B8B]">
-                <Link to="/" className="inline-flex items-center gap-2 rounded-full bg-[#F2F2F2] px-4 py-2 transition-colors hover:bg-[#ECFF66] hover:text-[#111111]">
+                <Link
+                  to="/"
+                  className="inline-flex items-center gap-2 rounded-full bg-[#F2F2F2] px-4 py-2 transition-colors hover:bg-[#F1F1F1] hover:text-[#111111]"
+                >
                   <Home size={13} strokeWidth={1.8} />
                   Home
                 </Link>
@@ -292,7 +295,8 @@ const Profile: React.FC = () => {
               </h1>
 
               <p className="mt-4 max-w-[650px] text-[14px] leading-relaxed text-[#555555] md:text-[16px]">
-                Track your orders, payment status, delivery progress and complete bill details in one place.
+                Track your orders, payment status, delivery progress and
+                complete bill details in one place.
               </p>
             </motion.div>
 
@@ -321,7 +325,7 @@ const Profile: React.FC = () => {
         <div className="grid grid-cols-1 gap-7 lg:grid-cols-[390px_minmax(0,1fr)] xl:gap-10">
           <aside className="space-y-5 lg:sticky lg:top-28 lg:self-start">
             <div className="overflow-hidden rounded-[24px] border border-[#E6E6E6] bg-white">
-              <div className="bg-[#ECFF66] px-7 py-5">
+              <div className="bg-[#F1F1F1] px-7 py-5">
                 <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#111111]">
                   Account details
                 </p>
@@ -347,15 +351,24 @@ const Profile: React.FC = () => {
                 </div>
 
                 <div className="space-y-4 text-[14px]">
-                  <InfoLine icon={Mail} value={user?.email || "Email not available"} />
-                  <InfoLine icon={Phone} value={user?.phone || user?.mobile || "Phone not available"} />
-                  <InfoLine icon={Clock} value={`Joined: ${formatDate(user?.created_at)}`} />
+                  <InfoLine
+                    icon={Mail}
+                    value={user?.email || "Email not available"}
+                  />
+                  <InfoLine
+                    icon={Phone}
+                    value={user?.phone || user?.mobile || "Phone not available"}
+                  />
+                  <InfoLine
+                    icon={Clock}
+                    value={`Joined: ${formatDate(user?.created_at)}`}
+                  />
                 </div>
               </div>
             </div>
 
             <div className="rounded-[24px] bg-[#111111] p-7 text-white">
-              <p className="mb-5 text-[12px] font-bold uppercase tracking-[0.18em] text-[#ECFF66]">
+              <p className="mb-5 text-[12px] font-bold uppercase tracking-[0.18em] text-[#F1F1F1]">
                 Account summary
               </p>
 
@@ -365,22 +378,40 @@ const Profile: React.FC = () => {
                 <SummaryNumber value={pendingOrders} label="Pending" />
               </div>
             </div>
-
-           
           </aside>
 
           <div className="space-y-6">
             <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
-              <DashboardCard icon={ShoppingBag} label="Total Orders" value={String(orders.length)} />
-              <DashboardCard icon={CreditCard} label="Payment Success" value={String(paidOrders)} />
-              <DashboardCard icon={Truck} label="Latest Status" value={latestOrder?.order_status || "No Order"} />
+              <DashboardCard
+                icon={ShoppingBag}
+                label="Total Orders"
+                value={String(orders.length)}
+              />
+              <DashboardCard
+                icon={CreditCard}
+                label="Payment Success"
+                value={String(paidOrders)}
+              />
+              <DashboardCard
+                icon={Truck}
+                label="Latest Status"
+                value={latestOrder?.order_status || "No Order"}
+              />
             </div>
 
             <div className="overflow-hidden rounded-[24px] border border-[#E6E6E6] bg-white">
               <div className="flex flex-col gap-4 border-b border-[#E6E6E6] p-5 md:flex-row md:items-center md:justify-between">
                 <div className="flex items-center gap-2">
-                  <TabButton label="Overview" active={activeTab === "overview"} onClick={() => setActiveTab("overview")} />
-                  <TabButton label="Orders" active={activeTab === "orders"} onClick={() => setActiveTab("orders")} />
+                  <TabButton
+                    label="Overview"
+                    active={activeTab === "overview"}
+                    onClick={() => setActiveTab("overview")}
+                  />
+                  <TabButton
+                    label="Orders"
+                    active={activeTab === "orders"}
+                    onClick={() => setActiveTab("orders")}
+                  />
                 </div>
 
                 <button
@@ -416,8 +447,14 @@ const Profile: React.FC = () => {
                         </div>
 
                         <div className="flex flex-wrap gap-2">
-                          <StatusPill label={`Payment: ${latestOrder.payment_status || "PENDING"}`} status={latestOrder.payment_status} />
-                          <StatusPill label={`Order: ${latestOrder.order_status || "PENDING"}`} status={latestOrder.order_status} />
+                          <StatusPill
+                            label={`Payment: ${latestOrder.payment_status || "PENDING"}`}
+                            status={latestOrder.payment_status}
+                          />
+                          <StatusPill
+                            label={`Order: ${latestOrder.order_status || "PENDING"}`}
+                            status={latestOrder.order_status}
+                          />
                         </div>
                       </div>
 
@@ -448,11 +485,17 @@ const Profile: React.FC = () => {
                         const PayIcon = paymentIcon(order.payment_status);
 
                         return (
-                          <div key={order.id} className="p-5 transition-colors hover:bg-[#F8F8F8] md:p-7">
+                          <div
+                            key={order.id}
+                            className="p-5 transition-colors hover:bg-[#F8F8F8] md:p-7"
+                          >
                             <div className="flex flex-col gap-5 xl:flex-row xl:items-center xl:justify-between">
                               <div className="flex items-start gap-4">
-                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#ECFF66] text-[#111111]">
-                                  <Package className="h-5 w-5" strokeWidth={1.8} />
+                                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[#F1F1F1] text-[#111111]">
+                                  <Package
+                                    className="h-5 w-5"
+                                    strokeWidth={1.8}
+                                  />
                                 </div>
 
                                 <div>
@@ -470,14 +513,18 @@ const Profile: React.FC = () => {
                                   <div className="mt-4 flex flex-wrap gap-2">
                                     <span
                                       className={`inline-flex items-center rounded-full border px-3 py-1.5 text-[10px] font-bold uppercase tracking-[0.13em] ${statusClass(
-                                        order.payment_status
+                                        order.payment_status,
                                       )}`}
                                     >
                                       <PayIcon className="mr-1 h-3 w-3" />
                                       {order.payment_status || "PENDING"}
                                     </span>
 
-                                    <StatusPill label={order.order_status || "PENDING"} status={order.order_status} small />
+                                    <StatusPill
+                                      label={order.order_status || "PENDING"}
+                                      status={order.order_status}
+                                      small
+                                    />
                                   </div>
                                 </div>
                               </div>
@@ -571,7 +618,7 @@ const DashboardCard = ({
   value: string;
 }) => (
   <div className="rounded-[24px] border border-[#E6E6E6] bg-white p-6">
-    <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-[#ECFF66] text-[#111111]">
+    <div className="mb-6 flex h-11 w-11 items-center justify-center rounded-full bg-[#F1F1F1] text-[#111111]">
       <Icon className="h-5 w-5" strokeWidth={1.8} />
     </div>
     <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.16em] text-[#8B8B8B]">
@@ -629,7 +676,10 @@ const StatusPill = ({
 const EmptyOrders = () => {
   return (
     <div className="flex min-h-[310px] flex-col items-center justify-center rounded-[22px] bg-[#F2F2F2] px-6 text-center">
-      <ShoppingBag className="mb-5 h-14 w-14 text-[#CFCFCF]" strokeWidth={1.15} />
+      <ShoppingBag
+        className="mb-5 h-14 w-14 text-[#CFCFCF]"
+        strokeWidth={1.15}
+      />
       <h3
         className="text-[26px] font-normal tracking-[2px] text-[#111111]"
         style={{ fontFamily: serifFont }}
@@ -637,7 +687,8 @@ const EmptyOrders = () => {
         No orders found
       </h3>
       <p className="mt-3 mb-7 max-w-md text-[14px] leading-relaxed text-[#777777]">
-        You have not placed any order yet. Start shopping and your orders will appear here.
+        You have not placed any order yet. Start shopping and your orders will
+        appear here.
       </p>
       <Link
         to="/products"
@@ -669,7 +720,7 @@ const TrackingTimeline = ({
             <div key={step} className="relative">
               <div
                 className={`mb-3 h-1.5 rounded-full ${
-                  active ? "bg-[#ECFF66]" : "bg-[#E6E6E6]"
+                  active ? "bg-[#F1F1F1]" : "bg-[#E6E6E6]"
                 }`}
               />
 
@@ -677,7 +728,7 @@ const TrackingTimeline = ({
                 <div
                   className={`flex h-7 w-7 shrink-0 items-center justify-center rounded-full ${
                     active
-                      ? "bg-[#111111] text-[#ECFF66]"
+                      ? "bg-[#111111] text-[#F1F1F1]"
                       : "border border-[#E6E6E6] bg-white text-[#B0B0B0]"
                   }`}
                 >
@@ -751,7 +802,7 @@ const OrderBillModal = ({
         exit={{ opacity: 0, y: 18, scale: 0.98 }}
         className="relative max-h-[90vh] w-full max-w-5xl overflow-hidden rounded-[28px] border border-white/30 bg-white shadow-2xl"
       >
-        <div className="flex items-center justify-between border-b border-[#E6E6E6] bg-[#ECFF66] p-5 md:p-6">
+        <div className="flex items-center justify-between border-b border-[#E6E6E6] bg-[#F1F1F1] p-5 md:p-6">
           <div>
             <p className="mb-2 text-[11px] font-bold uppercase tracking-[0.2em] text-[#111111]/70">
               Order bill
@@ -826,7 +877,10 @@ const OrderBillModal = ({
                 <InfoBox label="Payment" value={order.payment_status || "-"} />
                 <InfoBox label="Order" value={order.order_status || "-"} />
                 <InfoBox label="Paid On" value={formatDate(order.paid_at)} />
-                <InfoBox label="Payment ID" value={order.razorpay_payment_id || "-"} />
+                <InfoBox
+                  label="Payment ID"
+                  value={order.razorpay_payment_id || "-"}
+                />
               </div>
 
               <div className="overflow-x-auto rounded-[18px] border border-[#E6E6E6]">
@@ -851,7 +905,10 @@ const OrderBillModal = ({
                   <tbody className="divide-y divide-[#E6E6E6]">
                     {items.length === 0 ? (
                       <tr>
-                        <td colSpan={4} className="px-4 py-8 text-center text-[#777777]">
+                        <td
+                          colSpan={4}
+                          className="px-4 py-8 text-center text-[#777777]"
+                        >
                           No bill items found
                         </td>
                       </tr>
@@ -872,7 +929,9 @@ const OrderBillModal = ({
                               </span>
                             </div>
                           </td>
-                          <td className="px-4 py-4 text-center">{item.qty || 1}</td>
+                          <td className="px-4 py-4 text-center">
+                            {item.qty || 1}
+                          </td>
                           <td className="px-4 py-4 text-right">
                             {formatPrice(item.price)}
                           </td>
@@ -896,7 +955,9 @@ const OrderBillModal = ({
                   </div>
 
                   <div className="flex justify-between border-t border-[#E0E0E0] pt-3 text-[20px]">
-                    <span className="font-bold text-[#111111]">Paid Amount</span>
+                    <span className="font-bold text-[#111111]">
+                      Paid Amount
+                    </span>
                     <span className="font-bold text-[#006039]">
                       {formatPrice(order.total_amount)}
                     </span>

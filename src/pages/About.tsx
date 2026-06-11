@@ -12,7 +12,7 @@ const COLORS = {
   ink: "#111111",
   muted: "#777777",
   line: "#E6E6E6",
-  accent: "#ECFF66",
+  accent: "#F1F1F1",
   green: "#006039",
 };
 
@@ -41,7 +41,7 @@ const About: React.FC = () => {
             variants={fadeIn}
             className="max-w-[1120px]"
           >
-            <p className="mb-5 inline-flex rounded-full bg-[#ECFF66] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#111111]">
+            <p className="mb-5 inline-flex rounded-full bg-[#F1F1F1] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#111111]">
               About MURO Poster
             </p>
 
@@ -91,23 +91,29 @@ const About: React.FC = () => {
                 className="text-[28px] font-normal leading-[1.05] tracking-[2px] text-[#111111] md:text-[38px]"
                 style={{ fontFamily: serifFont }}
               >
-                MURO POSTER was built on a simple belief: the space around you quietly shapes who you become.
+                MURO POSTER was built on a simple belief: the space around you
+                quietly shapes who you become.
               </h2>
 
               <p className="mt-7 text-[16px] leading-relaxed text-[#555555]">
-                What you see every day doesn’t stay on the surface; it settles into your mind, influencing how you think, feel and move through life.
+                What you see every day doesn’t stay on the surface; it settles
+                into your mind, influencing how you think, feel and move through
+                life.
               </p>
 
               <p className="mt-5 text-[16px] leading-relaxed text-[#555555]">
-                Most people treat walls as something to fill, but we see them differently. To us, they are part of your mental environment — a place where ideas are reinforced and identity takes form.
+                Most people treat walls as something to fill, but we see them
+                differently. To us, they are part of your mental environment — a
+                place where ideas are reinforced and identity takes form.
               </p>
 
-              <div className="mt-8 rounded-[22px] bg-[#ECFF66] p-6">
+              <div className="mt-8 rounded-[22px] bg-[#F1F1F1] p-6">
                 <p
                   className="text-[20px] font-normal italic leading-snug tracking-[2px] text-[#111111]"
                   style={{ fontFamily: serifFont }}
                 >
-                  “When your environment reflects purpose, you naturally begin to live with it.”
+                  “When your environment reflects purpose, you naturally begin
+                  to live with it.”
                 </p>
               </div>
             </motion.div>
@@ -124,24 +130,42 @@ const About: React.FC = () => {
             transition={{ duration: 0.75 }}
             className="mx-auto max-w-[1050px] text-center"
           >
-            <Quote className="mx-auto mb-7 h-11 w-11 text-[#ECFF66]" strokeWidth={1.5} />
+            <Quote
+              className="mx-auto mb-7 h-11 w-11 text-[#F1F1F1]"
+              strokeWidth={1.5}
+            />
 
             <h3
               className="text-[30px] font-normal leading-[1.05] tracking-[2px] md:text-[44px]"
               style={{ fontFamily: serifFont }}
             >
-              Most spaces are designed to look good, but very few are designed to make you better.
+              Most spaces are designed to look good, but very few are designed
+              to make you better.
             </h3>
 
             <p className="mx-auto mt-8 max-w-[860px] text-[16px] leading-relaxed text-white/70 md:text-[18px]">
-              MURO exists to change that. Every piece we create is built to reinforce a state of mind — clarity, discipline, calm, focus, strength.
+              MURO exists to change that. Every piece we create is built to
+              reinforce a state of mind — clarity, discipline, calm, focus,
+              strength.
             </p>
           </motion.div>
 
           <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <ValueCard icon={Eye} title="Clarity" text="Visual reminders that keep your direction visible." />
-            <ValueCard icon={Target} title="Focus" text="Minimal pieces that support your daily discipline." />
-            <ValueCard icon={Sparkles} title="Atmosphere" text="A cleaner environment for stronger intent." />
+            <ValueCard
+              icon={Eye}
+              title="Clarity"
+              text="Visual reminders that keep your direction visible."
+            />
+            <ValueCard
+              icon={Target}
+              title="Focus"
+              text="Minimal pieces that support your daily discipline."
+            />
+            <ValueCard
+              icon={Sparkles}
+              title="Atmosphere"
+              text="A cleaner environment for stronger intent."
+            />
           </div>
         </div>
       </section>
@@ -167,7 +191,9 @@ const About: React.FC = () => {
             </h2>
 
             <p className="mt-7 max-w-[680px] text-[17px] leading-relaxed text-[#555555]">
-              We are here to shape the atmosphere — to create spaces that support becoming. MURO is for those who understand that growth is a process, and the environment is an active participant in it.
+              We are here to shape the atmosphere — to create spaces that
+              support becoming. MURO is for those who understand that growth is
+              a process, and the environment is an active participant in it.
             </p>
 
             <Link
@@ -208,7 +234,8 @@ const About: React.FC = () => {
           className="mx-auto max-w-[980px] text-[28px] font-normal leading-[1.08] tracking-[2px] text-[#111111] md:text-[40px]"
           style={{ fontFamily: serifFont }}
         >
-          Choose what surrounds you with intention. It is already shaping who you are becoming.
+          Choose what surrounds you with intention. It is already shaping who
+          you are becoming.
         </h2>
       </section>
     </main>
@@ -225,7 +252,7 @@ const ValueCard = ({
   text: string;
 }) => (
   <div className="rounded-[24px] border border-white/10 bg-white/[0.06] p-7">
-    <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-full bg-[#ECFF66] text-[#111111]">
+    <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-full bg-[#F1F1F1] text-[#111111]">
       <Icon size={20} strokeWidth={1.8} />
     </div>
 

@@ -1,11 +1,13 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion, Variants } from "framer-motion";
-import { Award, Heart, Package, Star, X } from "lucide-react";
+
+import { Award, Heart, Package, Star, X, ChevronLeft, ChevronRight } from "lucide-react";
 
 import heroBanner from "@/assets/hero-banner.jpg";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
 
 const SITE_ORIGIN = "https://muroposter.com";
 
@@ -111,7 +113,7 @@ const COLORS = {
   ink: "#101010",
   muted: "#9A9A94",
   line: "#E7E4DC",
-  accent: "#ECFF66",
+  accent: "#F1F1F1",
   green: "#006039",
 };
 
@@ -148,7 +150,11 @@ const getFullImageUrl = (path?: string) => {
     return `${SITE_ORIGIN}/${cleanPath}`;
   }
 
-  if (cleanPath.includes("uploads/product") || cleanPath.includes("uploads/postcards") || cleanPath.includes("uploads/home")) {
+  if (
+    cleanPath.includes("uploads/product") ||
+    cleanPath.includes("uploads/postcards") ||
+    cleanPath.includes("uploads/home")
+  ) {
     return `${SITE_ORIGIN}/${cleanPath}`;
   }
 
@@ -178,7 +184,10 @@ const getOfferPrice = (price: number, offer?: ActiveOffer | null) => {
 
   return {
     originalPrice: price,
-    finalPrice: Math.max(0, Math.round((price - (price * discount) / 100) * 100) / 100),
+    finalPrice: Math.max(
+      0,
+      Math.round((price - (price * discount) / 100) * 100) / 100,
+    ),
     hasOffer: true,
   };
 };
@@ -187,7 +196,9 @@ const fetchActiveOffer = async (): Promise<ActiveOffer | null> => {
   try {
     const response = await fetch(`${API_BASE}/offers/active`);
     const json = await response.json().catch(() => null);
-    const rows = Array.isArray(json?.data) ? json.data : json?.data?.items || [];
+    const rows = Array.isArray(json?.data)
+      ? json.data
+      : json?.data?.items || [];
     return rows[0] || null;
   } catch (error) {
     console.error("Failed to fetch active offer:", error);
@@ -203,8 +214,8 @@ const getFirstProductImageTitle = (product?: ProductItem | null) => {
   const imageRows = Array.isArray(product?.product_images)
     ? product?.product_images
     : Array.isArray(product?.images)
-    ? product?.images
-    : [];
+      ? product?.images
+      : [];
 
   const firstImage = imageRows
     .slice()
@@ -240,13 +251,15 @@ const getUploadedProductImage = (product?: ProductItem | null) => {
   const imageRows = Array.isArray(product?.product_images)
     ? product?.product_images
     : Array.isArray(product?.images)
-    ? product?.images
-    : [];
+      ? product?.images
+      : [];
 
   const firstUploaded = imageRows
     .slice()
     .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
-    .find((img) => Boolean(img.image_url || img.url || img.file_url || img.path));
+    .find((img) =>
+      Boolean(img.image_url || img.url || img.file_url || img.path),
+    );
 
   return (
     firstUploaded?.image_url ||
@@ -265,10 +278,12 @@ const getLowestSizePrice = (product?: ProductItem | null) => {
   const sizeRows = Array.isArray(product?.size_prices)
     ? product?.size_prices
     : Array.isArray(product?.sizes)
-    ? product?.sizes
-    : [];
+      ? product?.sizes
+      : [];
 
-  const prices = sizeRows.map((size) => safeNumber(size.price)).filter((price) => price > 0);
+  const prices = sizeRows
+    .map((size) => safeNumber(size.price))
+    .filter((price) => price > 0);
 
   if (prices.length > 0) {
     return Math.min(...prices);
@@ -278,11 +293,15 @@ const getLowestSizePrice = (product?: ProductItem | null) => {
 };
 
 const getHomeProductImage = (item?: HomeProduct | null) => {
-  const imageRows = Array.isArray(item?.product_images) ? item?.product_images : [];
+  const imageRows = Array.isArray(item?.product_images)
+    ? item?.product_images
+    : [];
   const firstUploaded = imageRows
     .slice()
     .sort((a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0))
-    .find((img) => Boolean(img.image_url || img.url || img.file_url || img.path));
+    .find((img) =>
+      Boolean(img.image_url || img.url || img.file_url || img.path),
+    );
 
   return (
     firstUploaded?.image_url ||
@@ -299,28 +318,40 @@ const getHomeProductImage = (item?: HomeProduct | null) => {
 
 const getHomeProductPrice = (item?: HomeProduct | null) => {
   const sizeRows = Array.isArray(item?.size_prices) ? item?.size_prices : [];
-  const sizePrices = sizeRows.map((size) => safeNumber(size.price)).filter((price) => price > 0);
+  const sizePrices = sizeRows
+    .map((size) => safeNumber(size.price))
+    .filter((price) => price > 0);
 
   if (sizePrices.length > 0) {
     return Math.min(...sizePrices);
   }
 
-  return safeNumber(item?.final_price) || safeNumber(item?.offer_price) || safeNumber(item?.total_price) || safeNumber(item?.price) || 500;
+  return (
+    safeNumber(item?.final_price) ||
+    safeNumber(item?.offer_price) ||
+    safeNumber(item?.total_price) ||
+    safeNumber(item?.price) ||
+    500
+  );
 };
 
 const getHomeProductTitle = (item?: HomeProduct | null) => {
-  return String(item?.product_name || item?.title || "Product").trim() || "Product";
+  return (
+    String(item?.product_name || item?.title || "Product").trim() || "Product"
+  );
 };
 
 const getHomeProductBrand = (item?: HomeProduct | null) => {
   if (item?.product_type === "postcard") return "Postcard";
-  if (item?.product_type === "cutout" || item?.product_type === "sqft") return "CutOut";
+  if (item?.product_type === "cutout" || item?.product_type === "sqft")
+    return "CutOut";
   return item?.category || "Muro Poster";
 };
 
 const getHomeProductLink = (item: HomeProduct, fallback: string) => {
   if (item.product_type === "postcard") return `/postcards/${item.id}`;
-  if (item.product_type === "cutout" || item.product_type === "sqft") return `/cutouts/${item.id}`;
+  if (item.product_type === "cutout" || item.product_type === "sqft")
+    return `/cutouts/${item.id}`;
   return item.id ? `/product/${item.id}` : fallback;
 };
 
@@ -352,14 +383,16 @@ const defaultHeroSlides: HomeHeroSlide[] = [
     button_link: "/products",
   },
   {
-    image_url: "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1800&auto=format&fit=crop",
+    image_url:
+      "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1800&auto=format&fit=crop",
     title: "Art For Every Space.",
     subtitle: "Bring warmth, mood and personality into your room.",
     button_text: "Explore Posters →",
     button_link: "/products",
   },
   {
-    image_url: "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1800&auto=format&fit=crop",
+    image_url:
+      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1800&auto=format&fit=crop",
     title: "Curated Wall Prints.",
     subtitle: "Simple, premium and meaningful posters for modern homes.",
     button_text: "Shop Now →",
@@ -397,14 +430,16 @@ const collectionHighlightTiles: HomeCategoryTile[] = [
     subtitle: "A curated wall-art story for modern rooms.",
     button_text: "Discover",
     button_link: "/products",
-    image_url: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1400&auto=format&fit=crop",
+    image_url:
+      "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1400&auto=format&fit=crop",
   },
   {
     title: "Bestsellers",
     subtitle: "Our most-loved art prints",
     button_text: "Explore",
     button_link: "/products",
-    image_url: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=1400&auto=format&fit=crop",
+    image_url:
+      "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=1400&auto=format&fit=crop",
   },
 ];
 
@@ -480,10 +515,27 @@ const normalizeHeroSlides = (items: any): HomeHeroSlide[] => {
     .slice(0, 3)
     .map((row: any, index: number) => ({
       title: String(row?.title || defaultHeroSlides[index]?.title || ""),
-      subtitle: String(row?.subtitle || defaultHeroSlides[index]?.subtitle || ""),
-      button_text: String(row?.button_text || row?.buttonText || defaultHeroSlides[index]?.button_text || "Explore"),
-      button_link: String(row?.button_link || row?.buttonLink || defaultHeroSlides[index]?.button_link || "/products"),
-      image_url: String(row?.image_url || row?.image || defaultHeroSlides[index]?.image_url || ""),
+      subtitle: String(
+        row?.subtitle || defaultHeroSlides[index]?.subtitle || "",
+      ),
+      button_text: String(
+        row?.button_text ||
+          row?.buttonText ||
+          defaultHeroSlides[index]?.button_text ||
+          "Explore",
+      ),
+      button_link: String(
+        row?.button_link ||
+          row?.buttonLink ||
+          defaultHeroSlides[index]?.button_link ||
+          "/products",
+      ),
+      image_url: String(
+        row?.image_url ||
+          row?.image ||
+          defaultHeroSlides[index]?.image_url ||
+          "",
+      ),
     }))
     .filter((row) => row.image_url);
 
@@ -496,10 +548,30 @@ const normalizeCategoryTiles = (items: any): HomeCategoryTile[] => {
     .slice(0, 3)
     .map((row: any, index: number) => ({
       title: String(row?.title || defaultCategoryTiles[index]?.title || ""),
-      subtitle: String(row?.subtitle || defaultCategoryTiles[index]?.subtitle || ""),
-      button_text: String(row?.button_text || row?.buttonText || row?.cta || defaultCategoryTiles[index]?.button_text || "Explore"),
-      button_link: String(row?.button_link || row?.buttonLink || row?.to || defaultCategoryTiles[index]?.button_link || "/products"),
-      image_url: String(row?.image_url || row?.image || row?.img || defaultCategoryTiles[index]?.image_url || ""),
+      subtitle: String(
+        row?.subtitle || defaultCategoryTiles[index]?.subtitle || "",
+      ),
+      button_text: String(
+        row?.button_text ||
+          row?.buttonText ||
+          row?.cta ||
+          defaultCategoryTiles[index]?.button_text ||
+          "Explore",
+      ),
+      button_link: String(
+        row?.button_link ||
+          row?.buttonLink ||
+          row?.to ||
+          defaultCategoryTiles[index]?.button_link ||
+          "/products",
+      ),
+      image_url: String(
+        row?.image_url ||
+          row?.image ||
+          row?.img ||
+          defaultCategoryTiles[index]?.image_url ||
+          "",
+      ),
     }))
     .filter((row) => row.image_url);
 
@@ -526,12 +598,24 @@ const fetchHomeContent = async (): Promise<HomeContent> => {
     return {
       hero_slides: normalizeHeroSlides(data.hero_slides),
       category_tiles: normalizeCategoryTiles(data.category_tiles),
-      featured_new_arrival_ids: Array.isArray(data.featured_new_arrival_ids) ? data.featured_new_arrival_ids.map(Number).filter(Boolean) : [],
-      featured_postcard_ids: Array.isArray(data.featured_postcard_ids) ? data.featured_postcard_ids.map(Number).filter(Boolean) : [],
-      featured_cutout_ids: Array.isArray(data.featured_cutout_ids) ? data.featured_cutout_ids.map(Number).filter(Boolean) : [],
-      featured_new_arrivals: Array.isArray(data.featured_new_arrivals) ? data.featured_new_arrivals : [],
-      featured_postcards: Array.isArray(data.featured_postcards) ? data.featured_postcards : [],
-      featured_cutouts: Array.isArray(data.featured_cutouts) ? data.featured_cutouts : [],
+      featured_new_arrival_ids: Array.isArray(data.featured_new_arrival_ids)
+        ? data.featured_new_arrival_ids.map(Number).filter(Boolean)
+        : [],
+      featured_postcard_ids: Array.isArray(data.featured_postcard_ids)
+        ? data.featured_postcard_ids.map(Number).filter(Boolean)
+        : [],
+      featured_cutout_ids: Array.isArray(data.featured_cutout_ids)
+        ? data.featured_cutout_ids.map(Number).filter(Boolean)
+        : [],
+      featured_new_arrivals: Array.isArray(data.featured_new_arrivals)
+        ? data.featured_new_arrivals
+        : [],
+      featured_postcards: Array.isArray(data.featured_postcards)
+        ? data.featured_postcards
+        : [],
+      featured_cutouts: Array.isArray(data.featured_cutouts)
+        ? data.featured_cutouts
+        : [],
     };
   } catch (error) {
     console.error("Failed to fetch home content:", error);
@@ -574,15 +658,34 @@ const normalizePosterProductForHome = (item: any): HomeProduct | null => {
     original_price: item?.original_price || item?.originalPrice,
     final_price: item?.final_price,
     offer_price: item?.offer_price,
-    product_images: Array.isArray(item?.product_images) ? item.product_images : Array.isArray(item?.images) ? item.images : [],
-    size_prices: Array.isArray(item?.size_prices) ? item.size_prices : Array.isArray(item?.sizes) ? item.sizes : [],
+    product_images: Array.isArray(item?.product_images)
+      ? item.product_images
+      : Array.isArray(item?.images)
+        ? item.images
+        : [],
+    size_prices: Array.isArray(item?.size_prices)
+      ? item.size_prices
+      : Array.isArray(item?.sizes)
+        ? item.sizes
+        : [],
   };
 };
 
-const normalizePostcardProductForHome = (item: any, fallbackType: "postcard" | "cutout"): HomeProduct | null => {
+const normalizePostcardProductForHome = (
+  item: any,
+  fallbackType: "postcard" | "cutout",
+): HomeProduct | null => {
   const id = Number(item?.id || item?.product_id || item?.productId || 0);
-  const productType = String(item?.product_type || fallbackType).toLowerCase() as "postcard" | "cutout" | "sqft";
-  const image = String(item?.image_url || item?.front_image_url || item?.main_poster_url || item?.back_image_url || "");
+  const productType = String(
+    item?.product_type || fallbackType,
+  ).toLowerCase() as "postcard" | "cutout" | "sqft";
+  const image = String(
+    item?.image_url ||
+      item?.front_image_url ||
+      item?.main_poster_url ||
+      item?.back_image_url ||
+      "",
+  );
 
   if (!id || !image) return null;
 
@@ -590,7 +693,9 @@ const normalizePostcardProductForHome = (item: any, fallbackType: "postcard" | "
     ...item,
     id,
     product_type: productType,
-    product_name: String(item?.product_name || item?.title || item?.name || "Product"),
+    product_name: String(
+      item?.product_name || item?.title || item?.name || "Product",
+    ),
     title: String(item?.title || item?.product_name || item?.name || "Product"),
     image_url: image,
     front_image_url: item?.front_image_url || "",
@@ -617,9 +722,17 @@ const uniqueHomeItems = (items: HomeProduct[]): HomeProduct[] => {
   return clean;
 };
 
-const fetchHomeProductById = async (id: number, type: "poster" | "postcard" | "cutout"): Promise<HomeProduct | null> => {
+const fetchHomeProductById = async (
+  id: number,
+  type: "poster" | "postcard" | "cutout",
+): Promise<HomeProduct | null> => {
   try {
-    const endpoint = type === "poster" ? `/products/view?id=${id}` : type === "postcard" ? `/postcards/${id}` : `/cutouts/${id}`;
+    const endpoint =
+      type === "poster"
+        ? `/products/view?id=${id}`
+        : type === "postcard"
+          ? `/postcards/${id}`
+          : `/cutouts/${id}`;
     const response = await fetch(`${API_BASE}${endpoint}`);
     const json = await response.json().catch(() => null);
     const item = json?.data?.product || json?.data || json?.product || null;
@@ -650,23 +763,35 @@ const resolveFeaturedHomeItems = async ({
   type: "poster" | "postcard" | "cutout";
   fallbackLimit?: number;
 }): Promise<HomeProduct[]> => {
-  const cleanProvided = uniqueHomeItems(Array.isArray(provided) ? provided : []);
+  const cleanProvided = uniqueHomeItems(
+    Array.isArray(provided) ? provided : [],
+  );
   if (cleanProvided.length > 0) {
     return cleanProvided.slice(0, 12);
   }
 
-  const ids = Array.isArray(selectedIds) ? selectedIds.map(Number).filter(Boolean) : [];
+  const ids = Array.isArray(selectedIds)
+    ? selectedIds.map(Number).filter(Boolean)
+    : [];
   const cleanPool = uniqueHomeItems(pool);
 
   if (ids.length > 0) {
     const poolById = new Map(cleanPool.map((item) => [Number(item.id), item]));
-    const selectedFromPool = ids.map((id) => poolById.get(id)).filter(Boolean) as HomeProduct[];
+    const selectedFromPool = ids
+      .map((id) => poolById.get(id))
+      .filter(Boolean) as HomeProduct[];
     const missingIds = ids.filter((id) => !poolById.has(id));
 
     if (missingIds.length > 0) {
-      const fetchedItems = await Promise.all(missingIds.map((id) => fetchHomeProductById(id, type)));
-      const fetchedById = new Map(fetchedItems.filter(Boolean).map((item) => [Number(item!.id), item!]));
-      const ordered = ids.map((id) => poolById.get(id) || fetchedById.get(id)).filter(Boolean) as HomeProduct[];
+      const fetchedItems = await Promise.all(
+        missingIds.map((id) => fetchHomeProductById(id, type)),
+      );
+      const fetchedById = new Map(
+        fetchedItems.filter(Boolean).map((item) => [Number(item!.id), item!]),
+      );
+      const ordered = ids
+        .map((id) => poolById.get(id) || fetchedById.get(id))
+        .filter(Boolean) as HomeProduct[];
       return uniqueHomeItems(ordered).slice(0, 12);
     }
 
@@ -747,7 +872,10 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
       className="relative w-full overflow-hidden bg-[#F4F4F2]"
     >
       <div className="relative h-[calc(100svh-80px)] min-h-[540px] w-full sm:h-[calc(100svh-116px)] lg:min-h-[620px]">
-        <Link to={activeSlide.button_link || "/products"} className="group relative block h-full w-full">
+        <Link
+          to={activeSlide.button_link || "/products"}
+          className="group relative block h-full w-full"
+        >
           <AnimatePresence mode="wait">
             <motion.img
               key={`${activeSlide.image_url}-${activeIndex}`}
@@ -774,7 +902,10 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
                 transition={{ duration: 0.42, ease: smoothEase }}
                 className={`${pageContainerClass} flex flex-col items-start`}
               >
-                <h1 className="max-w-[920px] text-[44px] leading-[0.92] tracking-[2px] md:text-[76px] lg:text-[104px]" style={headingStyle}>
+                <h1
+                  className="max-w-[920px] text-[44px] leading-[0.92] tracking-[2px] md:text-[76px] lg:text-[104px]"
+                  style={headingStyle}
+                >
                   {activeSlide.title}
                 </h1>
 
@@ -784,7 +915,7 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
                   </p>
                 )}
 
-                <span className="mt-7 inline-flex rounded-full border border-white/70 bg-white px-8 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#101010] transition-colors group-hover:bg-[#ECFF66] group-hover:border-[#ECFF66] md:px-10 md:py-4">
+                <span className="mt-7 inline-flex rounded-full border border-white/70 bg-white px-8 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#101010] transition-colors group-hover:bg-[#F1F1F1] group-hover:border-[#F1F1F1] md:px-10 md:py-4">
                   {activeSlide.button_text || "Explore"}
                 </span>
               </motion.div>
@@ -796,7 +927,12 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
           <>
             <button
               type="button"
-              onClick={() => setActiveIndex((prev) => (prev - 1 + cleanSlides.length) % cleanSlides.length)}
+              onClick={() =>
+                setActiveIndex(
+                  (prev) =>
+                    (prev - 1 + cleanSlides.length) % cleanSlides.length,
+                )
+              }
               className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#101010] shadow-sm transition-colors hover:bg-white md:inline-flex"
               aria-label="Previous slide"
             >
@@ -805,7 +941,9 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
 
             <button
               type="button"
-              onClick={() => setActiveIndex((prev) => (prev + 1) % cleanSlides.length)}
+              onClick={() =>
+                setActiveIndex((prev) => (prev + 1) % cleanSlides.length)
+              }
               className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#101010] shadow-sm transition-colors hover:bg-white md:inline-flex"
               aria-label="Next slide"
             >
@@ -820,7 +958,9 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
                   onClick={() => setActiveIndex(index)}
                   aria-label={`Go to slide ${index + 1}`}
                   className={`h-[7px] rounded-full transition-all duration-300 ${
-                    activeIndex === index ? "w-9 bg-white" : "w-[7px] bg-white/55 hover:bg-white"
+                    activeIndex === index
+                      ? "w-9 bg-white"
+                      : "w-[7px] bg-white/55 hover:bg-white"
                   }`}
                 />
               ))}
@@ -834,7 +974,10 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
 
 const ProductSkeletonCard = ({ index }: { index: number }) => {
   return (
-    <div className="animate-pulse" style={{ animationDelay: `${index * 70}ms` }}>
+    <div
+      className="animate-pulse"
+      style={{ animationDelay: `${index * 70}ms` }}
+    >
       <div className="aspect-[0.78] rounded-[12px] bg-[#F4F4F2]" />
       <div className="mt-4 h-3 w-2/3 rounded-full bg-[#F4F4F2]" />
       <div className="mt-3 h-3 w-1/2 rounded-full bg-[#F4F4F2]" />
@@ -842,33 +985,147 @@ const ProductSkeletonCard = ({ index }: { index: number }) => {
   );
 };
 
-const PosterProductCard = ({ item, activeOffer, index = 0 }: { item: ProductItem; activeOffer: ActiveOffer | null; index?: number }) => {
+const getProductImages = (item?: ProductItem | null): string[] => {
+  const imageRows = Array.isArray(item?.product_images)
+    ? item?.product_images
+    : Array.isArray(item?.images)
+      ? item.images
+      : [];
+
+  const sortedRows = imageRows.slice().sort((a, b) => {
+    const orderA = typeof a === "object" && a !== null ? Number(a.sort_order || 0) : 0;
+    const orderB = typeof b === "object" && b !== null ? Number(b.sort_order || 0) : 0;
+    return orderA - orderB;
+  });
+
+  const urls: string[] = [];
+
+  sortedRows.forEach((img) => {
+    if (typeof img === "string") {
+      if (img && !urls.includes(img)) urls.push(img);
+    } else if (img && typeof img === "object") {
+      const url = img.image_url || img.url || img.file_url || img.path;
+      if (url && !urls.includes(url)) urls.push(url);
+    }
+  });
+
+  if ((item as any)?.front_image_url && !urls.includes((item as any).front_image_url)) {
+    urls.push((item as any).front_image_url);
+  }
+  if ((item as any)?.back_image_url && !urls.includes((item as any).back_image_url)) {
+    urls.push((item as any).back_image_url);
+  }
+
+  if (urls.length === 0) {
+    const fallback =
+      item?.image_url ||
+      item?.main_poster_url ||
+      (item as any)?.front_image_url ||
+      (item as any)?.back_image_url ||
+      "";
+    if (fallback) {
+      urls.push(fallback);
+    }
+  }
+
+  return urls;
+};
+
+const PosterProductCard = ({
+  item,
+  activeOffer,
+  index = 0,
+}: {
+  item: ProductItem;
+  activeOffer: ActiveOffer | null;
+  index?: number;
+}) => {
+  const images = useMemo(() => getProductImages(item), [item]);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
   const productTitle = getProductTitle(item);
-  const posterImage = getUploadedProductImage(item);
   const productPrice = getLowestSizePrice(item);
-  const currentOffer = ((item as any).active_offer || activeOffer) as ActiveOffer | null;
+  const currentOffer = ((item as any).active_offer ||
+    activeOffer) as ActiveOffer | null;
   const offerPrice = getOfferPrice(productPrice, currentOffer);
   const productId = getProductId(item);
   const brandText = item.category || item.subcategory || "Muro Poster";
 
-  if (!posterImage || !productId) return null;
+  if (images.length === 0 || !productId) return null;
+  const activeImage = images[currentImageIndex];
 
   return (
     <motion.div variants={fadeInUp} custom={index}>
-      <Link to={`/product/${productId}`} state={{ productData: item }} className="group block w-full">
+      <Link
+        to={`/product/${productId}`}
+        state={{ productData: item }}
+        className="group block w-full"
+      >
         <article className="w-full">
-          <div className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] px-8 py-9 md:px-10 md:py-11">
+          <div
+            className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] px-8 py-9 md:px-10 md:py-11"
+          >
             <button
               type="button"
               aria-label="Add to wishlist"
-              className="absolute right-4 top-4 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
-              onClick={(e) => e.preventDefault()}
+              className="absolute right-4 top-4 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#000000] transition-colors hover:bg-white hover:text-[#006039]"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+              }}
             >
               <Heart className="h-5 w-5" strokeWidth={1.45} />
             </button>
 
+            {images.length > 1 && (
+              <>
+                <button
+                  type="button"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-black opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) =>
+                      prev === 0 ? images.length - 1 : prev - 1
+                    );
+                  }}
+                >
+                  <ChevronLeft size={16} />
+                </button>
+
+                <button
+                  type="button"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 z-10 flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-black opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white shadow-sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+                  }}
+                >
+                  <ChevronRight size={16} />
+                </button>
+
+                <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 flex gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                  {images.map((_, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${
+                        idx === currentImageIndex ? "bg-[#006039]" : "bg-black/20"
+                      }`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        setCurrentImageIndex(idx);
+                      }}
+                    />
+                  ))}
+                </div>
+              </>
+            )}
+
             <img
-              src={getFullImageUrl(posterImage)}
+              src={getFullImageUrl(activeImage)}
               alt={productTitle}
               className="max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
               loading="lazy"
@@ -877,19 +1134,33 @@ const PosterProductCard = ({ item, activeOffer, index = 0 }: { item: ProductItem
 
           <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
             <div className="min-w-0">
-              <p className="truncate text-[13px] leading-none text-[#A19D96]">{brandText}</p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">{productTitle}</h3>
+              <p className="truncate text-[13px] leading-none text-[#A19D96]">
+                {brandText}
+              </p>
+              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">
+                {productTitle}
+              </h3>
             </div>
 
             <div className="text-right">
-              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">New</p>
+              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">
+                New
+              </p>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">{formatPrice(offerPrice.finalPrice)}</span>
-                {offerPrice.hasOffer && <span className="text-[12px] text-[#A19D96] line-through">{formatPrice(offerPrice.originalPrice)}</span>}
+                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">
+                  {formatPrice(offerPrice.finalPrice)}
+                </span>
+                {offerPrice.hasOffer && (
+                  <span className="text-[12px] text-[#A19D96] line-through">
+                    {formatPrice(offerPrice.originalPrice)}
+                  </span>
+                )}
               </div>
 
               {currentOffer && offerPrice.hasOffer && (
-                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">{currentOffer.label}</p>
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">
+                  {currentOffer.label}
+                </p>
               )}
             </div>
           </div>
@@ -899,20 +1170,32 @@ const PosterProductCard = ({ item, activeOffer, index = 0 }: { item: ProductItem
   );
 };
 
-const HomeProductCard = ({ item, index = 0 }: { item: HomeProduct; index?: number }) => {
+const HomeProductCard = ({
+  item,
+  index = 0,
+}: {
+  item: HomeProduct;
+  index?: number;
+}) => {
   const image = getHomeProductImage(item);
   const titleText = getHomeProductTitle(item);
   const brandText = getHomeProductBrand(item);
   const finalPrice = getHomeProductPrice(item);
-  const originalPrice = safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
+  const originalPrice =
+    safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
   const hasOffer = originalPrice > 0 && originalPrice > finalPrice;
-  const offerLabel = String((item as any)?.active_offer?.label || (item as any)?.offer_label || "").trim();
+  const offerLabel = String(
+    (item as any)?.active_offer?.label || (item as any)?.offer_label || "",
+  ).trim();
 
   if (!image) return null;
 
   return (
     <motion.div variants={fadeInUp} custom={index}>
-      <Link to={getHomeProductLink(item, "/products")} className="group block w-full">
+      <Link
+        to={getHomeProductLink(item, "/products")}
+        className="group block w-full"
+      >
         <article className="w-full">
           <div className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] px-8 py-9 md:px-10 md:py-11">
             <button
@@ -934,18 +1217,34 @@ const HomeProductCard = ({ item, index = 0 }: { item: HomeProduct; index?: numbe
 
           <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
             <div className="min-w-0">
-              <p className="truncate text-[13px] leading-none text-[#A19D96]">{brandText}</p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">{titleText}</h3>
+              <p className="truncate text-[13px] leading-none text-[#A19D96]">
+                {brandText}
+              </p>
+              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">
+                {titleText}
+              </h3>
             </div>
 
             <div className="text-right">
-              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">New</p>
+              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">
+                New
+              </p>
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">{formatPrice(finalPrice)}</span>
-                {hasOffer && <span className="text-[12px] text-[#A19D96] line-through">{formatPrice(originalPrice)}</span>}
+                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">
+                  {formatPrice(finalPrice)}
+                </span>
+                {hasOffer && (
+                  <span className="text-[12px] text-[#A19D96] line-through">
+                    {formatPrice(originalPrice)}
+                  </span>
+                )}
               </div>
 
-              {hasOffer && offerLabel && <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">{offerLabel}</p>}
+              {hasOffer && offerLabel && (
+                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">
+                  {offerLabel}
+                </p>
+              )}
             </div>
           </div>
         </article>
@@ -978,7 +1277,9 @@ const HomeProductShowcase = ({
       className={sectionSpacingClass}
     >
       <div className={pageContainerClass}>
-        {(title || subtitle) && <SectionHeading title={title} subtitle={subtitle} />}
+        {(title || subtitle) && (
+          <SectionHeading title={title} subtitle={subtitle} />
+        )}
 
         <motion.div
           variants={staggerContainer}
@@ -988,7 +1289,11 @@ const HomeProductShowcase = ({
           className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-6"
         >
           {visibleItems.map((item, index) => (
-            <HomeProductCard key={`${item.product_type || "home"}-${item.id || index}`} item={item} index={index} />
+            <HomeProductCard
+              key={`${item.product_type || "home"}-${item.id || index}`}
+              item={item}
+              index={index}
+            />
           ))}
         </motion.div>
       </div>
@@ -1013,7 +1318,10 @@ const EditorialTile = ({
 }) => {
   return (
     <motion.div variants={fadeInUp} custom={index}>
-      <Link to={buttonLink || "/products"} className="group relative block overflow-hidden rounded-[12px] bg-[#F4F4F2] aspect-[4/5]">
+      <Link
+        to={buttonLink || "/products"}
+        className="group relative block overflow-hidden rounded-[12px] bg-[#F4F4F2] aspect-[4/5]"
+      >
         <img
           src={getFullImageUrl(imageUrl)}
           alt={title}
@@ -1024,10 +1332,17 @@ const EditorialTile = ({
         <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
         <div className="absolute inset-x-6 bottom-6 text-white md:inset-x-7 md:bottom-7">
-          <h3 className="text-[24px] leading-none tracking-[2px] md:text-[30px]" style={headingStyle}>
+          <h3
+            className="text-[24px] leading-none tracking-[2px] md:text-[30px]"
+            style={headingStyle}
+          >
             {title}
           </h3>
-          {subtitle && <p className="mt-3 max-w-[360px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">{subtitle}</p>}
+          {subtitle && (
+            <p className="mt-3 max-w-[360px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">
+              {subtitle}
+            </p>
+          )}
           <span className="mt-4 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
             {buttonText || "Explore"}
           </span>
@@ -1055,7 +1370,11 @@ const CollectionHighlightsSection = () => {
           className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:gap-6"
         >
           {collectionHighlightTiles.map((item, index) => (
-            <motion.div key={`${item.title}-${index}`} variants={fadeInUp} custom={index}>
+            <motion.div
+              key={`${item.title}-${index}`}
+              variants={fadeInUp}
+              custom={index}
+            >
               <Link
                 to={item.button_link || "/products"}
                 className="group relative block aspect-[16/13] overflow-hidden rounded-[12px] bg-[#F4F4F2]"
@@ -1070,11 +1389,18 @@ const CollectionHighlightsSection = () => {
                 <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
                 <div className="absolute inset-x-6 bottom-6 text-white md:inset-x-7 md:bottom-7">
-                  <h3 className="text-[24px] leading-none tracking-[2px] md:text-[30px]" style={headingStyle}>
+                  <h3
+                    className="text-[24px] leading-none tracking-[2px] md:text-[30px]"
+                    style={headingStyle}
+                  >
                     {item.title}
                   </h3>
 
-                  {item.subtitle && <p className="mt-3 max-w-[520px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">{item.subtitle}</p>}
+                  {item.subtitle && (
+                    <p className="mt-3 max-w-[520px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">
+                      {item.subtitle}
+                    </p>
+                  )}
 
                   <span className="mt-4 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
                     {item.button_text || "Explore"}
@@ -1101,27 +1427,33 @@ const faqItems: FAQItem[] = [
   },
   {
     question: "Are your posters waterproof or laminated?",
-    answer: "Our posters are printed on premium matte paper. They are not waterproof unless lamination or a protected frame is added.",
+    answer:
+      "Our posters are printed on premium matte paper. They are not waterproof unless lamination or a protected frame is added.",
   },
   {
     question: "Do the posters come framed?",
-    answer: "Frames depend on the selected product option. If a frame is not selected, the poster will be shipped as a print.",
+    answer:
+      "Frames depend on the selected product option. If a frame is not selected, the poster will be shipped as a print.",
   },
   {
     question: "What sizes are available?",
-    answer: "Available sizes are shown on each product page. You can select the size before adding the poster to cart.",
+    answer:
+      "Available sizes are shown on each product page. You can select the size before adding the poster to cart.",
   },
   {
     question: "Are the colors true to what I see online?",
-    answer: "We try to display colors accurately, but slight variation may happen because every screen has different brightness and color settings.",
+    answer:
+      "We try to display colors accurately, but slight variation may happen because every screen has different brightness and color settings.",
   },
   {
     question: "Is wall adhesive included?",
-    answer: "Wall adhesive is not included by default unless it is specifically mentioned on the product page or offer details.",
+    answer:
+      "Wall adhesive is not included by default unless it is specifically mentioned on the product page or offer details.",
   },
   {
     question: "How long does delivery take?",
-    answer: "Delivery usually takes 5–10 business days after dispatch, depending on your location and courier service.",
+    answer:
+      "Delivery usually takes 5–10 business days after dispatch, depending on your location and courier service.",
   },
   {
     question: "Do you deliver across India?",
@@ -1129,13 +1461,86 @@ const faqItems: FAQItem[] = [
   },
   {
     question: "Can I track my order after it is shipped?",
-    answer: "Yes, once your order is shipped, tracking details will be shared with you.",
+    answer:
+      "Yes, once your order is shipped, tracking details will be shared with you.",
   },
   {
     question: "What payment methods do you accept?",
-    answer: "We accept secure online payments including UPI, cards, wallets and other supported payment options through our payment gateway.",
+    answer:
+      "We accept secure online payments including UPI, cards, wallets and other supported payment options through our payment gateway.",
   },
 ];
+
+type ReviewItem = {
+  name: string;
+  rating: number;
+  title: string;
+  text: string;
+  date: string;
+};
+
+const reviewItems: ReviewItem[] = [
+  {
+    name: "Sarah K.",
+    rating: 5,
+    title: "Absolutely stunning quality!",
+    text: "The quality of the prints is absolutely stellar. The colors are deep and vibrant, and the paper texture feels incredibly premium. It looks perfect in my living room!",
+    date: "2 days ago",
+  },
+  {
+    name: "David M.",
+    rating: 5,
+    title: "Secure packaging & fast delivery",
+    text: "Fast shipping and secure packaging. The poster arrived in pristine condition. Excellent customer support too when I had a size customization question.",
+    date: "1 week ago",
+  },
+  {
+    name: "Elena R.",
+    rating: 5,
+    title: "Highly unique designs",
+    text: "MURO designs are so unique and inspiring. They aren't just decorations, they actually bring a modern character to my office space. I will definitely be ordering more.",
+    date: "2 weeks ago",
+  },
+];
+
+const HomeReviewsSection = () => {
+  return (
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:gap-6">
+      {reviewItems.map((item) => (
+        <div
+          key={item.name}
+          className="rounded-[12px] border border-[#E7E4DC] bg-[#F8F8F6] p-6 flex flex-col justify-between text-left md:p-7 shadow-sm transition-all duration-300 hover:shadow-md"
+        >
+          <div>
+            <div className="flex gap-1 mb-4">
+              {[...Array(item.rating)].map((_, i) => (
+                <Star
+                  key={i}
+                  className="h-4 w-4 fill-[#006039] text-[#006039]"
+                />
+              ))}
+            </div>
+
+            <h4 className="text-[16px] font-bold text-[#101010] mb-2 leading-tight">
+              {item.title}
+            </h4>
+            <p className="text-[13px] leading-relaxed text-[#555555] mb-5">
+              "{item.text}"
+            </p>
+          </div>
+
+          <div className="flex items-center justify-between mt-auto border-t border-[#E7E4DC]/50 pt-4 text-[12px]">
+            <div>
+              <span className="font-bold text-black">{item.name}</span>
+              <span className="text-[#006039] ml-2 font-semibold font-sans">✓ Verified Buyer</span>
+            </div>
+            <span className="text-gray-400">{item.date}</span>
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+};
 
 const HomeFAQSection = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -1276,7 +1681,10 @@ const NewsletterPopup = ({
                 be the first to hear about offers.
               </p>
 
-              <form onSubmit={handleSubmit} className="mt-7 space-y-3 text-left">
+              <form
+                onSubmit={handleSubmit}
+                className="mt-7 space-y-3 text-left"
+              >
                 <input
                   value={firstName}
                   onChange={(event) => {
@@ -1340,7 +1748,8 @@ const NewsletterPopup = ({
 const Index: React.FC = () => {
   const [bestsellers, setBestsellers] = useState<ProductItem[]>([]);
   const [loadingBestsellers, setLoadingBestsellers] = useState(true);
-  const [homeContent, setHomeContent] = useState<HomeContent>(emptyHomeContent());
+  const [homeContent, setHomeContent] =
+    useState<HomeContent>(emptyHomeContent());
   const [homeNewArrivals, setHomeNewArrivals] = useState<HomeProduct[]>([]);
   const [homePostcards, setHomePostcards] = useState<HomeProduct[]>([]);
   const [homeCutouts, setHomeCutouts] = useState<HomeProduct[]>([]);
@@ -1390,15 +1799,27 @@ const Index: React.FC = () => {
       JSON.stringify({
         ...payload,
         submitted_at: new Date().toISOString(),
-      })
+      }),
     );
 
     clearNewsletterTimer();
     setNewsletterOpen(false);
   };
 
-  const heroSlides = useMemo(() => (homeContent.hero_slides.length > 0 ? homeContent.hero_slides : defaultHeroSlides), [homeContent.hero_slides]);
-  const categoryTiles = useMemo(() => (homeContent.category_tiles.length > 0 ? homeContent.category_tiles : defaultCategoryTiles), [homeContent.category_tiles]);
+  const heroSlides = useMemo(
+    () =>
+      homeContent.hero_slides.length > 0
+        ? homeContent.hero_slides
+        : defaultHeroSlides,
+    [homeContent.hero_slides],
+  );
+  const categoryTiles = useMemo(
+    () =>
+      homeContent.category_tiles.length > 0
+        ? homeContent.category_tiles
+        : defaultCategoryTiles,
+    [homeContent.category_tiles],
+  );
 
   useEffect(() => {
     scheduleNewsletterPopup(10000);
@@ -1413,30 +1834,33 @@ const Index: React.FC = () => {
       setLoadingBestsellers(true);
 
       try {
-        const [homeRes, productsRes, offerRes, postcardRes, cutoutRes]: any = await Promise.all([
-          fetchHomeContent(),
-          fetchPublicItems("/products?limit=80"),
-          fetchActiveOffer(),
-          fetchPublicItems("/postcards"),
-          fetchPublicItems("/cutouts"),
-        ]);
+        const [homeRes, productsRes, offerRes, postcardRes, cutoutRes]: any =
+          await Promise.all([
+            fetchHomeContent(),
+            fetchPublicItems("/products?limit=80"),
+            fetchActiveOffer(),
+            fetchPublicItems("/postcards"),
+            fetchPublicItems("/cutouts"),
+          ]);
 
         const posterPool = uniqueHomeItems(
           (Array.isArray(productsRes) ? productsRes : [])
             .map((item: any) => normalizePosterProductForHome(item))
-            .filter(Boolean) as HomeProduct[]
+            .filter(Boolean) as HomeProduct[],
         );
 
         const postcardPool = uniqueHomeItems(
           (Array.isArray(postcardRes) ? postcardRes : [])
-            .map((item: any) => normalizePostcardProductForHome(item, "postcard"))
-            .filter(Boolean) as HomeProduct[]
+            .map((item: any) =>
+              normalizePostcardProductForHome(item, "postcard"),
+            )
+            .filter(Boolean) as HomeProduct[],
         );
 
         const cutoutPool = uniqueHomeItems(
           (Array.isArray(cutoutRes) ? cutoutRes : [])
             .map((item: any) => normalizePostcardProductForHome(item, "cutout"))
-            .filter(Boolean) as HomeProduct[]
+            .filter(Boolean) as HomeProduct[],
         );
 
         const newArrivalItems = await resolveFeaturedHomeItems({
@@ -1493,7 +1917,9 @@ const Index: React.FC = () => {
             </div>
           ) : bestsellers.length === 0 ? (
             <div className="flex min-h-[280px] items-center justify-center rounded-[12px] bg-[#F4F4F2] px-6 text-center">
-              <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#77736B]">No products with uploaded images found</p>
+              <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-[#77736B]">
+                No products with uploaded images found
+              </p>
             </div>
           ) : (
             <motion.div
@@ -1504,7 +1930,12 @@ const Index: React.FC = () => {
               className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-6"
             >
               {bestsellers.map((item, index) => (
-                <PosterProductCard key={String(getProductId(item) || index)} item={item} activeOffer={activeOffer} index={index} />
+                <PosterProductCard
+                  key={String(getProductId(item) || index)}
+                  item={item}
+                  activeOffer={activeOffer}
+                  index={index}
+                />
               ))}
             </motion.div>
           )}
@@ -1545,31 +1976,33 @@ const Index: React.FC = () => {
         title="New Arrivals"
         subtitle="Fresh wall prints selected for quick room refreshes."
         items={homeNewArrivals}
-       
       />
 
       <HomeProductShowcase
         title="Postcards"
         subtitle="Compact artworks with front and back postcard options."
         items={homePostcards}
-       
       />
 
-      <HomeProductShowcase
-      
-        items={homeCutouts}
-       
-      />
+      <HomeProductShowcase items={homeCutouts} />
 
       <CollectionHighlightsSection />
 
       <section className={sectionSpacingClass}>
         <div className={pageContainerClass}>
-          <SectionHeading title="DESIGNED FOR EVERY WALL" subtitle="Browse by room and build a look that feels complete." center />
+          <SectionHeading
+            title="DESIGNED FOR EVERY WALL"
+            subtitle="Browse by room and build a look that feels complete."
+            center
+          />
 
           <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:gap-6">
             {wallRooms.slice(0, 2).map((item) => (
-              <Link key={item.name} to={`/products?cat=${encodeURIComponent(item.name)}`} className="group relative block aspect-[16/8] overflow-hidden rounded-[12px] bg-[#F4F4F2]">
+              <Link
+                key={item.name}
+                to={`/products?cat=${encodeURIComponent(item.name)}`}
+                className="group relative block aspect-[16/8] overflow-hidden rounded-[12px] bg-[#F4F4F2]"
+              >
                 <img
                   src={item.img}
                   alt={item.name}
@@ -1578,10 +2011,15 @@ const Index: React.FC = () => {
                 />
                 <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/30" />
                 <div className="absolute inset-x-6 bottom-6 text-white">
-                  <h3 className="text-[26px] tracking-[2px] md:text-[34px]" style={headingStyle}>
+                  <h3
+                    className="text-[26px] tracking-[2px] md:text-[34px]"
+                    style={headingStyle}
+                  >
                     {item.name}
                   </h3>
-                  <span className="mt-2 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">Explore</span>
+                  <span className="mt-2 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
+                    Explore
+                  </span>
                 </div>
               </Link>
             ))}
@@ -1589,7 +2027,11 @@ const Index: React.FC = () => {
 
           <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-8 xl:gap-6">
             {wallRooms.slice(2, 10).map((item) => (
-              <Link key={item.name} to={`/products?cat=${encodeURIComponent(item.name)}`} className="group block">
+              <Link
+                key={item.name}
+                to={`/products?cat=${encodeURIComponent(item.name)}`}
+                className="group block"
+              >
                 <div className="relative aspect-[4/5] overflow-hidden rounded-[12px] bg-[#F4F4F2]">
                   <img
                     src={item.img}
@@ -1599,7 +2041,9 @@ const Index: React.FC = () => {
                   />
                   <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
                 </div>
-                <h3 className="mt-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#101010] transition-colors group-hover:text-[#006039]">{item.name}</h3>
+                <h3 className="mt-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#101010] transition-colors group-hover:text-[#006039]">
+                  {item.name}
+                </h3>
               </Link>
             ))}
           </div>
@@ -1619,19 +2063,39 @@ const Index: React.FC = () => {
               const Icon = item.icon;
 
               return (
-                <div key={item.title} className="rounded-[12px] border border-[#E7E4DC] bg-[#F8F8F6] p-6 text-center md:p-7">
+                <div
+                  key={item.title}
+                  className="rounded-[12px] border border-[#E7E4DC] bg-[#F8F8F6] p-6 text-center md:p-7"
+                >
                   <div className="mx-auto mb-8 flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#101010] shadow-sm">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
 
-                  <h3 className="text-[21px] leading-none tracking-[2px] text-[#101010]" style={headingStyle}>
+                  <h3
+                    className="text-[21px] leading-none tracking-[2px] text-[#101010]"
+                    style={headingStyle}
+                  >
                     {item.title}
                   </h3>
-                  <p className="mt-3 text-[14px] leading-relaxed text-[#77736B]">{item.text}</p>
+                  <p className="mt-3 text-[14px] leading-relaxed text-[#77736B]">
+                    {item.text}
+                  </p>
                 </div>
               );
             })}
           </div>
+        </div>
+      </section>
+
+      <section className={sectionSpacingClass}>
+        <div className={pageContainerClass}>
+          <SectionHeading
+            title="CUSTOMER REVIEWS"
+            subtitle="Authentic feedback from decorators who transformed their spaces with MURO."
+            center
+          />
+
+          <HomeReviewsSection />
         </div>
       </section>
 

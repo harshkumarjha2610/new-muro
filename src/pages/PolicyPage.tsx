@@ -14,7 +14,7 @@ const COLORS = {
   ink: "#111111",
   muted: "#777777",
   line: "#E6E6E6",
-  accent: "#ECFF66",
+  accent: "#F1F1F1",
   green: "#006039",
 };
 
@@ -36,7 +36,7 @@ const PolicyPage: React.FC<PolicyProps> = ({ title, children }) => {
           >
             <Link
               to="/"
-              className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#F2F2F2] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#777777] transition-colors hover:bg-[#ECFF66] hover:text-[#111111]"
+              className="mb-5 inline-flex items-center gap-2 rounded-full bg-[#F2F2F2] px-4 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#777777] transition-colors hover:bg-[#F1F1F1] hover:text-[#111111]"
             >
               <ArrowLeft size={14} strokeWidth={1.8} />
               Back to home
@@ -82,7 +82,7 @@ const PolicyPage: React.FC<PolicyProps> = ({ title, children }) => {
             className="space-y-5 lg:sticky lg:top-28 lg:self-start"
           >
             <div className="overflow-hidden rounded-[24px] border border-[#E6E6E6] bg-white">
-              <div className="bg-[#ECFF66] px-7 py-5">
+              <div className="bg-[#F1F1F1] px-7 py-5">
                 <h3 className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#111111]">
                   Quick navigation
                 </h3>
@@ -90,14 +90,17 @@ const PolicyPage: React.FC<PolicyProps> = ({ title, children }) => {
 
               <nav className="flex flex-col p-3">
                 <PolicyLink to="/shipping-policy" label="Shipping Policy" />
-                <PolicyLink to="/cancellation-refund" label="Cancellation & Refund" />
+                <PolicyLink
+                  to="/cancellation-refund"
+                  label="Cancellation & Refund"
+                />
                 <PolicyLink to="/privacy" label="Privacy Policy" />
                 <PolicyLink to="/terms" label="Terms & Conditions" />
               </nav>
             </div>
 
             <div className="rounded-[24px] bg-[#111111] p-7 text-white">
-              <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.18em] text-[#ECFF66]">
+              <p className="mb-2 text-[12px] font-bold uppercase tracking-[0.18em] text-[#F1F1F1]">
                 Need help?
               </p>
 
@@ -109,13 +112,14 @@ const PolicyPage: React.FC<PolicyProps> = ({ title, children }) => {
               </h3>
 
               <p className="mt-4 text-[14px] leading-relaxed text-white/70">
-                If you have questions about this policy, our support team is available to assist you.
+                If you have questions about this policy, our support team is
+                available to assist you.
               </p>
 
               <div className="mt-7 space-y-4">
                 <a
                   href="mailto:helpmuroposter@gmail.com"
-                  className="flex items-center gap-3 text-[14px] font-semibold text-white transition-colors hover:text-[#ECFF66]"
+                  className="flex items-center gap-3 text-[14px] font-semibold text-white transition-colors hover:text-[#F1F1F1]"
                 >
                   <Mail size={17} strokeWidth={1.7} />
                   helpmuroposter@gmail.com
@@ -125,7 +129,7 @@ const PolicyPage: React.FC<PolicyProps> = ({ title, children }) => {
                   href="https://wa.me/918059700876"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 text-[14px] font-semibold text-white transition-colors hover:text-[#ECFF66]"
+                  className="flex items-center gap-3 text-[14px] font-semibold text-white transition-colors hover:text-[#F1F1F1]"
                 >
                   <MessageCircle size={17} strokeWidth={1.7} />
                   +91 80597 00876

@@ -7,6 +7,9 @@ import {
   ChevronDown,
   ChevronRight,
   Heart,
+  Menu,
+  Globe,
+  Check,
 } from "lucide-react";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,8 +17,11 @@ import { NavLink } from "@/components/NavLink";
 import { API } from "@/services/api";
 import { cartApi } from "@/services/cartApi";
 import logoImg from "@/assets/logo.png";
+import poster1Img from "@/assets/poster-1.jpg";
+import poster2Img from "@/assets/poster-2.jpg";
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
+const API_BASE =
+  import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
 
 type ActiveOffer = { label: string; discount_percent: number };
 
@@ -75,13 +81,13 @@ const getCategoryId = (category: CategoryItem) => {
 
 const getSubcategoryId = (subcategory: SubcategoryItem) => {
   return String(
-    subcategory.id ?? subcategory.subcategory_id ?? subcategory.name
+    subcategory.id ?? subcategory.subcategory_id ?? subcategory.name,
   );
 };
 
 const normalizeCategoryTree = (
   categories: CategoryItem[],
-  subcategories: SubcategoryItem[]
+  subcategories: SubcategoryItem[],
 ): CategoryTreeItem[] => {
   const seenCategories = new Set<string>();
 
@@ -117,7 +123,13 @@ const normalizeCategoryTree = (
         const name = String(subcategory.name || "").trim();
         const key = name.toUpperCase();
 
-        if (!name || key === String(category.name || "").trim().toUpperCase()) {
+        if (
+          !name ||
+          key ===
+            String(category.name || "")
+              .trim()
+              .toUpperCase()
+        ) {
           return false;
         }
 
@@ -162,10 +174,24 @@ const Navbar = () => {
 
   const [activeOffer, setActiveOffer] = useState<ActiveOffer | null>(null);
 
+  const [expandedCategories, setExpandedCategories] = useState<
+    Record<string, boolean>
+  >({});
+
+  const toggleCategoryExpand = (key: string) => {
+    setExpandedCategories((prev) => ({
+      ...prev,
+      [key]: !prev[key],
+    }));
+  };
+
   const activeHoveredCategory = useMemo(() => {
     if (!hoveredCategoryKey) return null;
 
-    return categoryTree.find((category) => category.key === hoveredCategoryKey) || null;
+    return (
+      categoryTree.find((category) => category.key === hoveredCategoryKey) ||
+      null
+    );
   }, [categoryTree, hoveredCategoryKey]);
 
   const getSavedUser = () => {
@@ -175,7 +201,6 @@ const Navbar = () => {
       return null;
     }
   };
-
 
   const fetchCartCount = async () => {
     const token = localStorage.getItem("token");
@@ -196,7 +221,7 @@ const Navbar = () => {
         res?.data?.summary?.item_count ??
           res?.summary?.item_count ??
           res?.data?.item_count ??
-          0
+          0,
       );
 
       setCartCount(Number.isFinite(count) && count > 0 ? count : 0);
@@ -213,7 +238,9 @@ const Navbar = () => {
       try {
         const response = await fetch(`${API_BASE}/offers/active`);
         const json = await response.json().catch(() => null);
-        const rows = Array.isArray(json?.data) ? json.data : json?.data?.items || [];
+        const rows = Array.isArray(json?.data)
+          ? json.data
+          : json?.data?.items || [];
         setActiveOffer(rows[0] || null);
       } catch (error) {
         console.error("Failed to fetch active offer:", error);
@@ -356,7 +383,7 @@ const Navbar = () => {
         detail: {
           item_count: 0,
         },
-      })
+      }),
     );
 
     navigate("/login");
@@ -376,14 +403,22 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-xl">
-      <div className="flex h-[30px] w-full items-center justify-center bg-[#ECFF66] px-4 text-center font-montserrat text-[14px] font-semibold text-black md:text-[16px]">
+      <div className="flex h-[30px] w-full items-center justify-center bg-[#F1F1F1] px-4 text-center font-montserrat text-[14px] font-semibold text-black md:text-[16px]">
         {announcementText}
       </div>
 
       <div className="w-full border-b border-[#101010]/10 bg-white/95">
         <div className="relative mx-auto flex h-[80px] w-full max-w-[1540px] items-center justify-between px-4 sm:px-5 lg:px-6">
           <div className="flex min-w-0 flex-1 items-center gap-5 md:gap-7">
-           
+            <button
+              type="button"
+              onClick={() => setMobileOpen(true)}
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F4F4F2]"
+              aria-label="Open menu"
+            >
+              <Menu className="h-6 w-6 text-black" strokeWidth={1.5} />
+            </button>
+
             <nav className="hidden items-center gap-5 text-[14px] lg:flex xl:gap-7">
               <div
                 className="group relative flex h-[80px] items-center"
@@ -432,44 +467,61 @@ const Navbar = () => {
                     );
                   })}
 
-                  {activeHoveredCategory && activeHoveredCategory.subcategories.length > 0 && (
-                    <div className="absolute left-[calc(100%-1px)] top-0 w-[290px] overflow-hidden rounded-br-[18px] border border-[#E5E5E5] bg-white py-3 shadow-xl">
-                      <div className="mb-2 border-b border-[#F0F0F0] px-6 pb-2">
-                        <p className="font-montserrat text-[10px] font-bold uppercase tracking-[0.18em] text-[#1C1C1C]/45">
-                          {activeHoveredCategory.name}
-                        </p>
-                      </div>
+                  {activeHoveredCategory &&
+                    activeHoveredCategory.subcategories.length > 0 && (
+                      <div className="absolute left-[calc(100%-1px)] top-0 w-[290px] overflow-hidden rounded-br-[18px] border border-[#E5E5E5] bg-white py-3 shadow-xl">
+                        <div className="mb-2 border-b border-[#F0F0F0] px-6 pb-2">
+                          <p className="font-montserrat text-[10px] font-bold uppercase tracking-[0.18em] text-[#1C1C1C]/45">
+                            {activeHoveredCategory.name}
+                          </p>
+                        </div>
 
-                      {activeHoveredCategory.subcategories.map((subcat) => (
-                        <NavLink
-                          key={getSubcategoryId(subcat)}
-                          to={`/products?cat=${encodeURIComponent(
-                            activeHoveredCategory.name
-                          )}&subcat=${encodeURIComponent(subcat.name)}`}
-                          className="block border-l-2 border-transparent px-6 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.07em] text-[#111] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039]"
-                          activeClassName="border-l-2 border-[#006039] bg-[#F4F4F2] text-[#006039]"
-                        >
-                          {subcat.name}
-                        </NavLink>
-                      ))}
-                    </div>
-                  )}
+                        {activeHoveredCategory.subcategories.map((subcat) => (
+                          <NavLink
+                            key={getSubcategoryId(subcat)}
+                            to={`/products?cat=${encodeURIComponent(
+                              activeHoveredCategory.name,
+                            )}&subcat=${encodeURIComponent(subcat.name)}`}
+                            className="block border-l-2 border-transparent px-6 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.07em] text-[#111] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039]"
+                            activeClassName="border-l-2 border-[#006039] bg-[#F4F4F2] text-[#006039]"
+                          >
+                            {subcat.name}
+                          </NavLink>
+                        ))}
+                      </div>
+                    )}
                 </div>
               </div>
 
-              <NavLink to="/bestsellers" className={navBase} activeClassName={navActive}>
+              <NavLink
+                to="/bestsellers"
+                className={navBase}
+                activeClassName={navActive}
+              >
                 Bestsellers
               </NavLink>
 
-              <NavLink to="/cutouts" className={navBase} activeClassName={navActive}>
+              <NavLink
+                to="/cutouts"
+                className={navBase}
+                activeClassName={navActive}
+              >
                 CutOuts
               </NavLink>
 
-              <NavLink to="/postcards" className={navBase} activeClassName={navActive}>
+              <NavLink
+                to="/postcards"
+                className={navBase}
+                activeClassName={navActive}
+              >
                 Postcard
               </NavLink>
 
-              <NavLink to="/about" className={navBase} activeClassName={navActive}>
+              <NavLink
+                to="/about"
+                className={navBase}
+                activeClassName={navActive}
+              >
                 About MURO
               </NavLink>
             </nav>
@@ -484,24 +536,28 @@ const Navbar = () => {
               src={logoImg}
               alt="MURO Poster"
               className="h-10 w-auto max-w-[145px] object-contain md:h-9 md:max-w-[227px]"
-           style={{ height: '5.5rem' }} />
+              style={{ height: "5.5rem" }}
+            />
           </Link>
 
           <div className="flex min-w-0 flex-1 items-center justify-end gap-3 md:gap-5">
             <div
-              className="hidden h-[44px] w-[210px] cursor-text items-center justify-between rounded-full border border-[#101010]/20 bg-white px-5 text-[13px] text-[#77736B] transition-colors hover:border-[#101010]/45 md:flex xl:w-[250px]"
+              className="hidden h-[42px] w-[220px] cursor-text items-center justify-between rounded-full border border-[#101010]/15 bg-[#F9F9F9] pl-5 pr-4 text-[13px] text-[#77736B] transition-all hover:bg-white hover:border-[#101010]/30 xl:flex"
               onClick={() => setIsSearchOpen(true)}
             >
-              <span className="font-montserrat text-[13px] text-[#77736B]">
-                Search posters
+              <span className="text-[13px] font-normal text-[#888888]">
+                Search or ask
               </span>
-              <Search className="h-4 w-4 shrink-0 text-[#101010]" strokeWidth={1.7} />
+              <Search
+                className="h-4 w-4 shrink-0 text-black/70"
+                strokeWidth={1.5}
+              />
             </div>
 
             <button
               type="button"
               onClick={() => setIsSearchOpen(true)}
-              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F4F4F2] md:hidden"
+              className="inline-flex h-10 w-10 items-center justify-center rounded-full transition-colors hover:bg-[#F4F4F2] xl:hidden"
               aria-label="Open search"
             >
               <Search className="h-5 w-5 text-[#101010]" strokeWidth={1.7} />
@@ -615,7 +671,10 @@ const Navbar = () => {
             className="absolute left-0 z-40 w-full overflow-hidden border-t border-[#EBEBEB] bg-white shadow-2xl"
           >
             <div className="mx-auto flex max-w-4xl items-center gap-5 px-6 py-10">
-              <Search className="h-5 w-5 shrink-0 text-[#999]" strokeWidth={1.5} />
+              <Search
+                className="h-5 w-5 shrink-0 text-[#999]"
+                strokeWidth={1.5}
+              />
 
               <input
                 type="text"
@@ -624,7 +683,11 @@ const Navbar = () => {
                 autoFocus
               />
 
-              <button type="button" onClick={() => setIsSearchOpen(false)} aria-label="Close search">
+              <button
+                type="button"
+                onClick={() => setIsSearchOpen(false)}
+                aria-label="Close search"
+              >
                 <X className="h-5 w-5 text-[#999] transition-colors hover:text-black" />
               </button>
             </div>
@@ -634,152 +697,324 @@ const Navbar = () => {
 
       <AnimatePresence>
         {mobileOpen && (
-          <motion.nav
-            initial={{ x: "-100%" }}
-            animate={{ x: 0 }}
-            exit={{ x: "-100%" }}
-            transition={{ type: "tween", duration: 0.28 }}
-            className="fixed inset-0 z-[60] flex h-screen w-full flex-col bg-white lg:hidden"
-          >
-            <div className="flex h-[70px] items-center justify-between border-b border-[#EBEBEB] bg-[#F4F4F2] px-6">
-              <Link
-                to="/"
-                onClick={() => setMobileOpen(false)}
-                className="inline-flex items-center"
-              >
-                <img
-                  src={logoImg}
-                  alt="MURO Poster"
-                  className="h-9 w-auto max-w-[140px] object-contain"
-style={{"height":"5.5rem"}} />
-              </Link>
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              onClick={() => setMobileOpen(false)}
+              className="fixed inset-0 z-[60] bg-black/45 backdrop-blur-[1px]"
+            />
 
-              <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close menu">
-                <X className="h-6 w-6 text-black hover:opacity-60" strokeWidth={1.5} />
-              </button>
-            </div>
-
-            <div className="flex flex-col gap-7 overflow-y-auto px-8 py-8 font-montserrat text-[14px] font-black uppercase tracking-[0.08em] text-black">
-              <Link to="/" onClick={() => setMobileOpen(false)}>
-                Home
-              </Link>
-
-              <div className="flex flex-col gap-3">
+            {/* Drawer Container */}
+            <motion.div
+              initial={{ x: "-100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "-100%" }}
+              transition={{ type: "tween", duration: 0.25 }}
+              className="fixed bottom-0 left-0 top-0 z-[70] flex h-screen w-[380px] max-w-[85vw] flex-col bg-white shadow-2xl"
+            >
+              {/* Drawer Header */}
+              <div className="flex h-[80px] shrink-0 items-center justify-between border-b border-[#EBEBEB] px-6">
                 <Link
-                  to="/products"
+                  to="/"
                   onClick={() => setMobileOpen(false)}
-                  className="border-b border-[#F0F0F0] pb-2 text-[14px] font-medium tracking-widest text-[#AAAAAA]"
+                  className="inline-flex items-center"
                 >
-                  Product Categories
+                  <img
+                    src={logoImg}
+                    alt="MURO Poster"
+                    className="h-9 w-auto max-w-[140px] object-contain"
+                    style={{ height: "5.5rem" }}
+                  />
                 </Link>
 
-                {categoryTree.map((cat) => (
-                  <div key={cat.key} className="flex flex-col gap-2">
-                    <Link
-                      to={`/products?cat=${encodeURIComponent(cat.name)}`}
-                      onClick={() => setMobileOpen(false)}
-                      className="pl-2 text-[14px] font-semibold"
-                    >
-                      {cat.name}
-                    </Link>
-
-                    {cat.subcategories.length > 0 && (
-                      <div className="flex flex-col gap-2 pl-5">
-                        {cat.subcategories.map((subcat) => (
-                          <Link
-                            key={getSubcategoryId(subcat)}
-                            to={`/products?cat=${encodeURIComponent(cat.name)}&subcat=${encodeURIComponent(subcat.name)}`}
-                            onClick={() => setMobileOpen(false)}
-                            className="text-[10px] font-semibold tracking-widest text-[#1C1C1C]/55"
-                          >
-                            {subcat.name}
-                          </Link>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                <button
+                  type="button"
+                  onClick={() => setMobileOpen(false)}
+                  aria-label="Close menu"
+                >
+                  <X
+                    className="h-6 w-6 text-black hover:opacity-60"
+                    strokeWidth={1.5}
+                  />
+                </button>
               </div>
 
-              <Link to="/bestsellers" onClick={() => setMobileOpen(false)}>
-                Bestsellers
-              </Link>
-
-              <Link to="/cutouts" onClick={() => setMobileOpen(false)}>
-                CutOuts
-              </Link>
-
-              <Link to="/postcards" onClick={() => setMobileOpen(false)}>
-                Postcard
-              </Link>
-
-              <Link to="/about" onClick={() => setMobileOpen(false)}>
-                About MURO
-              </Link>
-
-              <Link to="/contact" onClick={() => setMobileOpen(false)}>
-                Contact
-              </Link>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setMobileOpen(false);
-                  navigate("/cart");
-                }}
-                className="text-left"
-              >
-                Cart {cartCount > 0 ? `(${cartCount})` : ""}
-              </button>
-
-              <div className="mt-2 flex flex-col gap-6 border-t border-[#F0F0F0] pt-6">
-                {isLoggedIn ? (
-                  <>
-                    {userData?.name && (
-                      <p className="border-b border-[#F0F0F0] pb-3 text-[10px] tracking-widest text-[#AAAAAA]">
-                        Logged in as: <span className="font-black text-black">{userData.name}</span>
-                      </p>
-                    )}
-
-                    {userData?.role === "admin" && (
-                      <Link
-                        to="/admin/dashboard"
-                        onClick={() => setMobileOpen(false)}
-                        className="text-[#006039]"
-                      >
-                        Admin Dashboard
-                      </Link>
-                    )}
-
-                    <Link to="/profile" onClick={() => setMobileOpen(false)}>
-                      View Account
-                    </Link>
-
-                    <button
-                      type="button"
-                      onClick={() => {
-                        handleLogout();
-                        setMobileOpen(false);
-                      }}
-                      className="text-left text-red-500"
-                    >
-                      Logout
-                    </button>
-                  </>
-                ) : (
-                  <Link to="/login" onClick={() => setMobileOpen(false)}>
-                    Login / Sign Up
+              {/* Drawer Body - Scrollable */}
+              <div className="flex-1 overflow-y-auto px-6 py-6 flex flex-col gap-6">
+                {/* Promo Cards */}
+                <div className="grid grid-cols-2 gap-3 shrink-0">
+                  <Link
+                    to="/products?new=true"
+                    onClick={() => setMobileOpen(false)}
+                    className="group relative h-[110px] overflow-hidden rounded-[8px] bg-gray-100"
+                  >
+                    <img
+                      src={poster1Img}
+                      alt="Summer Edit"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/15" />
+                    <span className="absolute bottom-2.5 left-2.5 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-white">
+                      Summer Edit
+                    </span>
                   </Link>
-                )}
+
+                  <Link
+                    to="/bestsellers"
+                    onClick={() => setMobileOpen(false)}
+                    className="group relative h-[110px] overflow-hidden rounded-[8px] bg-gray-100"
+                  >
+                    <img
+                      src={poster2Img}
+                      alt="Bestsellers"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-black/25 transition-colors group-hover:bg-black/15" />
+                    <span className="absolute bottom-2.5 left-2.5 font-sans text-[11px] font-bold uppercase tracking-[0.08em] text-white">
+                      Bestsellers
+                    </span>
+                  </Link>
+                </div>
+
+                {/* Primary Links */}
+                <div className="flex flex-col font-sans text-[15px] font-semibold tracking-wide text-black">
+                  <Link
+                    to="/products?sale=true"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 text-red-600 font-bold hover:text-red-700"
+                  >
+                    SALE
+                  </Link>
+
+                  <Link
+                    to="/products?new=true"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    New Arrivals
+                  </Link>
+
+                  <Link
+                    to="/bestsellers"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    Bestsellers
+                  </Link>
+
+                  {/* Categories Accordion */}
+                  <div className="border-y border-[#EBEBEB] py-1 my-1">
+                    {categoryTree.map((cat) => {
+                      const isExpanded = !!expandedCategories[cat.key];
+                      const hasSub = cat.subcategories.length > 0;
+
+                      return (
+                        <div key={cat.key} className="flex flex-col">
+                          {hasSub ? (
+                            <>
+                              <button
+                                type="button"
+                                onClick={() => toggleCategoryExpand(cat.key)}
+                                className="flex w-full items-center justify-between py-2 text-[14px] font-semibold tracking-wide text-black hover:text-[#006039] text-left"
+                              >
+                                <span>{cat.name}</span>
+                                <ChevronRight
+                                  size={15}
+                                  strokeWidth={2}
+                                  className={`text-black/50 transition-transform duration-200 ${
+                                    isExpanded ? "rotate-90" : ""
+                                  }`}
+                                />
+                              </button>
+
+                              <AnimatePresence initial={false}>
+                                {isExpanded && (
+                                  <motion.div
+                                    initial={{ height: 0, opacity: 0 }}
+                                    animate={{ height: "auto", opacity: 1 }}
+                                    exit={{ height: 0, opacity: 0 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="overflow-hidden pl-4 flex flex-col gap-2 pb-2.5 border-l border-[#F0F0F0] ml-1.5"
+                                  >
+                                    {cat.subcategories.map((subcat) => (
+                                      <Link
+                                        key={getSubcategoryId(subcat)}
+                                        to={`/products?cat=${encodeURIComponent(
+                                          cat.name,
+                                        )}&subcat=${encodeURIComponent(subcat.name)}`}
+                                        onClick={() => setMobileOpen(false)}
+                                        className="text-[13px] font-medium text-[#666] hover:text-[#006039] py-0.5"
+                                      >
+                                        {subcat.name}
+                                      </Link>
+                                    ))}
+                                  </motion.div>
+                                )}
+                              </AnimatePresence>
+                            </>
+                          ) : (
+                            <Link
+                              to={`/products?cat=${encodeURIComponent(cat.name)}`}
+                              onClick={() => setMobileOpen(false)}
+                              className="block py-2 text-[14px] font-semibold tracking-wide text-black hover:text-[#006039]"
+                            >
+                              {cat.name}
+                            </Link>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  <Link
+                    to="/cutouts"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    CutOuts
+                  </Link>
+
+                  <Link
+                    to="/postcards"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    Postcards
+                  </Link>
+
+                  <Link
+                    to="/about"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    About MURO
+                  </Link>
+
+                  <Link
+                    to="/contact"
+                    onClick={() => setMobileOpen(false)}
+                    className="block py-2.5 hover:text-[#006039]"
+                  >
+                    Contact
+                  </Link>
+                </div>
+
+                <div className="h-[1px] w-full bg-[#EBEBEB] shrink-0" />
+
+                {/* Secondary Links */}
+                <div className="flex flex-col gap-3 font-sans text-[13px] font-medium text-[#555]">
+                  <Link
+                    to="/products?category=magazine"
+                    onClick={() => setMobileOpen(false)}
+                    className="hover:text-black"
+                  >
+                    Art Magazine
+                  </Link>
+
+                  <Link
+                    to="/contact?type=business"
+                    onClick={() => setMobileOpen(false)}
+                    className="hover:text-black"
+                  >
+                    Business
+                  </Link>
+
+                  <Link
+                    to="/faq"
+                    onClick={() => setMobileOpen(false)}
+                    className="hover:text-black"
+                  >
+                    FAQ & Support
+                  </Link>
+
+                  <Link
+                    to="/terms"
+                    onClick={() => setMobileOpen(false)}
+                    className="hover:text-black"
+                  >
+                    Terms & Conditions
+                  </Link>
+                </div>
+
+                <div className="h-[1px] w-full bg-[#EBEBEB] shrink-0" />
+
+                {/* Account Actions inside Drawer */}
+                <div className="flex flex-col gap-3 font-sans text-[13px]">
+                  {isLoggedIn ? (
+                    <>
+                      <div className="text-[12px] text-gray-400">
+                        Logged in as{" "}
+                        <span className="font-semibold text-black">
+                          {userData?.name || "User"}
+                        </span>
+                      </div>
+                      {userData?.role === "admin" && (
+                        <Link
+                          to="/admin/dashboard"
+                          onClick={() => setMobileOpen(false)}
+                          className="text-[#006039] font-semibold hover:underline"
+                        >
+                          Admin Dashboard
+                        </Link>
+                      )}
+                      <Link
+                        to="/profile"
+                        onClick={() => setMobileOpen(false)}
+                        className="hover:text-[#006039] font-medium"
+                      >
+                        View Account
+                      </Link>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          handleLogout();
+                          setMobileOpen(false);
+                        }}
+                        className="text-left text-red-500 font-semibold hover:text-red-600"
+                      >
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      to="/login"
+                      onClick={() => setMobileOpen(false)}
+                      className="font-semibold hover:text-[#006039] text-[#111]"
+                    >
+                      Login / Sign Up
+                    </Link>
+                  )}
+                </div>
               </div>
-            </div>
-          </motion.nav>
+
+              {/* Drawer Footer */}
+              <div className="shrink-0 border-t border-[#EBEBEB] bg-[#FAF9F6] px-6 py-5 flex flex-col gap-3">
+                <div className="flex flex-col gap-2">
+                  <div className="flex items-center gap-2 rounded-full bg-[#F4F4F2] px-4 py-2 text-[11px] font-semibold text-black/80">
+                    <Check size={14} className="text-black shrink-0" />
+                    <span>90 days returns</span>
+                  </div>
+                  <div className="flex items-center gap-2 rounded-full bg-[#F4F4F2] px-4 py-2 text-[11px] font-semibold text-black/80">
+                    <Check size={14} className="text-black shrink-0" />
+                    <span>Flexible payments</span>
+                  </div>
+                </div>
+
+                {/* <div className="flex items-center gap-2 text-[12px] font-semibold text-black/60 hover:text-black mt-1 py-1 cursor-pointer">
+                  <Globe size={14} strokeWidth={2} />
+                  <span>United States (USD)</span>
+                </div> */}
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
-
     </header>
   );
 };
-
 
 export default Navbar;
