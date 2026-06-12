@@ -1068,7 +1068,7 @@ const PosterProductCard = ({
             <button
               type="button"
               aria-label="Add to wishlist"
-              className="absolute right-4 top-4 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#000000] transition-colors hover:bg-white hover:text-[#006039]"
+              className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#000000] transition-colors hover:bg-white hover:text-[#006039]"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();

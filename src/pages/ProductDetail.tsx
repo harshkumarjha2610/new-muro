@@ -786,11 +786,7 @@ const ProductDetails: React.FC = () => {
                       key={`${image}-${index}`}
                       type="button"
                       onClick={() => setActiveImageIndex(index)}
-                      className={`relative shrink-0 w-[118px] h-[148px] lg:w-full lg:h-[270px] rounded-[12px] overflow-hidden bg-[#F2F2F2] border transition-all ${
-                        active
-                          ? "border-[#111111] ring-1 ring-[#111111]"
-                          : "border-transparent hover:border-[#CFCFCF]"
-                      }`}
+                      className={`relative shrink-0 w-[118px] h-[148px] lg:w-full lg:h-[270px] rounded-[12px] overflow-hidden bg-[#F2F2F2] transition-all`}
                       aria-label={`View image ${index + 1}`}
                     >
                       <img
@@ -808,7 +804,7 @@ const ProductDetails: React.FC = () => {
               <button
                 type="button"
                 aria-label="Add to wishlist"
-                className="absolute top-5 right-5 z-10 h-10 w-10 rounded-full bg-white/70 flex items-center justify-center text-[#111111] hover:bg-white transition-colors"
+                className="absolute top-1 right-1 z-10 h-10 w-10 rounded-full  flex items-center justify-center text-[#111111] hover:bg-white transition-colors"
               >
                 <Heart size={21} strokeWidth={1.4} />
               </button>
@@ -820,7 +816,7 @@ const ProductDetails: React.FC = () => {
               />
             </div>
 
-            <aside className="order-3 lg:sticky lg:top-[125px] lg:max-h-[calc(100vh-145px)] lg:overflow-y-auto lg:pl-6 lg:pr-1">
+            <aside className="order-3 lg:sticky lg:top-[145px] lg:max-h-[calc(100vh-145px)] lg:overflow-y-auto lg:pl-6 lg:pr-1">
               <div className="bg-white lg:pt-1">
                 <div className="mb-3 flex items-start justify-between gap-5">
                   <div>
@@ -882,7 +878,7 @@ const ProductDetails: React.FC = () => {
                   </div>
                 )}
 
-                <div className="space-y-3 mb-4">
+                {/* <div className="space-y-3 mb-4">
                   <InfoOption
                     label="Size"
                     icon="↗"
@@ -892,7 +888,7 @@ const ProductDetails: React.FC = () => {
                     trailing={formatPrice(productPrice)}
                   />
 
-                  {/* <div className="rounded-[22px] border border-[#C9C9C9] p-3">
+                  <div className="rounded-[22px] border border-[#C9C9C9] p-3">
                     <div className="flex items-center gap-2">
                       <input
                         value={couponCode}
@@ -926,8 +922,8 @@ const ProductDetails: React.FC = () => {
                             : "Coupon is not valid")}
                       </p>
                     )}
-                  </div> */}
-                </div>
+                  </div>
+                </div> */}
 
                 <button
                   type="button"
