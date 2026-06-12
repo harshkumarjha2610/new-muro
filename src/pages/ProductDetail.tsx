@@ -11,6 +11,7 @@ import {
 import { toast } from "sonner";
 import { API } from "@/services/api";
 import { cartApi } from "@/services/cartApi";
+import { CollectionHighlightsSection } from "./Index";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
@@ -1076,6 +1077,7 @@ const ProductDetails: React.FC = () => {
           </div>
         </div>
       </section>
+      <CollectionHighlightsSection/>
 
       <section className="w-full py-12 md:py-16 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 2xl:px-0">

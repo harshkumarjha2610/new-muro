@@ -1352,7 +1352,7 @@ const EditorialTile = ({
   );
 };
 
-const CollectionHighlightsSection = () => {
+export const CollectionHighlightsSection = () => {
   return (
     <motion.section
       variants={fadeInUp}

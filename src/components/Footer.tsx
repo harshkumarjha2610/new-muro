@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Globe } from "lucide-react";
+import { Globe, Mail, Phone, Clock } from "lucide-react";
 
 const Footer = () => {
   const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -11,7 +11,7 @@ const Footer = () => {
     <footer className="bg-[#F1F1F1] text-[#111111] border-t border-[#E4E4E4] font-sans">
       <div className="max-w-[1400px] mx-auto px-6 pt-16 pb-8">
         {/* Main Footer Row */}
-        <div className="flex flex-col lg:flex-row justify-between gap-12 mb-16">
+        <div className="flex flex-col lg:flex-row justify-between gap-12 mb-2">
           {/* Left Block: Newsletter Section */}
           <div className="w-full lg:w-[35%] flex flex-col gap-4 text-left">
             <h5 className="text-[14px] font-semibold tracking-wide text-black">
@@ -46,125 +46,155 @@ const Footer = () => {
           </div>
 
           {/* Right Block: Links Grid */}
-          <div className="w-full lg:w-[50%] grid grid-cols-2 md:grid-cols-4 gap-2">
-            {/* Column 1: SHOP */}
-            <div className="text-left flex flex-col gap-5">
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">
+          <div className="w-full lg:w-[60%] grid grid-cols-1 sm:grid-cols-3 gap-8">
+            {/* Column 2: Shop */}
+            <div className="text-left">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
                 Shop
-              </span>
-              <div className="flex flex-col gap-3 text-[13px] text-[#555555]">
-                <Link to="/products" className="hover:text-black transition-colors w-fit">
-                  Posters
+              </h4>
+
+              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+                <Link
+                  to="/shop"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  All Products
                 </Link>
-                <Link to="/bestsellers" className="hover:text-black transition-colors w-fit">
+
+                <Link
+                  to="/bestsellers"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
                   Bestsellers
                 </Link>
-                <Link to="/cutouts" className="hover:text-black transition-colors w-fit">
-                  CutOuts
+
+                <Link
+                  to="/new-arrivals"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  New Arrivals
                 </Link>
-                <Link to="/postcards" className="hover:text-black transition-colors w-fit">
-                  Postcard
+
+                <Link
+                  to="/shop"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Shop by Mood
                 </Link>
-                <Link to="/about" className="hover:text-black transition-colors w-fit">
-                  About MURO
+
+                <Link
+                  to="/gift-ideas"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Gift Ideas
                 </Link>
               </div>
             </div>
 
-            {/* Column 2: ABOUT US */}
-            <div className="text-left flex flex-col gap-5">
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">
-                About Us
-              </span>
-              <div className="flex flex-col gap-3 text-[13px] text-[#555555]">
-                <Link to="/about" className="hover:text-black transition-colors w-fit">
-                  About us
-                </Link>
-                <Link to="/about#sustainability" className="hover:text-black transition-colors w-fit">
-                  Sustainability
-                </Link>
-                <Link to="/contact" className="hover:text-black transition-colors w-fit">
-                  Collaborations
-                </Link>
-                <Link to="/about" className="hover:text-black transition-colors w-fit">
-                  Career
-                </Link>
-              </div>
-            </div>
+            {/* Column 3: Policies */}
+            <div className="text-left">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
+                Policies
+              </h4>
 
-            {/* Column 3: SUPPORT */}
-            <div className="text-left flex flex-col gap-5">
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">
-                Support
-              </span>
-              <div className="flex flex-col gap-3 text-[13px] text-[#555555]">
-                <Link to="/contact" className="hover:text-black transition-colors w-fit">
-                  Contact us
+              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+                <Link
+                  to="/shipping-policy"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Shipping Policy
                 </Link>
-                <Link to="/shipping-policy" className="hover:text-black transition-colors w-fit">
-                  Shipping policy
+
+                <Link
+                  to="/cancellation-refund"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Cancellation & Refund
                 </Link>
-                <Link to="/cancellation-refund" className="hover:text-black transition-colors w-fit">
-                  Return policy
+
+                <Link
+                  to="/terms"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Terms & Conditions
                 </Link>
-                <Link to="/privacy" className="hover:text-black transition-colors w-fit">
-                  Privacy policy
+
+                <Link
+                  to="/privacy"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Privacy Policy
                 </Link>
-                <Link to="/faq" className="hover:text-black transition-colors w-fit">
+
+                <Link
+                  to="/#faqs"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
                   FAQ
                 </Link>
-                <Link to="/terms" className="hover:text-black transition-colors w-fit">
-                  Terms & conditions
+
+                <Link
+                  to="/disclaimer"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Website Disclaimer
                 </Link>
               </div>
             </div>
 
-            {/* Column 4: FOLLOW US */}
-            <div className="text-left flex flex-col gap-5">
-              <span className="text-[11px] font-bold uppercase tracking-[0.15em] text-black">
-                Follow Us
-              </span>
-              <div className="flex flex-col gap-3 text-[13px] text-[#555555]">
+            {/* Column 4: Support */}
+            <div className="text-left">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
+                Support
+              </h4>
+
+              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+                <Link
+                  to="/contact"
+                  className="hover:text-[#111111] transition-all w-fit"
+                >
+                  Contact Page
+                </Link>
+
                 <a
-                  href="https://instagram.com"
+                  href="mailto:helpmuroposter@gmail.com"
+                  className="flex items-center gap-3 hover:text-[#111111] transition-all w-fit"
+                >
+                  <Mail size={16} /> helpmuroposter@gmail.com
+                </a>
+
+                <a
+                  href="https://wa.me/918059700876"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-black transition-colors w-fit"
+                  className="flex items-center gap-3 hover:text-[#111111] transition-all w-fit"
                 >
-                  Instagram
+                  <Phone size={16} /> +91 80597 00876
                 </a>
-                <a
-                  href="https://facebook.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-black transition-colors w-fit"
+
+                <div className="flex items-start gap-3">
+                  <Clock size={16} className="mt-0.5 flex-shrink-0" />
+                  <span>
+                    Mon – Fri
+                    <br />
+                    10:00 AM – 6:00 PM (IST)
+                  </span>
+                </div>
+
+                <Link
+                  to="/track-order"
+                  className="hover:text-[#111111] transition-all w-fit mt-2 font-semibold border-b border-[#111111]/30 pb-0.5"
                 >
-                  Facebook
-                </a>
-                <a
-                  href="https://tiktok.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-black transition-colors w-fit"
-                >
-                  TikTok
-                </a>
-                <a
-                  href="https://pinterest.com"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-black transition-colors w-fit"
-                >
-                  Pinterest
-                </a>
+                  Track Your Order
+                </Link>
               </div>
             </div>
           </div>
         </div>
 
         {/* Center Brand and Copyright Block */}
-        <div className="flex flex-col items-center justify-center border-t border-[#EBEBEB] pt-12 mt-12">
-          <Link to="/" className="inline-block mb-5">
+        <div className="flex flex-col items-center justify-center border-t border-[#EBEBEB]">
+          <Link to="/" className="inline-block mb-2">
             <span 
               className="text-[34px] tracking-[2px] text-black"
               style={{ fontFamily: '"Coolvetica", "Coolvetica Regular", Arial, sans-serif' }}
@@ -175,9 +205,9 @@ MURO POSTER            </span>
             Copyright © 2026 MURO Poster. Operated by Saar Graphics, India. All rights reserved.
           </p>
         </div>
-
-        {/* Bottom Strip: Payments & Locator */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 mt-8 pt-6 border-t border-[#EBEBEB] text-[#888888] text-[11px]">
+      </div>
+      {/* Bottom Strip: Payments & Locator */}
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 p-6 border-t border-[#EBEBEB] bg-white text-[#888888] text-[11px]">
           {/* Payment Icons */}
           <div className="flex flex-wrap items-center gap-2">
             <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
@@ -238,10 +268,9 @@ MURO POSTER            </span>
           {/* Country Selector */}
           <div className="flex items-center gap-2 font-semibold text-black/60 hover:text-black cursor-pointer">
             <Globe size={14} />
-            <span>United States (USD)</span>
+            <span>India (IND)</span>
           </div>
         </div>
-      </div>
     </footer>
   );
 };

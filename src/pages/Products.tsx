@@ -450,7 +450,25 @@ const Products: React.FC = () => {
       </section>
 
       <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
-        <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#E2E2DF] pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E2E2DF] pb-4">
+        {/* <span>Categories</span> */}
+        {availableSubcats.map((sub) => {
+          const name = sub.name || "";
+          const nameUpper = name.toUpperCase();
+          return (
+            <button
+            key={sub.id || name}
+            onClick={() => handleSubCategoryClick(nameUpper)}
+            className={`text-[13px] pr-10 text-left hover:underline tracking-wide transition-colors ${
+              selectedSubCategory === nameUpper ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
+            }`}
+            >
+                        {toTitleCase(name)}
+                      </button>
+                    );
+                  })}
+                  </div>
+        {/* <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-[#E2E2DF] pb-4">
           <div className="flex items-center gap-4">
             <button
               onClick={() => setIsFilterOpen(!isFilterOpen)}
@@ -473,8 +491,8 @@ const Products: React.FC = () => {
               )}
             </button>
           </div>
-          </div>
-                <motion.div
+          </div> */}
+                {/* <motion.div
           initial={false}
           animate={{ height: isFilterOpen ? "auto" : 0, opacity: isFilterOpen ? 1 : 0 }}
           transition={{ duration: 0.3, ease: [0.25, 1, 0.5, 1] }}
@@ -526,21 +544,7 @@ const Products: React.FC = () => {
                   >
                     All {toTitleCase(selectedCategory)}
                   </button>
-                  {availableSubcats.map((sub) => {
-                    const name = sub.name || "";
-                    const nameUpper = name.toUpperCase();
-                    return (
-                      <button
-                        key={sub.id || name}
-                        onClick={() => handleSubCategoryClick(nameUpper)}
-                        className={`text-[13px] text-left hover:underline tracking-wide transition-colors ${
-                          selectedSubCategory === nameUpper ? "font-bold text-[#006039]" : "text-[#101010] font-medium"
-                        }`}
-                      >
-                        {toTitleCase(name)}
-                      </button>
-                    );
-                  })}
+                  
                 </div>
               )}
             </div>
@@ -555,7 +559,7 @@ const Products: React.FC = () => {
                 </button>
               )}
           </div>
-        </motion.div>
+        </motion.div> */}
 
         {loading ? (
           <div className="flex min-h-[45vh] items-center justify-center">
