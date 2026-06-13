@@ -171,7 +171,7 @@ const ProductCard = ({ product, activeOffer, index }: { product: any; activeOffe
           <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
             <div className="min-w-0">
               <p className="truncate text-[13px] leading-none text-[#A19D96]">{brand}</p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[15px]">{title}</h3>
+              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[15px] capitalize">{title}</h3>
             </div>
 
             <div className="text-right">
@@ -450,7 +450,7 @@ const Products: React.FC = () => {
       </section>
 
       <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
-        <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#E2E2DF] pb-4">
+        <div className="flex flex-wrap items-center justify-between gap-4  pb-4">
         {/* <span>Categories</span> */}
         {availableSubcats.map((sub) => {
           const name = sub.name || "";

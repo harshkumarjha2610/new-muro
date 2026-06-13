@@ -13,14 +13,14 @@ const Footer = () => {
         {/* Main Footer Row */}
         <div className="flex flex-col lg:flex-row justify-between gap-12 mb-2">
           {/* Left Block: Newsletter Section */}
-          <div className="w-full lg:w-[35%] flex flex-col gap-4 text-left">
+          <div className="w-full lg:w-[50%] flex flex-col gap-4 text-left">
             <h5 className="text-[14px] font-semibold tracking-wide text-black">
               Join our community and receive 10% off your first order.
             </h5>
 
             <form
               onSubmit={handleNewsletterSubmit}
-              className="flex w-full max-w-[400px] items-center gap-2"
+              className="flex w-full items-center gap-2"
             >
               <input
                 type="email"
@@ -36,7 +36,7 @@ const Footer = () => {
               </button>
             </form>
 
-            <p className="text-[11px] leading-[1.6] text-[#888888] max-w-[360px]">
+            <p className="text-[11px] leading-[1.6] text-[#888888] ">
               By subscribing, you agree to receive our newsletter and our{" "}
               <Link to="/privacy" className="underline hover:text-black">
                 Privacy Policy
@@ -46,14 +46,14 @@ const Footer = () => {
           </div>
 
           {/* Right Block: Links Grid */}
-          <div className="w-full lg:w-[60%] grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="w-full lg:w-[40%] grid grid-cols-1 sm:grid-cols-3 gap-0">
             {/* Column 2: Shop */}
             <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
                 Shop
               </h4>
 
-              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
                 <Link
                   to="/shop"
                   className="hover:text-[#111111] transition-all w-fit"
@@ -93,11 +93,11 @@ const Footer = () => {
 
             {/* Column 3: Policies */}
             <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
                 Policies
               </h4>
 
-              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
                 <Link
                   to="/shipping-policy"
                   className="hover:text-[#111111] transition-all w-fit"
@@ -144,11 +144,11 @@ const Footer = () => {
 
             {/* Column 4: Support */}
             <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-9 tracking-wide text-[#111111]">
+              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
                 Support
               </h4>
 
-              <div className="flex flex-col gap-4 text-[14px] text-[#111111]/70">
+              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
                 <Link
                   to="/contact"
                   className="hover:text-[#111111] transition-all w-fit"
@@ -198,8 +198,7 @@ const Footer = () => {
             <span 
               className="text-[34px] tracking-[2px] text-black"
               style={{ fontFamily: '"Coolvetica", "Coolvetica Regular", Arial, sans-serif' }}
-            >
-MURO POSTER            </span>
+            >MURO POSTER</span>
           </Link>
           <p className="text-center text-[11px] leading-[1.8] text-[#888888] max-w-[600px] px-4">
             Copyright © 2026 MURO Poster. Operated by Saar Graphics, India. All rights reserved.
@@ -210,7 +209,7 @@ MURO POSTER            </span>
         <div className="flex flex-col sm:flex-row justify-between items-center gap-6 p-6 border-t border-[#EBEBEB] bg-white text-[#888888] text-[11px]">
           {/* Payment Icons */}
           <div className="flex flex-wrap items-center gap-2">
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg"
                 alt="Visa"
@@ -219,7 +218,7 @@ MURO POSTER            </span>
               />
             </div>
             
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg"
                 alt="MasterCard"
@@ -228,7 +227,7 @@ MURO POSTER            </span>
               />
             </div>
 
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Rupay-Logo.png"
                 alt="RuPay"
@@ -237,7 +236,7 @@ MURO POSTER            </span>
               />
             </div>
 
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/6/6f/UPI_logo.svg"
                 alt="UPI"
@@ -246,7 +245,7 @@ MURO POSTER            </span>
               />
             </div>
 
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
                 src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg"
                 alt="Paytm"
@@ -255,9 +254,9 @@ MURO POSTER            </span>
               />
             </div>
 
-            <div className="w-12 h-7.5 bg-white rounded-md border border-[#EBEBEB] flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+            <div className="w-4 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/f/fa/American_Express_logo_%282018%29.svg"
+                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/American_Express_Square_Logo.png"
                 alt="American Express"
                 className="max-h-[60%] max-w-[80%] object-contain"
                 loading="lazy"

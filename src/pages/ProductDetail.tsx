@@ -824,7 +824,7 @@ const ProductDetails: React.FC = () => {
                       {product.category || "Muro Poster"}
                     </p>
                     <h1
-                      className="mt-1 text-[18px] md:text-[19px] font-medium leading-tight tracking-[2px] text-[#111111]"
+                      className="mt-1 text-[18px] md:text-[19px] font-medium leading-tight capitalize tracking-[2px] text-[#111111]"
                       style={{ fontFamily: serifFont }}
                     >
                       {productTitle}

@@ -892,7 +892,7 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
           <div className="absolute inset-0 bg-black/25" />
           <div className="absolute inset-x-0 bottom-0 h-[74%] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
 
-          <div className="absolute inset-x-5 bottom-10 z-10 text-white md:inset-x-10 md:bottom-14 lg:bottom-16">
+          <div className="absolute bottom-2 z-10 text-white ">
             <AnimatePresence mode="wait">
               <motion.div
                 key={`hero-content-${activeIndex}`}
@@ -903,19 +903,19 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
                 className={`${pageContainerClass} flex flex-col items-start`}
               >
                 <h1
-                  className="max-w-[920px] text-[44px] leading-[0.92] tracking-[2px] md:text-[76px] lg:text-[104px]"
+                  className="max-w-[920px] text-[32px] leading-[0.92] tracking-[2px]"
                   style={headingStyle}
                 >
                   {activeSlide.title}
                 </h1>
 
                 {activeSlide.subtitle && (
-                  <p className="mt-5 max-w-[620px] text-[14px] leading-relaxed text-white/90 md:text-[16px]">
+                  <p className="mt-5 max-w-[620px] text-[12px] leading-relaxed text-white/90 ">
                     {activeSlide.subtitle}
                   </p>
                 )}
 
-                <span className="mt-7 inline-flex rounded-full border border-white/70 bg-white px-8 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#101010] transition-colors group-hover:bg-[#F1F1F1] group-hover:border-[#F1F1F1] md:px-10 md:py-4">
+                <span className=" inline-flex py-3 text-[13px] font-bold uppercase tracking-[0.18em] text-white underline line-height: 1;">
                   {activeSlide.button_text || "Explore"}
                 </span>
               </motion.div>
