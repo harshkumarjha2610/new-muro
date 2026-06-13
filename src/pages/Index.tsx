@@ -1137,7 +1137,7 @@ const PosterProductCard = ({
               <p className="truncate text-[13px] leading-none text-[#A19D96]">
                 {brandText}
               </p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">
+              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px] capitalize">
                 {productTitle}
               </h3>
             </div>
