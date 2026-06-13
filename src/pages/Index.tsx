@@ -846,15 +846,15 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const cleanSlides = slides.length > 0 ? slides : defaultHeroSlides;
 
-  useEffect(() => {
-    if (cleanSlides.length <= 1) return;
+  // useEffect(() => {
+  //   if (cleanSlides.length <= 1) return;
 
-    const timer = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % cleanSlides.length);
-    }, 4500);
+  //   const timer = window.setInterval(() => {
+  //     setActiveIndex((prev) => (prev + 1) % cleanSlides.length);
+  //   }, 4500);
 
-    return () => window.clearInterval(timer);
-  }, [cleanSlides.length]);
+  //   return () => window.clearInterval(timer);
+  // }, [cleanSlides.length]);
 
   useEffect(() => {
     if (activeIndex >= cleanSlides.length) {
@@ -923,7 +923,7 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
           </div>
         </Link>
 
-        {cleanSlides.length > 1 && (
+        {/* {cleanSlides.length > 1 && (
           <>
             <button
               type="button"
@@ -966,7 +966,7 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
               ))}
             </div>
           </>
-        )}
+        )} */}
       </div>
     </motion.section>
   );
