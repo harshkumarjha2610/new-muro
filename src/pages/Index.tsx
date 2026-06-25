@@ -490,21 +490,21 @@ const collectionHighlightTiles: HomeCategoryTile[] = [
 
 const roomEditorialTiles: HomeCategoryTile[] = [
   {
-    title: "Art Magazine",
+    title: "Dress Your Walls",
     subtitle: "Discover stories, ideas and inspiration for your home",
     button_text: "Discover",
     button_link: "/products?cat=Art%20Magazine",
     image_url: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1400&auto=format&fit=crop",
   },
   {
-    title: "Curated For Summer",
+    title: "⁠Own Your Space",
     subtitle: "Bright, breezy prints for warmer days",
     button_text: "Explore",
     button_link: "/products?cat=Summer",
     image_url: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=1400&auto=format&fit=crop",
   },
   {
-    title: "Photo Art",
+    title: "⁠Share The Feeling",
     subtitle: "Photography that turns everyday walls into timeless art",
     button_text: "Explore",
     button_link: "/products?cat=Photo%20Art",
