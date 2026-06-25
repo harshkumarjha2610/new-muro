@@ -447,21 +447,21 @@ const defaultHeroSlides: HomeHeroSlide[] = [
 
 const defaultCategoryTiles: HomeCategoryTile[] = [
   {
-    title: "posters",
+    title: "Posters",
     subtitle: "New prints to refresh your walls",
     button_text: "Discover",
     button_link: "/new-arrivals",
     image_url: "images/posters.webp",
   },
   {
-    title: "cutouts",
+    title: "Cutouts",
     subtitle: "Playful prints to bring joy to their space",
     button_text: "Explore",
     button_link: "/products?cat=Kids%20Art%20Prints",
     image_url: "images/cutouts.webp",
   },
   {
-    title: "postcard",
+    title: "Postcard",
     subtitle: "Front and back postcard products ",
     button_text: "Explore",
     button_link: "/postcards",
@@ -471,7 +471,7 @@ const defaultCategoryTiles: HomeCategoryTile[] = [
 
 const collectionHighlightTiles: HomeCategoryTile[] = [
   {
-    title: "New arrival",
+    title: "New Arrivals",
     subtitle: "A curated wall-art story for modern rooms.",
     button_text: "Discover",
     button_link: "/products",
@@ -634,7 +634,7 @@ const fetchHomeContent = async (): Promise<HomeContent> => {
 
     return {
       hero_slides: normalizeHeroSlides(data.hero_slides),
-      category_tiles: normalizeCategoryTiles(data.category_tiles),
+      category_tiles: defaultCategoryTiles,
       featured_new_arrival_ids: Array.isArray(data.featured_new_arrival_ids)
         ? data.featured_new_arrival_ids.map(Number).filter(Boolean)
         : [],
@@ -2122,7 +2122,16 @@ const Index: React.FC = () => {
         </div>
       </section>
 
-      <div className="-mt-7 md:-mt-10">
+      <div className="flex justify-center py-2 md:py-3 bg-white">
+        <Link
+          to="/products"
+          className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
+        >
+          Discover our Posters
+        </Link>
+      </div>
+
+      <div>
         <EditorialGridSection items={categoryTiles} columns={3} />
       </div>
 
@@ -2133,12 +2142,13 @@ const Index: React.FC = () => {
 
       <div className="flex justify-center py-2 md:py-3 bg-white">
         <Link
-          to="/frames"
+          to="/cutouts"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
-          Discover our frames
+          Discover our Cutouts
         </Link>
       </div>
+
 
       <CollectionHighlightsSection />
 
@@ -2149,10 +2159,10 @@ const Index: React.FC = () => {
 
       <div className="flex justify-center py-2 md:py-3 bg-white">
         <Link
-          to="/frames"
+          to="/postcards"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
-          Discover our frames
+          Discover our Postcard
         </Link>
       </div>
 
