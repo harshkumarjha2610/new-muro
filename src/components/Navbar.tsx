@@ -411,15 +411,10 @@ const Navbar = () => {
               >
                 <NavLink
                   to="/products"
-                  className={`${navBase} flex items-center gap-1`}
+                  className={navBase}
                   activeClassName={navActive}
                 >
                   Posters
-                  <ChevronDown
-                    size={12}
-                    className="transition-transform duration-300 group-hover:rotate-180"
-                    strokeWidth={2.3}
-                  />
                 </NavLink>
 
                 <div className="invisible absolute left-0 top-[80px] z-50 flex w-[310px] flex-col rounded-b-[18px] border border-[#E5E5E5] bg-white py-3 text-black opacity-0 shadow-xl transition-all duration-200 group-hover:visible group-hover:opacity-100">
