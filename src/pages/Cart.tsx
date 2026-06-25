@@ -90,6 +90,15 @@ const COLORS = {
 
 const serifFont = "Georgia, 'Times New Roman', serif";
 
+const mainHeadingClass =
+  "text-[40px] font-normal uppercase leading-none tracking-[2px] text-[#111111]";
+
+const sectionHeadingClass =
+  "text-[22px] font-bold uppercase leading-none tracking-[2px] text-[#111111] md:text-[24px]";
+
+const smallHeadingClass =
+  "text-[11px] font-bold uppercase tracking-[2px] text-[#8B8B8B]";
+
 const getFullImageUrl = (path?: string) => {
   if (!path) return "https://via.placeholder.com/300x400?text=No+Image";
 
@@ -497,14 +506,9 @@ const Cart: React.FC = () => {
       <section className="border-b border-[#E6E6E6] bg-white">
         <div className="mx-auto flex max-w-[1500px] flex-col gap-5 px-5 py-10 md:px-8 md:py-14 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B8B8B]">
-              Shopping bag
-            </p>
-            <h1
-              className="text-[42px] font-normal leading-none tracking-[2px] text-[#111111] md:text-[68px]"
-              style={{ fontFamily: serifFont }}
-            >
-              Your cart
+            <p className={`mb-3 ${smallHeadingClass}`}>Shopping Bag</p>
+            <h1 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
+              Your Cart
             </h1>
           </div>
 
@@ -533,11 +537,8 @@ const Cart: React.FC = () => {
               strokeWidth={1}
             />
 
-            <h2
-              className="text-[32px] font-normal tracking-[2px] text-[#111111] md:text-[44px]"
-              style={{ fontFamily: serifFont }}
-            >
-              Your cart is empty
+            <h2 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
+              Your Cart Is Empty
             </h2>
 
             <p className="mt-4 max-w-[360px] text-[15px] leading-relaxed text-[#777777]">
@@ -546,7 +547,7 @@ const Cart: React.FC = () => {
 
             <Link
               to="/products"
-              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#111111] px-9 text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039]"
+              className="mt-8 inline-flex h-12 items-center justify-center rounded-full bg-[#111111] px-9 text-[12px] font-bold uppercase tracking-[2px] text-white transition-colors hover:bg-[#006039]"
             >
               Continue shopping
             </Link>
@@ -555,15 +556,13 @@ const Cart: React.FC = () => {
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_390px] xl:gap-12">
             <section>
               <div className="mb-5 flex items-center justify-between gap-4">
-                <h2 className="text-[15px] font-bold uppercase tracking-[0.16em] text-[#111111]">
-                  Items ({itemCount})
-                </h2>
+                <h2 className={sectionHeadingClass}>Items ({itemCount})</h2>
 
                 <button
                   type="button"
                   onClick={clearCart}
                   disabled={actionLoading}
-                  className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8B8B8B] transition-colors hover:text-red-600 disabled:opacity-50"
+                  className="text-[11px] font-bold uppercase tracking-[2px] text-[#8B8B8B] transition-colors hover:text-red-600 disabled:opacity-50"
                 >
                   Clear cart
                 </button>
@@ -597,10 +596,7 @@ const Cart: React.FC = () => {
                                 Muro Poster
                               </p>
 
-                              <h3
-                                className="line-clamp-2 text-[20px] font-normal leading-[1.08] tracking-[2px] text-[#111111] md:text-[24px]"
-                                style={{ fontFamily: serifFont }}
-                              >
+                              <h3 className="line-clamp-2 text-[17px] font-semibold leading-snug tracking-[0px] text-[#111111] md:text-[19px]">
                                 {item.title}
                               </h3>
                             </div>
@@ -618,7 +614,7 @@ const Cart: React.FC = () => {
                             </button>
                           </div>
 
-                          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#777777]">
+                          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2 text-[12px] font-semibold uppercase tracking-[2px] text-[#777777]">
                             {(item.size_name || item.size_code) && (
                               <span>
                                 Size:{" "}
@@ -717,8 +713,8 @@ const Cart: React.FC = () => {
             <aside className="lg:sticky lg:top-28 lg:self-start">
               <div className="overflow-hidden rounded-[22px] border border-[#E7E7E7] bg-white">
                 <div className="bg-[#F1F1F1] px-7 py-5">
-                  <p className="text-[12px] font-bold uppercase tracking-[0.18em] text-[#111111]">
-                    Order summary
+                  <p className="text-[12px] font-bold uppercase tracking-[2px] text-[#111111]">
+                    Order Summary
                   </p>
                 </div>
 
@@ -781,7 +777,7 @@ const Cart: React.FC = () => {
                     type="button"
                     onClick={() => setIsCheckoutOpen(true)}
                     disabled={actionLoading || cartItems.length === 0}
-                    className="mt-7 flex h-[56px] w-full items-center justify-center gap-2 rounded-full bg-[#111111] text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039] disabled:cursor-not-allowed disabled:opacity-50"
+                    className="mt-7 flex h-[56px] w-full items-center justify-center gap-2 rounded-full bg-[#111111] text-[12px] font-bold uppercase tracking-[2px] text-white transition-colors hover:bg-[#006039] disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Checkout
                     <ArrowRight size={15} />
@@ -789,12 +785,12 @@ const Cart: React.FC = () => {
 
                   <Link
                     to="/products"
-                    className="mt-4 flex h-[48px] w-full items-center justify-center rounded-full border border-[#D8D8D8] text-[12px] font-bold uppercase tracking-[0.18em] text-[#111111] transition-colors hover:border-[#111111]"
+                    className="mt-4 flex h-[48px] w-full items-center justify-center rounded-full border border-[#D8D8D8] text-[12px] font-bold uppercase tracking-[2px] text-[#111111] transition-colors hover:border-[#111111]"
                   >
                     Continue shopping
                   </Link>
 
-                  <div className="mt-6 grid grid-cols-2 gap-2 text-center text-[10px] font-bold uppercase tracking-[0.12em] text-[#777777]">
+                  <div className="mt-6 grid grid-cols-2 gap-2 text-center text-[10px] font-bold uppercase tracking-[2px] text-[#777777]">
                     <span className="rounded-full bg-[#F2F2F2] px-3 py-2">
                       GPay
                     </span>
@@ -839,15 +835,13 @@ const Cart: React.FC = () => {
                 <X size={20} />
               </button>
 
-              <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8B8B8B]">
-                Checkout
-              </p>
+              <p className={`mb-3 ${smallHeadingClass}`}>Checkout</p>
 
               <h2
-                className="mb-7 text-[34px] font-normal tracking-[2px] text-[#111111]"
+                className={`mb-7 ${mainHeadingClass}`}
                 style={{ fontFamily: serifFont }}
               >
-                Delivery details
+                Delivery Details
               </h2>
 
               <form onSubmit={handleCheckoutSubmit} className="space-y-4">
@@ -952,7 +946,7 @@ const Cart: React.FC = () => {
                 <button
                   type="submit"
                   disabled={actionLoading}
-                  className="h-14 w-full rounded-full bg-[#111111] text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039] disabled:opacity-50"
+                  className="h-14 w-full rounded-full bg-[#111111] text-[12px] font-bold uppercase tracking-[2px] text-white transition-colors hover:bg-[#006039] disabled:opacity-50"
                 >
                   {actionLoading ? "Processing..." : "Pay now"}
                 </button>
@@ -977,7 +971,7 @@ const Input = ({
   type?: string;
 }) => (
   <label className="block">
-    <span className="mb-2 block text-[11px] font-bold uppercase tracking-[0.18em] text-[#777777]">
+    <span className="mb-2 block text-[11px] font-bold uppercase tracking-[2px] text-[#777777]">
       {label}
     </span>
 

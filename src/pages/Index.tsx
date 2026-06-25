@@ -117,13 +117,39 @@ const COLORS = {
   green: "#006039",
 };
 
-const pageContainerClass =
-  "mx-auto w-full max-w-[1400px] px-6 sm:px-8 md:px-10 lg:px-12 xl:px-14 2xl:px-16";
+const sectionContainerClass = "muro-postery-container";
 
-const sectionSpacingClass = "w-full bg-white py-8 md:py-10";
+const pageContainerClass = sectionContainerClass;
+
+const productGridContainerClass = sectionContainerClass;
+
+const productGridClass =
+  "grid w-full grid-cols-2 gap-x-[14px] gap-y-[34px] sm:gap-x-[16px] md:grid-cols-4 xl:gap-x-[16px]";
+
+const sectionSpacingClass = "w-full bg-white py-5 md:py-7";
 
 const headingStyle: React.CSSProperties = {
   letterSpacing: "2px",
+};
+
+const PRODUCT_ROW_LIMIT = 4;
+
+const productImageBoxStyle: React.CSSProperties = {
+  // 3px taller than the previous Postery-size image box.
+  aspectRatio: "317.5 / 447.5",
+};
+
+const productImageBoxClass =
+  "relative flex w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] p-[26px] sm:p-[34px] lg:p-[42px]";
+
+const editorialThreeTileStyle: React.CSSProperties = {
+  // 3px taller than before at the target 428px width.
+  aspectRatio: "428 / 579.15",
+};
+
+const editorialTwoTileStyle: React.CSSProperties = {
+  // 3px taller than before at the target 649px width.
+  aspectRatio: "649 / 701.21",
 };
 
 const NEWSLETTER_SUBMITTED_KEY = "muro_newsletter_popup_submitted";
@@ -133,6 +159,25 @@ type NewsletterPopupPayload = {
   firstName: string;
   lastName: string;
   email: string;
+};
+
+const toTitleCase = (value?: string | number) => {
+  return String(value || "")
+    .trim()
+    .toLowerCase()
+    .split(" ")
+    .filter(Boolean)
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+const toUpperText = (value?: string | number) => {
+  return String(value || "").trim().toUpperCase();
+};
+
+const toSentenceCase = (value?: string | number) => {
+  const text = String(value || "").trim().toLowerCase();
+  return text ? text.charAt(0).toUpperCase() + text.slice(1) : "";
 };
 
 const getFullImageUrl = (path?: string) => {
@@ -402,22 +447,22 @@ const defaultHeroSlides: HomeHeroSlide[] = [
 
 const defaultCategoryTiles: HomeCategoryTile[] = [
   {
-    title: "New Arrivals",
+    title: "posters",
     subtitle: "New prints to refresh your walls",
     button_text: "Discover",
     button_link: "/new-arrivals",
     image_url: "images/posters.webp",
   },
   {
-    title: "Kids Art Prints",
+    title: "cutouts",
     subtitle: "Playful prints to bring joy to their space",
     button_text: "Explore",
     button_link: "/products?cat=Kids%20Art%20Prints",
     image_url: "images/cutouts.webp",
   },
   {
-    title: "Postcards",
-    subtitle: "Front and back postcard products with premium paper options",
+    title: "postcard",
+    subtitle: "Front and back postcard products ",
     button_text: "Explore",
     button_link: "/postcards",
     image_url: "images/postcards.webp",
@@ -426,7 +471,7 @@ const defaultCategoryTiles: HomeCategoryTile[] = [
 
 const collectionHighlightTiles: HomeCategoryTile[] = [
   {
-    title: "Muro Poster Collection",
+    title: "New arrival",
     subtitle: "A curated wall-art story for modern rooms.",
     button_text: "Discover",
     button_link: "/products",
@@ -443,53 +488,34 @@ const collectionHighlightTiles: HomeCategoryTile[] = [
   },
 ];
 
-const wallRooms = [
+const roomEditorialTiles: HomeCategoryTile[] = [
   {
-    name: "Bedroom",
-    img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    title: "Art Magazine",
+    subtitle: "Discover stories, ideas and inspiration for your home",
+    button_text: "Discover",
+    button_link: "/products?cat=Art%20Magazine",
+    image_url: "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1400&auto=format&fit=crop",
   },
   {
-    name: "Living Room",
-    img: "https://images.unsplash.com/photo-1493666438817-866a91353ca9",
+    title: "Curated For Summer",
+    subtitle: "Bright, breezy prints for warmer days",
+    button_text: "Explore",
+    button_link: "/products?cat=Summer",
+    image_url: "https://images.unsplash.com/photo-1600210491369-e753d80a41f3?w=1400&auto=format&fit=crop",
   },
   {
-    name: "Office",
-    img: "https://images.unsplash.com/photo-1497215728101-856f4ea42174",
-  },
-  {
-    name: "Gym",
-    img: "https://images.unsplash.com/photo-1517836357463-d25dfeac3438",
-  },
-  {
-    name: "Kitchen",
-    img: "https://images.unsplash.com/photo-1504674900247-0877df9cc836",
-  },
-  {
-    name: "Kids Room",
-    img: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9",
-  },
-  {
-    name: "Hallway",
-    img: "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
-  },
-  {
-    name: "Dining Room",
-    img: "https://images.unsplash.com/photo-1505691938895-1758d7feb511",
-  },
-  {
-    name: "Studio",
-    img: "https://images.unsplash.com/photo-1492724441997-5dc865305da7",
-  },
-  {
-    name: "Bathroom",
-    img: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85",
+    title: "Photo Art",
+    subtitle: "Photography that turns everyday walls into timeless art",
+    button_text: "Explore",
+    button_link: "/products?cat=Photo%20Art",
+    image_url: "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1400&auto=format&fit=crop",
   },
 ];
 
 const whyBuyItems = [
   {
     icon: Award,
-    title: "Premium Print Quality",
+    title: "Elite Print Quality",
     text: "Sharp, vibrant and long-lasting prints made for modern homes.",
   },
   {
@@ -520,21 +546,21 @@ const normalizeHeroSlides = (items: any): HomeHeroSlide[] => {
       ),
       button_text: String(
         row?.button_text ||
-          row?.buttonText ||
-          defaultHeroSlides[index]?.button_text ||
-          "Explore",
+        row?.buttonText ||
+        defaultHeroSlides[index]?.button_text ||
+        "Explore",
       ),
       button_link: String(
         row?.button_link ||
-          row?.buttonLink ||
-          defaultHeroSlides[index]?.button_link ||
-          "/products",
+        row?.buttonLink ||
+        defaultHeroSlides[index]?.button_link ||
+        "/products",
       ),
       image_url: String(
         row?.image_url ||
-          row?.image ||
-          defaultHeroSlides[index]?.image_url ||
-          "",
+        row?.image ||
+        defaultHeroSlides[index]?.image_url ||
+        "",
       ),
     }))
     .filter((row) => row.image_url);
@@ -553,29 +579,40 @@ const normalizeCategoryTiles = (items: any): HomeCategoryTile[] => {
       ),
       button_text: String(
         row?.button_text ||
-          row?.buttonText ||
-          row?.cta ||
-          defaultCategoryTiles[index]?.button_text ||
-          "Explore",
+        row?.buttonText ||
+        row?.cta ||
+        defaultCategoryTiles[index]?.button_text ||
+        "Explore",
       ),
       button_link: String(
         row?.button_link ||
-          row?.buttonLink ||
-          row?.to ||
-          defaultCategoryTiles[index]?.button_link ||
-          "/products",
+        row?.buttonLink ||
+        row?.to ||
+        defaultCategoryTiles[index]?.button_link ||
+        "/products",
       ),
       image_url: String(
         row?.image_url ||
-          row?.image ||
-          row?.img ||
-          defaultCategoryTiles[index]?.image_url ||
-          "",
+        row?.image ||
+        row?.img ||
+        defaultCategoryTiles[index]?.image_url ||
+        "",
       ),
     }))
     .filter((row) => row.image_url);
 
-  return normalized.length > 0 ? normalized : defaultCategoryTiles;
+  // Keep this section fixed at exactly 3 boxes.
+  // If admin/API sends only 1 or 2 tiles, fill remaining slots with default tiles.
+  const filled = [...normalized];
+  defaultCategoryTiles.forEach((tile) => {
+    if (filled.length >= 3) return;
+    const alreadyExists = filled.some(
+      (item) => item.title.trim().toLowerCase() === tile.title.trim().toLowerCase(),
+    );
+    if (!alreadyExists) filled.push(tile);
+  });
+
+  return filled.slice(0, 3);
 };
 
 const emptyHomeContent = (): HomeContent => ({
@@ -681,10 +718,10 @@ const normalizePostcardProductForHome = (
   ).toLowerCase() as "postcard" | "cutout" | "sqft";
   const image = String(
     item?.image_url ||
-      item?.front_image_url ||
-      item?.main_poster_url ||
-      item?.back_image_url ||
-      "",
+    item?.front_image_url ||
+    item?.main_poster_url ||
+    item?.back_image_url ||
+    "",
   );
 
   if (!id || !image) return null;
@@ -720,6 +757,41 @@ const uniqueHomeItems = (items: HomeProduct[]): HomeProduct[] => {
   });
 
   return clean;
+};
+
+const homeItemKey = (item: HomeProduct) =>
+  `${item.product_type || "poster"}-${Number(item.id || 0)}`;
+
+const fillHomeProductRow = ({
+  primary,
+  fallback,
+  startIndex = 0,
+  limit = PRODUCT_ROW_LIMIT,
+}: {
+  primary?: HomeProduct[];
+  fallback?: HomeProduct[];
+  startIndex?: number;
+  limit?: number;
+}) => {
+  const output = uniqueHomeItems(primary || []).slice(0, limit);
+  const outputKeys = new Set(output.map(homeItemKey));
+  const fallbackItems = uniqueHomeItems(fallback || []);
+
+  if (output.length >= limit || fallbackItems.length === 0) {
+    return output.slice(0, limit);
+  }
+
+  for (let step = 0; output.length < limit && step < fallbackItems.length * 2; step += 1) {
+    const item = fallbackItems[(startIndex + step) % fallbackItems.length];
+    const key = homeItemKey(item);
+
+    if (!outputKeys.has(key)) {
+      output.push(item);
+      outputKeys.add(key);
+    }
+  }
+
+  return output.slice(0, limit);
 };
 
 const fetchHomeProductById = async (
@@ -814,27 +886,25 @@ const SectionHeading = ({
 }) => {
   return (
     <div
-      className={`mb-7 md:mb-9 flex gap-5 ${
-        center ? "justify-center text-center" : "justify-start text-left"
-      }`}
+      className={`mb-5 md:mb-7 flex gap-5 ${center ? "justify-center text-center" : "justify-start text-left"
+        }`}
     >
       <div className={center ? "mx-auto min-w-0" : "min-w-0"}>
         {title && (
           <h2
-            className="text-[24px] md:text-[34px] leading-none text-[#101010] tracking-[2px]"
+            className="uppercase text-[24px] leading-none tracking-[2px] text-[#101010] md:text-[34px]"
             style={headingStyle}
           >
-            {title}
+            {toUpperText(title)}
           </h2>
         )}
 
         {subtitle && (
           <p
-            className={`mt-2 text-[13px] md:text-[14px] leading-relaxed text-[#77736B] ${
-              center ? "mx-auto max-w-[620px]" : "max-w-[520px]"
-            }`}
+            className={`muro-section-subtitle mt-2 text-[13px] font-normal leading-relaxed text-[#A19D96] md:text-[14px] ${center ? "mx-auto max-w-[760px]" : "max-w-[620px]"
+              }`}
           >
-            {subtitle}
+            {toTitleCase(subtitle)}
           </p>
         )}
       </div>
@@ -843,132 +913,56 @@ const SectionHeading = ({
 };
 
 const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
-  const [activeIndex, setActiveIndex] = useState(0);
   const cleanSlides = slides.length > 0 ? slides : defaultHeroSlides;
-
-  // useEffect(() => {
-  //   if (cleanSlides.length <= 1) return;
-
-  //   const timer = window.setInterval(() => {
-  //     setActiveIndex((prev) => (prev + 1) % cleanSlides.length);
-  //   }, 4500);
-
-  //   return () => window.clearInterval(timer);
-  // }, [cleanSlides.length]);
-
-  useEffect(() => {
-    if (activeIndex >= cleanSlides.length) {
-      setActiveIndex(0);
-    }
-  }, [activeIndex, cleanSlides.length]);
-
-  const activeSlide = cleanSlides[activeIndex] || defaultHeroSlides[0];
+  const activeSlide = cleanSlides[0] || defaultHeroSlides[0];
 
   return (
-    <motion.section
-      variants={fadeInUp}
-      initial="hidden"
-      animate="show"
-      className="relative w-full overflow-hidden bg-[#F4F4F2]"
-    >
-      <div className="relative h-[calc(100svh-80px)] min-h-[540px] w-full sm:h-[calc(100svh-116px)] lg:min-h-[620px]">
+    <section className="relative w-full overflow-hidden bg-[#F4F4F2]">
+      <div className="relative h-[calc(100svh-110px)] min-h-[540px] w-full lg:min-h-[620px]">
         <Link
           to={activeSlide.button_link || "/products"}
-          className="group relative block h-full w-full"
+          className="relative block h-full w-full"
         >
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={`${activeSlide.image_url}-${activeIndex}`}
-              src={getFullImageUrl(activeSlide.image_url)}
-              alt={activeSlide.title}
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 1.02 }}
-              transition={{ duration: 0.8, ease: smoothEase }}
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1400ms] ease-out group-hover:scale-[1.035]"
-            />
-          </AnimatePresence>
+          {/* STATIC IMAGE ONLY - NO FADE, NO SCALE, NO SLIDER EFFECT */}
+          <img
+            src={getFullImageUrl(activeSlide.image_url)}
+            alt={activeSlide.title}
+            className="absolute inset-0 h-full w-full object-cover"
+            draggable={false}
+          />
 
-          <div className="absolute inset-0 bg-black/25" />
-          <div className="absolute inset-x-0 bottom-0 h-[74%] bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
+          {/* READABILITY OVERLAY ONLY */}
+          <div className="absolute inset-0 bg-black/20" />
+          <div className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-black/72 via-black/28 to-transparent" />
 
-          <div className="absolute bottom-2 z-10 text-white ">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={`hero-content-${activeIndex}`}
-                initial={{ opacity: 0, y: 18 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.42, ease: smoothEase }}
-                className={`${pageContainerClass} flex flex-col items-start`}
-              >
+          {/* TEXT ALIGNED WITH NAVBAR HAMBURGER */}
+          <div className="absolute inset-0 z-10 flex items-end">
+            <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 md:pb-14 2xl:px-0">
+              <div className="max-w-[620px]">
                 <h1
-                  className="max-w-[920px] text-[32px] leading-[0.92] tracking-[2px]"
+                  className="uppercase text-[30px] font-bold leading-[0.95] tracking-[2px] text-white md:text-[36px]"
                   style={headingStyle}
                 >
-                  {activeSlide.title}
+                  {toUpperText(activeSlide.title)}
                 </h1>
 
                 {activeSlide.subtitle && (
-                  <p className="mt-5 max-w-[620px] text-[12px] leading-relaxed text-white/90 ">
-                    {activeSlide.subtitle}
+                  <p className="mt-5 max-w-[620px] text-[13px] font-normal leading-relaxed text-white/90 md:text-[14px]">
+                    {toTitleCase(activeSlide.subtitle)}
                   </p>
                 )}
 
-                <span className=" inline-flex py-3 text-[13px] font-bold uppercase tracking-[0.18em] text-white underline line-height: 1;">
-                  {activeSlide.button_text || "Explore"}
-                </span>
-              </motion.div>
-            </AnimatePresence>
+                {activeSlide.button_text && (
+                  <span className="mt-4 inline-flex border-b border-white pb-1 text-[12px] font-bold uppercase tracking-[0.22em] text-white md:text-[13px]">
+                    {toUpperText(activeSlide.button_text)}
+                  </span>
+                )}
+              </div>
+            </div>
           </div>
         </Link>
-
-        {/* {cleanSlides.length > 1 && (
-          <>
-            <button
-              type="button"
-              onClick={() =>
-                setActiveIndex(
-                  (prev) =>
-                    (prev - 1 + cleanSlides.length) % cleanSlides.length,
-                )
-              }
-              className="absolute left-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#101010] shadow-sm transition-colors hover:bg-white md:inline-flex"
-              aria-label="Previous slide"
-            >
-              ←
-            </button>
-
-            <button
-              type="button"
-              onClick={() =>
-                setActiveIndex((prev) => (prev + 1) % cleanSlides.length)
-              }
-              className="absolute right-5 top-1/2 z-20 hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#101010] shadow-sm transition-colors hover:bg-white md:inline-flex"
-              aria-label="Next slide"
-            >
-              →
-            </button>
-
-            <div className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 items-center gap-2 md:bottom-7">
-              {cleanSlides.map((slide, index) => (
-                <button
-                  key={`${slide.title}-${index}`}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`Go to slide ${index + 1}`}
-                  className={`h-[7px] rounded-full transition-all duration-300 ${
-                    activeIndex === index
-                      ? "w-9 bg-white"
-                      : "w-[7px] bg-white/55 hover:bg-white"
-                  }`}
-                />
-              ))}
-            </div>
-          </>
-        )} */}
       </div>
-    </motion.section>
+    </section>
   );
 };
 
@@ -978,7 +972,7 @@ const ProductSkeletonCard = ({ index }: { index: number }) => {
       className="animate-pulse"
       style={{ animationDelay: `${index * 70}ms` }}
     >
-      <div className="aspect-[0.78] rounded-[12px] bg-[#F4F4F2]" />
+      <div className="rounded-[12px] bg-[#F4F4F2]" style={productImageBoxStyle} />
       <div className="mt-4 h-3 w-2/3 rounded-full bg-[#F4F4F2]" />
       <div className="mt-3 h-3 w-1/2 rounded-full bg-[#F4F4F2]" />
     </div>
@@ -1043,13 +1037,13 @@ const PosterProductCard = ({
   const images = useMemo(() => getProductImages(item), [item]);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const productTitle = getProductTitle(item);
+  const productTitle = toTitleCase(getProductTitle(item));
   const productPrice = getLowestSizePrice(item);
   const currentOffer = ((item as any).active_offer ||
     activeOffer) as ActiveOffer | null;
   const offerPrice = getOfferPrice(productPrice, currentOffer);
   const productId = getProductId(item);
-  const brandText = item.category || item.subcategory || "Muro Poster";
+  const brandText = toTitleCase(item.category || item.subcategory || "Muro Poster");
 
   if (images.length === 0 || !productId) return null;
   const activeImage = images[currentImageIndex];
@@ -1062,19 +1056,17 @@ const PosterProductCard = ({
         className="group block w-full"
       >
         <article className="w-full">
-          <div
-            className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] px-8 py-9 md:px-10 md:py-11"
-          >
+          <div className={productImageBoxClass} style={productImageBoxStyle}>
             <button
               type="button"
               aria-label="Add to wishlist"
-              className="absolute right-2 top-2 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#000000] transition-colors hover:bg-white hover:text-[#006039]"
+              className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#000000] transition-colors hover:bg-white hover:text-[#006039]"
               onClick={(e) => {
                 e.preventDefault();
                 e.stopPropagation();
               }}
             >
-              <Heart className="h-5 w-5" strokeWidth={1.45} />
+              <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
             {images.length > 1 && (
@@ -1110,9 +1102,8 @@ const PosterProductCard = ({
                     <button
                       key={idx}
                       type="button"
-                      className={`h-1.5 w-1.5 rounded-full transition-colors ${
-                        idx === currentImageIndex ? "bg-[#006039]" : "bg-black/20"
-                      }`}
+                      className={`h-1.5 w-1.5 rounded-full transition-colors ${idx === currentImageIndex ? "bg-[#006039]" : "bg-black/20"
+                        }`}
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
@@ -1132,34 +1123,37 @@ const PosterProductCard = ({
             />
           </div>
 
-          <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
-            <div className="min-w-0">
-              <p className="truncate text-[13px] leading-none text-[#A19D96]">
+          <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
+            <div className="min-w-0 muro-product-font">
+              <p className="muro-product-category truncate text-[13px] leading-none">
                 {brandText}
               </p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px] capitalize">
+
+              <h3 className="muro-product-title mt-2 min-h-[40px] text-[14px] leading-snug md:text-[14px]">
                 {productTitle}
               </h3>
             </div>
 
-            <div className="text-right">
-              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">
-                New
+            <div className="w-[104px] shrink-0 text-right">
+              <p className="mb-2 text-[13px] font-medium leading-none text-[#A19D96]">
+                {toTitleCase("New")}
               </p>
+
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">
+                <span className="muro-product-price text-[13px] text-[#101010] md:text-[14px]">
                   {formatPrice(offerPrice.finalPrice)}
                 </span>
+
                 {offerPrice.hasOffer && (
-                  <span className="text-[12px] text-[#A19D96] line-through">
+                  <span className="muro-product-old-price text-[12px] text-[#A19D96] line-through">
                     {formatPrice(offerPrice.originalPrice)}
                   </span>
                 )}
               </div>
 
               {currentOffer && offerPrice.hasOffer && (
-                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">
-                  {currentOffer.label}
+                <p className="muro-offer-label mt-2 text-[10px] uppercase tracking-[0.18em] text-[#006039]">
+                  {toUpperText(currentOffer.label)}
                 </p>
               )}
             </div>
@@ -1178,8 +1172,8 @@ const HomeProductCard = ({
   index?: number;
 }) => {
   const image = getHomeProductImage(item);
-  const titleText = getHomeProductTitle(item);
-  const brandText = getHomeProductBrand(item);
+  const titleText = toTitleCase(getHomeProductTitle(item));
+  const brandText = toTitleCase(getHomeProductBrand(item));
   const finalPrice = getHomeProductPrice(item);
   const originalPrice =
     safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
@@ -1197,14 +1191,14 @@ const HomeProductCard = ({
         className="group block w-full"
       >
         <article className="w-full">
-          <div className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] px-8 py-9 md:px-10 md:py-11">
+          <div className={productImageBoxClass} style={productImageBoxStyle}>
             <button
               type="button"
               aria-label="Add to wishlist"
-              className="absolute right-4 top-4 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
+              className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
               onClick={(e) => e.preventDefault()}
             >
-              <Heart className="h-5 w-5" strokeWidth={1.45} />
+              <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
             <img
@@ -1215,34 +1209,37 @@ const HomeProductCard = ({
             />
           </div>
 
-          <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
-            <div className="min-w-0">
-              <p className="truncate text-[13px] leading-none text-[#A19D96]">
+          <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
+            <div className="min-w-0 muro-product-font">
+              <p className="muro-product-category truncate text-[13px] leading-none">
                 {brandText}
               </p>
-              <h3 className="mt-2 min-h-[38px] text-[14px] font-medium leading-snug text-[#101010] md:text-[14px]">
+
+              <h3 className="muro-product-title mt-2 min-h-[40px] text-[14px] leading-snug md:text-[14px]">
                 {titleText}
               </h3>
             </div>
 
-            <div className="text-right">
-              <p className="mb-2 text-[13px] leading-none text-[#A19D96]">
-                New
+            <div className="w-[104px] shrink-0 text-right">
+              <p className="mb-2 text-[13px] font-medium leading-none text-[#A19D96]">
+                {toTitleCase("New")}
               </p>
+
               <div className="flex flex-wrap items-center justify-end gap-2">
-                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">
+                <span className="muro-product-price text-[13px] text-[#101010] md:text-[14px]">
                   {formatPrice(finalPrice)}
                 </span>
+
                 {hasOffer && (
-                  <span className="text-[12px] text-[#A19D96] line-through">
+                  <span className="muro-product-old-price text-[12px] text-[#A19D96] line-through">
                     {formatPrice(originalPrice)}
                   </span>
                 )}
               </div>
 
               {hasOffer && offerLabel && (
-                <p className="mt-1 text-[10px] font-semibold uppercase tracking-[0.12em] text-[#006039]">
-                  {offerLabel}
+                <p className="muro-offer-label mt-2 text-[10px] uppercase tracking-[0.18em] text-[#006039]">
+                  {toUpperText(offerLabel)}
                 </p>
               )}
             </div>
@@ -1256,17 +1253,15 @@ const HomeProductCard = ({
 const HomeProductShowcase = ({
   title,
   items,
-  linkTo,
   subtitle,
+  limit = PRODUCT_ROW_LIMIT,
 }: {
   title?: string;
   items: HomeProduct[];
-  linkTo?: string;
   subtitle?: string;
+  limit?: number;
 }) => {
-  const visibleItems = uniqueHomeItems(items).slice(0, 8);
-
-  if (!visibleItems.length) return null;
+  const visibleItems = uniqueHomeItems(items).slice(0, limit);
 
   return (
     <motion.section
@@ -1276,7 +1271,7 @@ const HomeProductShowcase = ({
       viewport={{ once: true, margin: "-80px" }}
       className={sectionSpacingClass}
     >
-      <div className={pageContainerClass}>
+      <div className={productGridContainerClass}>
         {(title || subtitle) && (
           <SectionHeading title={title} subtitle={subtitle} />
         )}
@@ -1286,15 +1281,19 @@ const HomeProductShowcase = ({
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-6"
+          className={productGridClass}
         >
-          {visibleItems.map((item, index) => (
-            <HomeProductCard
-              key={`${item.product_type || "home"}-${item.id || index}`}
-              item={item}
-              index={index}
-            />
-          ))}
+          {visibleItems.length > 0
+            ? visibleItems.map((item, index) => (
+              <HomeProductCard
+                key={`${item.product_type || "home"}-${item.id || index}`}
+                item={item}
+                index={index}
+              />
+            ))
+            : Array.from({ length: limit }).map((_, index) => (
+              <ProductSkeletonCard key={`empty-${index}`} index={index} />
+            ))}
         </motion.div>
       </div>
     </motion.section>
@@ -1308,6 +1307,7 @@ const EditorialTile = ({
   buttonLink,
   imageUrl,
   index,
+  aspectStyle,
 }: {
   title: string;
   subtitle?: string;
@@ -1315,12 +1315,14 @@ const EditorialTile = ({
   buttonLink?: string;
   imageUrl: string;
   index: number;
+  aspectStyle?: React.CSSProperties;
 }) => {
   return (
     <motion.div variants={fadeInUp} custom={index}>
       <Link
         to={buttonLink || "/products"}
-        className="group relative block overflow-hidden rounded-[12px] bg-[#F4F4F2] aspect-[4/5]"
+        className="group relative block overflow-hidden rounded-[12px] bg-[#F4F4F2]"
+        style={aspectStyle || editorialThreeTileStyle}
       >
         <img
           src={getFullImageUrl(imageUrl)}
@@ -1331,7 +1333,7 @@ const EditorialTile = ({
         <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-black/20" />
         <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
 
-        <div className="absolute inset-x-6 bottom-6 text-white md:inset-x-7 md:bottom-7">
+        <div className="absolute inset-x-6 bottom-7 text-white md:inset-x-8 md:bottom-8">
           <h3
             className="text-[24px] leading-none tracking-[2px] md:text-[30px]"
             style={headingStyle}
@@ -1339,12 +1341,12 @@ const EditorialTile = ({
             {title}
           </h3>
           {subtitle && (
-            <p className="mt-3 max-w-[360px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">
-              {subtitle}
+            <p className="muro-editorial-subtitle mt-3 max-w-[560px] overflow-hidden text-ellipsis whitespace-nowrap text-[13px] font-normal leading-relaxed text-white/90 md:text-[14px]">
+              {toTitleCase(subtitle)}
             </p>
           )}
           <span className="mt-4 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
-            {buttonText || "Explore"}
+            {toUpperText(buttonText || "Explore")}
           </span>
         </div>
       </Link>
@@ -1352,7 +1354,25 @@ const EditorialTile = ({
   );
 };
 
-export const CollectionHighlightsSection = () => {
+const FrameDiscoveryButton = () => {
+  return (
+    <div className="mt-6 flex justify-center md:mt-7">
+
+    </div>
+  );
+};
+
+const EditorialGridSection = ({
+  items,
+  columns = 3,
+}: {
+  items: HomeCategoryTile[];
+  columns?: 2 | 3;
+}) => {
+  const visibleItems = items.slice(0, columns);
+
+  if (!visibleItems.length) return null;
+
   return (
     <motion.section
       variants={fadeInUp}
@@ -1367,52 +1387,29 @@ export const CollectionHighlightsSection = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
-          className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:gap-6"
+          className={`grid grid-cols-1 gap-[16px] ${columns === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+            }`}
         >
-          {collectionHighlightTiles.map((item, index) => (
-            <motion.div
+          {visibleItems.map((item, index) => (
+            <EditorialTile
               key={`${item.title}-${index}`}
-              variants={fadeInUp}
-              custom={index}
-            >
-              <Link
-                to={item.button_link || "/products"}
-                className="group relative block aspect-[16/13] overflow-hidden rounded-[12px] bg-[#F4F4F2]"
-              >
-                <img
-                  src={getFullImageUrl(item.image_url)}
-                  alt={item.title}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.045]"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-black/20" />
-                <div className="absolute inset-x-0 bottom-0 h-[58%] bg-gradient-to-t from-black/70 via-black/25 to-transparent" />
-
-                <div className="absolute inset-x-6 bottom-6 text-white md:inset-x-7 md:bottom-7">
-                  <h3
-                    className="text-[24px] leading-none tracking-[2px] md:text-[30px]"
-                    style={headingStyle}
-                  >
-                    {item.title}
-                  </h3>
-
-                  {item.subtitle && (
-                    <p className="mt-3 max-w-[520px] text-[13px] leading-relaxed text-white/90 md:text-[14px]">
-                      {item.subtitle}
-                    </p>
-                  )}
-
-                  <span className="mt-4 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
-                    {item.button_text || "Explore"}
-                  </span>
-                </div>
-              </Link>
-            </motion.div>
+              title={item.title}
+              subtitle={item.subtitle}
+              buttonText={item.button_text}
+              buttonLink={item.button_link}
+              imageUrl={item.image_url}
+              index={index}
+              aspectStyle={columns === 2 ? editorialTwoTileStyle : editorialThreeTileStyle}
+            />
           ))}
         </motion.div>
       </div>
     </motion.section>
   );
+};
+
+export const CollectionHighlightsSection = () => {
+  return <EditorialGridSection items={collectionHighlightTiles} columns={2} />;
 };
 
 type FAQItem = {
@@ -1483,21 +1480,21 @@ const reviewItems: ReviewItem[] = [
   {
     name: "Sarah K.",
     rating: 5,
-    title: "Absolutely stunning quality!",
+    title: "ABSOLUTELY STUNNING QUALITY!",
     text: "The quality of the prints is absolutely stellar. The colors are deep and vibrant, and the paper texture feels incredibly premium. It looks perfect in my living room!",
     date: "2 days ago",
   },
   {
     name: "David M.",
     rating: 5,
-    title: "Secure packaging & fast delivery",
+    title: "SECURE PACKAGING & FAST DELIVERY",
     text: "Fast shipping and secure packaging. The poster arrived in pristine condition. Excellent customer support too when I had a size customization question.",
     date: "1 week ago",
   },
   {
     name: "Elena R.",
     rating: 5,
-    title: "Highly unique designs",
+    title: "HIGHLY UNIQUE DESIGNS",
     text: "MURO designs are so unique and inspiring. They aren't just decorations, they actually bring a modern character to my office space. I will definitely be ordering more.",
     date: "2 weeks ago",
   },
@@ -1505,7 +1502,7 @@ const reviewItems: ReviewItem[] = [
 
 const HomeReviewsSection = () => {
   return (
-    <div className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:gap-6">
+    <div className="grid grid-cols-1 gap-[16px] md:grid-cols-3">
       {reviewItems.map((item) => (
         <div
           key={item.name}
@@ -1521,20 +1518,20 @@ const HomeReviewsSection = () => {
               ))}
             </div>
 
-            <h4 className="text-[16px] font-bold text-[#101010] mb-2 leading-tight">
-              {item.title}
+            <h4 className="muro-review-title mb-2 text-[16px] leading-tight">
+              {toSentenceCase(item.title)}
             </h4>
-            <p className="text-[13px] leading-relaxed text-[#555555] mb-5">
-              "{item.text}"
+            <p className="mb-5 text-[13px] font-normal leading-relaxed text-[#A19D96]">
+              "{toTitleCase(item.text)}"
             </p>
           </div>
 
           <div className="flex items-center justify-between mt-auto border-t border-[#E7E4DC]/50 pt-4 text-[12px]">
             <div>
-              <span className="font-bold text-black">{item.name}</span>
-              <span className="text-[#006039] ml-2 font-semibold font-sans">✓ Verified Buyer</span>
+              <span className="font-bold text-black">{toTitleCase(item.name)}</span>
+              <span className="ml-2 font-sans font-semibold text-[#006039]">✓ Verified Buyer</span>
             </div>
-            <span className="text-gray-400">{item.date}</span>
+            <span className="text-[#A19D96]">{toTitleCase(item.date)}</span>
           </div>
         </div>
       ))}
@@ -1558,8 +1555,8 @@ const HomeFAQSection = () => {
               className="flex w-full items-center justify-between gap-8 py-6 text-left"
               aria-expanded={isOpen}
             >
-              <span className="text-[16px] font-semibold leading-relaxed text-[#101010] md:text-[18px]">
-                {item.question}
+              <span className="text-[16px] font-semibold leading-relaxed text-[#101010] md:text-[16px]">
+                {toTitleCase(item.question)}
               </span>
 
               <span className="shrink-0 text-[24px] font-light leading-none text-[#77736B]">
@@ -1576,8 +1573,8 @@ const HomeFAQSection = () => {
                   transition={{ duration: 0.24, ease: smoothEase }}
                   className="overflow-hidden"
                 >
-                  <p className="max-w-[760px] pb-7 text-[15px] leading-relaxed text-[#77736B] md:text-[16px]">
-                    {item.answer}
+                  <p className="max-w-[760px] pb-7 text-[15px] font-normal leading-relaxed text-[#A19D96] md:text-[16px]">
+                    {toTitleCase(item.answer)}
                   </p>
                 </motion.div>
               )}
@@ -1672,13 +1669,13 @@ const NewsletterPopup = ({
                 className="text-[24px] font-bold leading-tight tracking-[2px] text-[#111111] md:text-[28px]"
                 style={headingStyle}
               >
-                Your walls deserve better.
+                {toUpperText("Your walls deserve better.")}
               </h2>
 
               <p className="mx-auto mt-5 max-w-[360px] text-[13px] leading-relaxed text-[#333333]">
-                Join the Muro Poster community and get 10% off your first order.
-                Discover new artists and collections, interior inspiration, and
-                be the first to hear about offers.
+                {toTitleCase(
+                  "Join the Muro Poster community and get 10% off your first order. Discover new artists and collections, interior inspiration, and be the first to hear about offers.",
+                )}
               </p>
 
               <form
@@ -1726,7 +1723,7 @@ const NewsletterPopup = ({
                   type="submit"
                   className="h-[48px] w-full rounded-full bg-[#000000] text-[13px] font-semibold text-white transition-colors hover:bg-[#006039]"
                 >
-                  Get my 10% off
+                  {toUpperText("Get my 10% off")}
                 </button>
               </form>
 
@@ -1735,7 +1732,7 @@ const NewsletterPopup = ({
                 onClick={onClose}
                 className="mx-auto mt-6 text-[12px] font-medium text-[#111111] transition-colors hover:text-[#006039]"
               >
-                No thanks, maybe later
+                {toTitleCase("No thanks, maybe later")}
               </button>
             </div>
           </motion.div>
@@ -1884,12 +1881,36 @@ const Index: React.FC = () => {
           type: "cutout",
         });
 
+        const firstProductRow = fillHomeProductRow({
+          primary: posterPool,
+          fallback: posterPool,
+          startIndex: 0,
+        });
+
+        const secondProductRow = fillHomeProductRow({
+          primary: newArrivalItems,
+          fallback: posterPool,
+          startIndex: PRODUCT_ROW_LIMIT,
+        });
+
+        const thirdProductRow = fillHomeProductRow({
+          primary: postcardItems,
+          fallback: [...postcardPool, ...posterPool],
+          startIndex: PRODUCT_ROW_LIMIT * 2,
+        });
+
+        const fourthProductRow = fillHomeProductRow({
+          primary: cutoutItems,
+          fallback: [...cutoutPool, ...posterPool],
+          startIndex: PRODUCT_ROW_LIMIT * 3,
+        });
+
         setHomeContent(homeRes);
         setActiveOffer(offerRes);
-        setBestsellers(posterPool.slice(0, 8) as unknown as ProductItem[]);
-        setHomeNewArrivals(newArrivalItems);
-        setHomePostcards(postcardItems);
-        setHomeCutouts(cutoutItems);
+        setBestsellers(firstProductRow as unknown as ProductItem[]);
+        setHomeNewArrivals(secondProductRow);
+        setHomePostcards(thirdProductRow);
+        setHomeCutouts(fourthProductRow);
       } catch (err) {
         console.error("Failed to fetch home data:", err);
       } finally {
@@ -1902,16 +1923,175 @@ const Index: React.FC = () => {
 
   return (
     <main
+      id="muro-home-page"
       className="min-h-screen overflow-x-hidden bg-white text-[#101010] selection:bg-[#101010] selection:text-white"
       style={{ backgroundColor: COLORS.page, color: COLORS.ink }}
     >
+      <style>{`
+        /* Exact Postery-size layout:
+           - 4 product cards: (1320 - 3*16) / 4 = 318px, same as 317.5px target.
+           - 3 editorial tiles: (1320 - 2*16) / 3 = 429.33px, matching the 428px screenshot size.
+           - 2 editorial tiles: (1320 - 16) / 2 = 652px, matching the 649px screenshot size. */
+        #muro-home-page .muro-postery-container {
+          width: calc(100% - 32px) !important;
+          max-width: 1320px !important;
+          margin-left: auto !important;
+          margin-right: auto !important;
+          padding-left: 0 !important;
+          padding-right: 0 !important;
+          box-sizing: border-box !important;
+        }
+
+        @media (min-width: 640px) {
+          #muro-home-page .muro-postery-container {
+            width: calc(100% - 48px) !important;
+          }
+        }
+
+        @media (min-width: 1024px) {
+          #muro-home-page .muro-postery-container {
+            width: calc(100% - 64px) !important;
+          }
+        }
+
+        @media (min-width: 1440px) {
+          #muro-home-page .muro-postery-container {
+            width: 1320px !important;
+          }
+        }
+
+        #muro-home-page .muro-product-font,
+        #muro-home-page .muro-product-font * {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          letter-spacing: 0px !important;
+          text-transform: none !important;
+          font-style: normal !important;
+        }
+
+        #muro-home-page .muro-product-category {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 500 !important;
+          letter-spacing: 0px !important;
+          text-transform: capitalize !important;
+          color: #A19D96 !important;
+        }
+
+        #muro-home-page .muro-product-title {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 600 !important;
+          letter-spacing: 0px !important;
+          text-transform: capitalize !important;
+          color: #101010 !important;
+        }
+
+        #muro-home-page .muro-product-price {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 700 !important;
+          letter-spacing: 0px !important;
+        }
+
+        #muro-home-page .muro-product-old-price {
+          font-weight: 500 !important;
+        }
+
+        #muro-home-page .muro-offer-label {
+          font-weight: 800 !important;
+        }
+
+        #muro-home-page .muro-why-title {
+          white-space: nowrap !important;
+          font-size: 19px !important;
+          font-weight: 800 !important;
+          letter-spacing: 1.2px !important;
+          color: #101010 !important;
+        }
+
+        #muro-home-page .muro-why-text {
+          font-weight: 500 !important;
+          color: #9A9690 !important;
+        }
+
+        @media (min-width: 768px) {
+          #muro-home-page .muro-section-subtitle,
+          #muro-home-page .muro-editorial-subtitle,
+          #muro-home-page .muro-why-text {
+            white-space: nowrap !important;
+            overflow: hidden !important;
+            text-overflow: ellipsis !important;
+          }
+
+          #muro-home-page .muro-section-subtitle {
+            max-width: none !important;
+          }
+        }
+
+        #muro-home-page .muro-review-title {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 700 !important;
+          letter-spacing: 0px !important;
+          text-transform: none !important;
+          color: #101010 !important;
+        }
+
+
+        /* FOOTER PAYMENT / CURRENCY ICON FIX - equal box size + evenly spaced */
+        footer .payment-icons,
+        footer .footer-payment-icons,
+        footer .muro-payment-icons,
+        footer [class*="payment-icons" i],
+        footer [class*="paymentIcons" i] {
+          display: flex !important;
+          align-items: center !important;
+          justify-content: space-evenly !important;
+          gap: 10px !important;
+          width: 100% !important;
+        }
+
+        footer .payment-icons > *,
+        footer .footer-payment-icons > *,
+        footer .muro-payment-icons > *,
+        footer [class*="payment-icons" i] > *,
+        footer [class*="paymentIcons" i] > * {
+          flex: 1 1 0 !important;
+          min-height: 43px !important;
+          display: flex !important;
+          align-items: center !important;
+          justify-content: center !important;
+        }
+
+        footer img[alt*="rupay" i],
+        footer img[src*="rupay" i],
+        footer img[alt*="rupay-logo" i],
+        footer img[src*="rupay-logo" i],
+        footer img[alt*="upi" i],
+        footer img[src*="upi" i],
+        footer img[alt*="paytm" i],
+        footer img[src*="paytm" i],
+        footer img[alt*="visa" i],
+        footer img[src*="visa" i],
+        footer img[alt*="master" i],
+        footer img[src*="master" i],
+        footer img[alt*="mastercard" i],
+        footer img[src*="mastercard" i] {
+          width: 60px !important;
+          height: 30px !important;
+          max-width: 60px !important;
+          max-height: 30px !important;
+          min-width: 60px !important;
+          object-fit: contain !important;
+          object-position: center !important;
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      `}</style>
+
       <HomeHeroSlider slides={heroSlides} />
 
       <section className={sectionSpacingClass}>
-        <div className={pageContainerClass}>
+        <div className={productGridContainerClass}>
           {loadingBestsellers ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-6">
-              {Array.from({ length: 8 }).map((_, index) => (
+            <div className={productGridClass}>
+              {Array.from({ length: PRODUCT_ROW_LIMIT }).map((_, index) => (
                 <ProductSkeletonCard key={index} index={index} />
               ))}
             </div>
@@ -1927,7 +2107,7 @@ const Index: React.FC = () => {
               initial="hidden"
               whileInView="show"
               viewport={{ once: true, margin: "-80px" }}
-              className="grid grid-cols-2 gap-x-4 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4 xl:gap-x-6"
+              className={productGridClass}
             >
               {bestsellers.map((item, index) => (
                 <PosterProductCard
@@ -1942,113 +2122,46 @@ const Index: React.FC = () => {
         </div>
       </section>
 
-      <motion.section
-        variants={fadeInUp}
-        initial="hidden"
-        whileInView="show"
-        viewport={{ once: true, margin: "-80px" }}
-        className={sectionSpacingClass}
-      >
-        <div className={pageContainerClass}>
-          <motion.div
-            variants={staggerContainer}
-            initial="hidden"
-            whileInView="show"
-            viewport={{ once: true, margin: "-80px" }}
-            className="grid grid-cols-1 gap-5 md:grid-cols-3 xl:gap-6"
-          >
-            {categoryTiles.map((item, index) => (
-              <EditorialTile
-                key={`${item.title}-${index}`}
-                title={item.title}
-                subtitle={item.subtitle}
-                buttonText={item.button_text}
-                buttonLink={item.button_link}
-                imageUrl={item.image_url}
-                index={index}
-              />
-            ))}
-          </motion.div>
-        </div>
-      </motion.section>
+      <div className="-mt-7 md:-mt-10">
+        <EditorialGridSection items={categoryTiles} columns={3} />
+      </div>
 
       <HomeProductShowcase
-        title="New Arrivals"
-        subtitle="Fresh wall prints selected for quick room refreshes."
         items={homeNewArrivals}
+        limit={PRODUCT_ROW_LIMIT}
       />
 
-      <HomeProductShowcase
-        title="Postcards"
-        subtitle="Compact artworks with front and back postcard options."
-        items={homePostcards}
-      />
-
-      <HomeProductShowcase items={homeCutouts} />
+      <div className="flex justify-center py-2 md:py-3 bg-white">
+        <Link
+          to="/frames"
+          className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
+        >
+          Discover our frames
+        </Link>
+      </div>
 
       <CollectionHighlightsSection />
 
-      <section className={sectionSpacingClass}>
-        <div className={pageContainerClass}>
-          <SectionHeading
-            title="DESIGNED FOR EVERY WALL"
-            subtitle="Browse by room and build a look that feels complete."
-            center
-          />
+      <HomeProductShowcase
+        items={homePostcards}
+        limit={PRODUCT_ROW_LIMIT}
+      />
 
-          <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:gap-6">
-            {wallRooms.slice(0, 2).map((item) => (
-              <Link
-                key={item.name}
-                to={`/products?cat=${encodeURIComponent(item.name)}`}
-                className="group relative block aspect-[16/8] overflow-hidden rounded-[12px] bg-[#F4F4F2]"
-              >
-                <img
-                  src={item.img}
-                  alt={item.name}
-                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-105"
-                  loading="lazy"
-                />
-                <div className="absolute inset-0 bg-black/20 transition-colors group-hover:bg-black/30" />
-                <div className="absolute inset-x-6 bottom-6 text-white">
-                  <h3
-                    className="text-[26px] tracking-[2px] md:text-[34px]"
-                    style={headingStyle}
-                  >
-                    {item.name}
-                  </h3>
-                  <span className="mt-2 inline-flex text-[12px] font-semibold uppercase tracking-[0.12em] underline underline-offset-4">
-                    Explore
-                  </span>
-                </div>
-              </Link>
-            ))}
-          </div>
+      <div className="flex justify-center py-2 md:py-3 bg-white">
+        <Link
+          to="/frames"
+          className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
+        >
+          Discover our frames
+        </Link>
+      </div>
 
-          <div className="mt-5 grid grid-cols-2 gap-5 md:grid-cols-4 lg:grid-cols-8 xl:gap-6">
-            {wallRooms.slice(2, 10).map((item) => (
-              <Link
-                key={item.name}
-                to={`/products?cat=${encodeURIComponent(item.name)}`}
-                className="group block"
-              >
-                <div className="relative aspect-[4/5] overflow-hidden rounded-[12px] bg-[#F4F4F2]">
-                  <img
-                    src={item.img}
-                    alt={item.name}
-                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1000ms] ease-out group-hover:scale-105"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
-                </div>
-                <h3 className="mt-3 text-[12px] font-semibold uppercase tracking-[0.14em] text-[#101010] transition-colors group-hover:text-[#006039]">
-                  {item.name}
-                </h3>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <EditorialGridSection items={roomEditorialTiles} columns={3} />
+
+      <HomeProductShowcase
+        items={homeCutouts}
+        limit={PRODUCT_ROW_LIMIT}
+      />
 
       <section className={sectionSpacingClass}>
         <div className={pageContainerClass}>
@@ -2058,27 +2171,28 @@ const Index: React.FC = () => {
             center
           />
 
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 xl:gap-6">
+          <div className="grid grid-cols-1 gap-[16px] sm:grid-cols-2 lg:grid-cols-4">
             {whyBuyItems.map((item) => {
               const Icon = item.icon;
 
               return (
                 <div
                   key={item.title}
-                  className="rounded-[12px] border border-[#E7E4DC] bg-[#F8F8F6] p-6 text-center md:p-7"
+                  className="min-h-[203px] rounded-[12px] border border-[#E7E4DC] bg-[#F8F8F6] p-6 text-center md:min-h-[215px] md:p-7"
                 >
                   <div className="mx-auto mb-8 flex h-11 w-11 items-center justify-center rounded-full bg-white text-[#101010] shadow-sm">
                     <Icon className="h-5 w-5" strokeWidth={1.7} />
                   </div>
 
                   <h3
-                    className="text-[21px] leading-none tracking-[2px] text-[#101010]"
+                    className="muro-why-title leading-none text-[#101010]"
                     style={headingStyle}
                   >
-                    {item.title}
+                    {toUpperText(item.title)}
                   </h3>
-                  <p className="mt-3 text-[14px] leading-relaxed text-[#77736B]">
-                    {item.text}
+
+                  <p className="muro-why-text mt-3 text-[14px] leading-relaxed">
+                    {toTitleCase(item.text)}
                   </p>
                 </div>
               );
@@ -2121,3 +2235,7 @@ const Index: React.FC = () => {
 };
 
 export default Index;
+
+
+
+

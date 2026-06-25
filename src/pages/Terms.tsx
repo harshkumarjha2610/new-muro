@@ -2,14 +2,17 @@ import React from "react";
 import PolicyPage from "./PolicyPage";
 
 const headingClass =
-  "pt-4 text-[21px] font-bold leading-none tracking-[-0.03em] text-[#111111] md:text-[26px]";
+  "pt-4 text-[22px] font-bold uppercase leading-none tracking-[2px] text-[#111111] md:text-[24px]";
+
+const promiseHeadingClass =
+  "mb-4 text-[22px] font-bold leading-none tracking-[2px] text-[#111111] md:text-[24px]";
 
 const Terms: React.FC = () => {
   return (
-    <PolicyPage title="Terms & Conditions">
+    <PolicyPage title="TERMS & CONDITIONS">
       <section className="space-y-8">
         <div className="rounded-[22px] bg-[#F2F2F2] p-6 md:p-8">
-          <p className="text-[18px] font-normal italic leading-snug tracking-[-0.03em] text-[#111111] md:text-[22px]">
+          <p className="text-[18px] font-normal italic leading-snug tracking-[2px] text-[#111111] md:text-[22px]">
             Welcome to MURO POSTER. By accessing or purchasing from
             muroposter.com, you agree to these Terms & Conditions. Please read
             them carefully before placing an order.
@@ -17,7 +20,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Business Identity</h2>
+          <h2 className={headingClass}>BUSINESS IDENTITY</h2>
+
           <p>
             These Terms apply to MURO POSTER, operated by Saar Graphics, located
             in Ambala (Haryana) India. Any disputes are governed by the laws of
@@ -26,13 +30,15 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Products</h2>
+          <h2 className={headingClass}>PRODUCTS</h2>
+
           <p>
             MURO POSTER offers physical wall art and related products.
             Descriptions, images, dimensions, and specifications are presented
             as accurately as possible. Minor variations in color or finish may
             occur due to printing processes and display differences.
           </p>
+
           <p>
             We reserve the right to modify, discontinue, or introduce products
             at any time without prior notice.
@@ -40,17 +46,21 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Orders & Payments</h2>
+          <h2 className={headingClass}>ORDERS & PAYMENTS</h2>
+
           <p>
             Prices are listed in the currency shown at checkout. Payments are
             processed through secure third-party gateways.
           </p>
+
           <p>By placing an order, you confirm that:</p>
+
           <ul className="list-disc space-y-2 pl-5 text-[#555555] marker:text-[#111111]">
             <li>Provided information is accurate</li>
             <li>You are authorized to use the payment method</li>
             <li>You agree to the full checkout amount</li>
           </ul>
+
           <p>
             We reserve the right to cancel or refuse orders due to pricing
             errors, availability issues, suspected fraud, or other operational
@@ -59,7 +69,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Shipping & Delivery</h2>
+          <h2 className={headingClass}>SHIPPING & DELIVERY</h2>
+
           <p>
             Orders are processed according to our Shipping Policy. Delivery
             timelines depend on carriers and location. MURO POSTER is not
@@ -71,7 +82,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Returns, Refunds & Cancellations</h2>
+          <h2 className={headingClass}>RETURNS, REFUNDS & CANCELLATIONS</h2>
+
           <p>
             All returns, replacements, and refunds are governed exclusively by
             our Cancellation & Refund Policy.
@@ -79,7 +91,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Intellectual Property</h2>
+          <h2 className={headingClass}>INTELLECTUAL PROPERTY</h2>
+
           <p>
             All website content — including artwork, branding, text, and
             graphics — is the property of MURO POSTER and protected by
@@ -89,6 +102,7 @@ const Terms: React.FC = () => {
 
           <div className="rounded-[18px] border-l-4 border-[#F1F1F1] bg-[#F2F2F2] p-6">
             <p className="mb-2 font-bold text-[#111111]">You may not:</p>
+
             <ul className="list-disc space-y-1 pl-5 text-[#555555] marker:text-[#111111]">
               <li>Reproduce or distribute our designs</li>
               <li>
@@ -103,12 +117,14 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Limitation of Liability</h2>
+          <h2 className={headingClass}>LIMITATION OF LIABILITY</h2>
+
           <p>
             To the fullest extent permitted by law, MURO POSTER is not liable
             for indirect, incidental, or consequential damages arising from
             website or product use.
           </p>
+
           <p>
             Our products are intended as visual tools for personal environment
             enhancement and are not substitutes for professional or medical
@@ -117,7 +133,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Warranty Disclaimer</h2>
+          <h2 className={headingClass}>WARRANTY DISCLAIMER</h2>
+
           <p>
             Except where required by law, products are provided without
             additional warranties, express or implied.
@@ -125,7 +142,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Website Use</h2>
+          <h2 className={headingClass}>WEBSITE USE</h2>
+
           <p>
             Users agree not to engage in fraudulent behavior, interfere with
             website functionality, extract data through automated means, or
@@ -134,7 +152,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Force Majeure</h2>
+          <h2 className={headingClass}>FORCE MAJEURE</h2>
+
           <p>
             MURO POSTER is not liable for delays or failure to perform due to
             events beyond reasonable control, including natural disasters,
@@ -143,7 +162,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Dispute Resolution</h2>
+          <h2 className={headingClass}>DISPUTE RESOLUTION</h2>
+
           <p>
             We encourage resolution through direct communication. Any legal
             disputes shall be handled under the governing jurisdiction stated
@@ -152,7 +172,8 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Changes to Terms</h2>
+          <h2 className={headingClass}>CHANGES TO TERMS</h2>
+
           <p>
             We may update these Terms at any time. Continued website use
             indicates acceptance of revised Terms.
@@ -160,20 +181,24 @@ const Terms: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Contact</h2>
+          <h2 className={headingClass}>CONTACT SUPPORT</h2>
+
           <p>
-            Questions regarding these Terms may be directed to:{" "}
+            Questions regarding these Terms may be directed to{" "}
             <a
               href="mailto:helpmuroposter@gmail.com"
               className="font-bold underline underline-offset-4 hover:text-[#006039]"
             >
               helpmuroposter@gmail.com
             </a>
+            .
           </p>
         </div>
 
-        <div className="mt-12 rounded-[22px] bg-[#F1F1F1] p-6 font-bold text-[#111111] md:p-8">
-          <p>
+        <div className="mt-12 rounded-[22px] bg-[#F1F1F1] p-6 text-[#111111] md:p-8">
+          <h2 className={promiseHeadingClass}>Muro Promise</h2>
+
+          <p className="font-bold tracking-[2px]">
             We aim to address concerns fairly and responsibly should any issue
             arise.
           </p>

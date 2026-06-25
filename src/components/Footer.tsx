@@ -1,275 +1,210 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Globe, Mail, Phone, Clock } from "lucide-react";
+import { Globe } from "lucide-react";
 
 const Footer = () => {
   const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
   };
 
+  const footerHeadingClass =
+    "muro-footer-heading mb-[26px] text-left text-[16px] font-semibold uppercase leading-none text-black";
+
+  const footerLinkClass =
+    "block w-fit text-left text-[16px] font-normal leading-[1.62] tracking-[-0.01em] text-black transition-colors hover:text-black/65";
+
   return (
-    <footer className="bg-[#F1F1F1] text-[#111111] border-t border-[#E4E4E4] font-sans">
-      <div className="max-w-[1400px] mx-auto px-6 pt-16 pb-8">
-        {/* Main Footer Row */}
-        <div className="flex flex-col lg:flex-row justify-between gap-12 mb-2">
-          {/* Left Block: Newsletter Section */}
-          <div className="w-full lg:w-[50%] flex flex-col gap-4 text-left">
-            <h5 className="text-[14px] font-semibold tracking-wide text-black">
+    <footer
+      id="muro-footer"
+      className="w-full overflow-hidden border-t border-[#E2E2E2] bg-[#F1F1F1] font-sans text-black"
+    >
+      <style>{`
+        #muro-footer,
+        #muro-footer * {
+          -webkit-font-smoothing: antialiased;
+          text-rendering: geometricPrecision;
+        }
+
+        #muro-footer .muro-footer-container {
+          width: calc(100% - 32px);
+          max-width: 1320px;
+          margin-left: auto;
+          margin-right: auto;
+          padding-left: 0;
+          padding-right: 0;
+          box-sizing: border-box;
+        }
+
+        @media (min-width: 640px) {
+          #muro-footer .muro-footer-container {
+            width: calc(100% - 48px);
+          }
+        }
+
+        @media (min-width: 1024px) {
+          #muro-footer .muro-footer-container {
+            width: calc(100% - 64px);
+          }
+        }
+
+        @media (min-width: 1440px) {
+          #muro-footer .muro-footer-container {
+            width: 1320px;
+          }
+        }
+
+        #muro-footer .muro-newsletter-title {
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+          font-weight: 700 !important;
+          letter-spacing: -0.02em !important;
+        }
+
+        #muro-footer .muro-footer-heading {
+          letter-spacing: 2px !important;
+          font-weight: 700 !important;
+        }
+      `}</style>
+
+      <div className="muro-footer-container pt-[58px] pb-[54px]">
+        <div className="grid grid-cols-1 items-start gap-y-14 xl:grid-cols-[minmax(0,760px)_1fr] xl:gap-x-[100px] 2xl:gap-x-[125px]">
+          <div className="w-full max-w-[760px] text-left">
+            <h5
+              className="muro-newsletter-title mb-[20px] text-[16px] leading-none text-black md:text-[17px]"
+              style={{
+                fontFamily:
+                  '-apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif',
+              }}
+            >
               Join our community and receive 10% off your first order.
             </h5>
 
             <form
               onSubmit={handleNewsletterSubmit}
-              className="flex w-full items-center gap-2"
+              className="flex w-full max-w-[735px] flex-col gap-3 sm:flex-row sm:items-center"
             >
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="h-[42px] min-w-0 flex-1 rounded-full border border-[#D8D8D8] bg-white px-4 text-[13px] text-black outline-none placeholder:text-[#888888] focus:border-black"
+                className="h-[54px] min-w-0 flex-1 rounded-full border border-[#9E9E9E] bg-white px-[22px] text-[16px] font-normal text-black outline-none placeholder:text-black/70 focus:border-black"
               />
 
               <button
                 type="submit"
-                className="h-[42px] shrink-0 rounded-full bg-black px-6 text-[13px] font-semibold text-white transition-colors hover:bg-black/80"
+                className="h-[54px] w-full shrink-0 rounded-full bg-[#211D1D] px-[24px] text-[16px] font-normal text-white transition-colors hover:bg-black sm:w-auto"
               >
                 Sign up
               </button>
             </form>
 
-            <p className="text-[11px] leading-[1.6] text-[#888888] ">
+            <p className="mt-[20px] max-w-[735px] text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
               By subscribing, you agree to receive our newsletter and our{" "}
-              <Link to="/privacy" className="underline hover:text-black">
+              <Link to="/privacy" className="underline hover:text-black/65">
                 Privacy Policy
               </Link>
               . You may unsubscribe at any time.
             </p>
           </div>
 
-          {/* Right Block: Links Grid */}
-          <div className="w-full lg:w-[40%] grid grid-cols-1 sm:grid-cols-3 gap-0">
-            {/* Column 2: Shop */}
-            <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
-                Shop
-              </h4>
-
-              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
-                <Link
-                  to="/shop"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  All Products
-                </Link>
-
-                <Link
-                  to="/bestsellers"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Bestsellers
-                </Link>
-
-                <Link
-                  to="/new-arrivals"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  New Arrivals
-                </Link>
-
-                <Link
-                  to="/shop"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Shop by Mood
-                </Link>
-
-                <Link
-                  to="/gift-ideas"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Gift Ideas
-                </Link>
-              </div>
+          <div className="grid w-full grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-4 xl:flex xl:justify-between xl:gap-0">
+            <div className="min-w-0 text-left xl:w-[140px]">
+              <h4 className={footerHeadingClass}>SHOP</h4>
+              <nav className="flex flex-col items-start">
+                <Link to="/business" className={footerLinkClass}>Business</Link>
+                <Link to="/products" className={footerLinkClass}>Posters</Link>
+                <Link to="/frames" className={footerLinkClass}>Frames</Link>
+                <Link to="/accessories" className={footerLinkClass}>Accessories</Link>
+                <Link to="/artists" className={footerLinkClass}>Artists</Link>
+                <Link to="/collections" className={footerLinkClass}>Collections</Link>
+                <Link to="/black-friday" className={footerLinkClass}>Black Friday</Link>
+              </nav>
             </div>
 
-            {/* Column 3: Policies */}
-            <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
-                Policies
-              </h4>
-
-              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
-                <Link
-                  to="/shipping-policy"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Shipping Policy
-                </Link>
-
-                <Link
-                  to="/cancellation-refund"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Cancellation & Refund
-                </Link>
-
-                <Link
-                  to="/terms"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Terms & Conditions
-                </Link>
-
-                <Link
-                  to="/privacy"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Privacy Policy
-                </Link>
-
-                <Link
-                  to="/#faqs"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  FAQ
-                </Link>
-
-                <Link
-                  to="/disclaimer"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Website Disclaimer
-                </Link>
-              </div>
+            <div className="min-w-0 text-left xl:w-[150px]">
+              <h4 className={footerHeadingClass}>ABOUT US</h4>
+              <nav className="flex flex-col items-start">
+                <Link to="/about" className={footerLinkClass}>About us</Link>
+                <Link to="/our-products" className={footerLinkClass}>Our products</Link>
+                <Link to="/sustainability" className={footerLinkClass}>Sustainability</Link>
+                <Link to="/collaborations" className={footerLinkClass}>Collaborations</Link>
+                <Link to="/career" className={footerLinkClass}>Career</Link>
+              </nav>
             </div>
 
-            {/* Column 4: Support */}
-            <div className="text-left">
-              <h4 className="h-[42px] flex items-center text-[24px] md:text-[26px] mb-4 tracking-wide text-[#111111]">
-                Support
-              </h4>
+            <div className="min-w-0 text-left xl:w-[170px]">
+              <h4 className={footerHeadingClass}>SUPPORT</h4>
+              <nav className="flex flex-col items-start">
+                <Link to="/customer-service" className={footerLinkClass}>Customer service</Link>
+                <Link to="/contact" className={footerLinkClass}>Contact us</Link>
+                <Link to="/shipping-policy" className={footerLinkClass}>Shipping policy</Link>
+                <Link to="/return-policy" className={footerLinkClass}>Return policy</Link>
+                <Link to="/privacy" className={footerLinkClass}>Privacy policy</Link>
+                <Link to="/ai-policy" className={footerLinkClass}>AI policy</Link>
+                <Link to="/terms" className={footerLinkClass}>Terms &amp; conditions</Link>
+              </nav>
+            </div>
 
-              <div className="flex flex-col gap-2 text-[14px] text-[#111111]/70">
-                <Link
-                  to="/contact"
-                  className="hover:text-[#111111] transition-all w-fit"
-                >
-                  Contact Page
-                </Link>
-
-                <a
-                  href="mailto:helpmuroposter@gmail.com"
-                  className="flex items-center gap-3 hover:text-[#111111] transition-all w-fit"
-                >
-                  <Mail size={16} /> helpmuroposter@gmail.com
-                </a>
-
-                <a
-                  href="https://wa.me/918059700876"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 hover:text-[#111111] transition-all w-fit"
-                >
-                  <Phone size={16} /> +91 80597 00876
-                </a>
-
-                <div className="flex items-start gap-3">
-                  <Clock size={16} className="mt-0.5 flex-shrink-0" />
-                  <span>
-                    Mon – Fri
-                    <br />
-                    10:00 AM – 6:00 PM (IST)
-                  </span>
-                </div>
-
-                <Link
-                  to="/track-order"
-                  className="hover:text-[#111111] transition-all w-fit mt-2 font-semibold border-b border-[#111111]/30 pb-0.5"
-                >
-                  Track Your Order
-                </Link>
-              </div>
+            <div className="min-w-0 text-left xl:w-[120px]">
+              <h4 className={footerHeadingClass}>FOLLOW US</h4>
+              <nav className="flex flex-col items-start">
+                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Instagram</a>
+                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Facebook</a>
+                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>TikTok</a>
+                <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Pinterest</a>
+              </nav>
             </div>
           </div>
         </div>
 
-        {/* Center Brand and Copyright Block */}
-        <div className="flex flex-col items-center justify-center border-t border-[#EBEBEB]">
-          <Link to="/" className="inline-block mb-2">
-            <span 
-              className="text-[34px] tracking-[2px] text-black"
-              style={{ fontFamily: '"Coolvetica", "Coolvetica Regular", Arial, sans-serif' }}
-            >MURO POSTER</span>
+        <div className="mt-[34px] flex flex-col items-center justify-center text-center">
+          <Link to="/" className="inline-flex items-center justify-center">
+            <span className="text-center text-[42px] font-bold uppercase leading-none tracking-[4px] text-black md:text-[48px]">
+              MURO POSTER
+            </span>
           </Link>
-          <p className="text-center text-[11px] leading-[1.8] text-[#888888] max-w-[600px] px-4">
+
+          <p className="mt-[26px] max-w-[900px] text-center text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
             Copyright © 2026 MURO Poster. Operated by Saar Graphics, India. All rights reserved.
           </p>
         </div>
       </div>
-      {/* Bottom Strip: Payments & Locator */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-6 p-6 border-t border-[#EBEBEB] bg-white text-[#888888] text-[11px]">
-          {/* Payment Icons */}
-          <div className="flex flex-wrap items-center gap-2">
-            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Visa_Inc._logo_%282021%E2%80%93present%29.svg"
-                alt="Visa"
-                className="max-h-[60%] max-w-[80%] object-contain"
-                loading="lazy"
-              />
-            </div>
-            
-            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/a/a4/Mastercard_2019_logo.svg"
-                alt="MasterCard"
-                className="max-h-[60%] max-w-[80%] object-contain"
-                loading="lazy"
-              />
-            </div>
 
-            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
+      <div className="border-t border-[#E5E5E5] bg-white">
+        <div className="muro-footer-container">
+          <div className="flex min-h-[52px] w-full flex-col gap-3 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-0">
+            <div className="flex flex-wrap items-center gap-2">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Rupay-Logo.png"
-                alt="RuPay"
-                className="max-h-[60%] max-w-[80%] object-contain"
+                src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Google_Pay_Logo_%282020%29.svg"
+                alt="Google Pay"
+                className="h-[11px] w-auto object-contain"
                 loading="lazy"
               />
-            </div>
-
-            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/6/6f/UPI_logo.svg"
-                alt="UPI"
-                className="max-h-[65%] max-w-[85%] object-contain"
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b0/Apple_Pay_logo.svg"
+                alt="Apple Pay"
+                className="h-[11px] w-auto object-contain"
                 loading="lazy"
               />
-            </div>
-
-            <div className="w-8 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/2/24/Paytm_Logo_%28standalone%29.svg"
+                src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/paytm-icon.png"
                 alt="Paytm"
-                className="max-h-[55%] max-w-[80%] object-contain"
+                className="h-[8px] w-auto object-contain"
                 loading="lazy"
               />
-            </div>
-
-            <div className="w-4 h-7.5 bg-white rounded-md  flex items-center justify-center shadow-[0_1px_2px_rgba(0,0,0,0.02)] transition-colors hover:border-[#CCCCCC]">
               <img
-                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/American_Express_Square_Logo.png"
-                alt="American Express"
-                className="max-h-[60%] max-w-[80%] object-contain"
+                src="https://upload.wikimedia.org/wikipedia/commons/b/b5/PayPal.svg"
+                alt="PayPal"
+                className="h-[11px] w-auto object-contain"
                 loading="lazy"
               />
             </div>
-          </div>
 
-          {/* Country Selector */}
-          <div className="flex items-center gap-2 font-semibold text-black/60 hover:text-black cursor-pointer">
-            <Globe size={14} />
-            <span>India (IND)</span>
+            <div className="flex items-center gap-2 text-[14px] font-normal text-black">
+              <Globe size={14} strokeWidth={1.6} className="shrink-0" />
+              <span>India (IND)</span>
+            </div>
           </div>
         </div>
+      </div>
     </footer>
   );
 };

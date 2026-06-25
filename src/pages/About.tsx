@@ -18,6 +18,11 @@ const COLORS = {
 
 const serifFont = "Georgia, 'Times New Roman', serif";
 
+const aboutContainerClass = "w-full px-[clamp(16px,10vw,170px)]";
+
+const mainHeadingClass =
+  "uppercase text-[40px] font-normal leading-[1.05] tracking-[2px] text-[#111111]";
+
 const About: React.FC = () => {
   const fadeIn: Variants = {
     hidden: { opacity: 0, y: 28 },
@@ -34,7 +39,7 @@ const About: React.FC = () => {
       style={{ backgroundColor: COLORS.page, color: COLORS.ink }}
     >
       <section className="border-b border-[#E6E6E6] bg-white">
-        <div className="mx-auto max-w-[1500px] px-5 py-10 md:px-8 md:py-12">
+        <div className={`${aboutContainerClass} py-10 md:py-12`}>
           <motion.div
             initial="hidden"
             animate="visible"
@@ -45,14 +50,11 @@ const About: React.FC = () => {
               About MURO Poster
             </p>
 
-            <h1
-              className="text-[34px] font-normal leading-[1.02] tracking-[2px] text-[#111111] md:text-[46px] lg:text-[56px]"
-              style={{ fontFamily: serifFont }}
-            >
+            <h1 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
               Environment is not background. It is influence.
             </h1>
 
-            <p className="mt-5 max-w-[680px] text-[15px] leading-relaxed text-[#555555] md:text-[17px]">
+            <p className="mt-5 max-w-[680px] text-[15px] font-medium leading-relaxed text-black md:text-[17px]">
               What surrounds you is shaping you — every day.
             </p>
           </motion.div>
@@ -60,7 +62,7 @@ const About: React.FC = () => {
       </section>
 
       <section className="bg-white py-10 md:py-12">
-        <div className="mx-auto max-w-[1500px] px-5 md:px-8">
+        <div className={aboutContainerClass}>
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] lg:gap-12">
             <motion.div
               initial={{ opacity: 0, scale: 0.97 }}
@@ -83,25 +85,22 @@ const About: React.FC = () => {
               variants={fadeIn}
               className="flex flex-col justify-center rounded-[24px] border border-[#E6E6E6] bg-white p-6 md:p-10 lg:p-12"
             >
-              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B8B8B]">
+              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-black">
                 The conviction
               </p>
 
-              <h2
-                className="text-[28px] font-normal leading-[1.05] tracking-[2px] text-[#111111] md:text-[38px]"
-                style={{ fontFamily: serifFont }}
-              >
+              <h2 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
                 MURO POSTER was built on a simple belief: the space around you
                 quietly shapes who you become.
               </h2>
 
-              <p className="mt-7 text-[16px] leading-relaxed text-[#555555]">
+              <p className="mt-7 text-[16px] font-medium leading-relaxed text-black">
                 What you see every day doesn’t stay on the surface; it settles
                 into your mind, influencing how you think, feel and move through
                 life.
               </p>
 
-              <p className="mt-5 text-[16px] leading-relaxed text-[#555555]">
+              <p className="mt-5 text-[16px] font-medium leading-relaxed text-black">
                 Most people treat walls as something to fill, but we see them
                 differently. To us, they are part of your mental environment — a
                 place where ideas are reinforced and identity takes form.
@@ -122,7 +121,7 @@ const About: React.FC = () => {
       </section>
 
       <section className="bg-[#111111] py-12 text-white md:py-14">
-        <div className="mx-auto max-w-[1500px] px-5 md:px-8">
+        <div className={aboutContainerClass}>
           <motion.div
             initial={{ opacity: 0, y: 32 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -136,14 +135,14 @@ const About: React.FC = () => {
             />
 
             <h3
-              className="text-[30px] font-normal leading-[1.05] tracking-[2px] md:text-[44px]"
+              className="uppercase text-[40px] font-normal leading-[1.05] tracking-[2px] text-white"
               style={{ fontFamily: serifFont }}
             >
               Most spaces are designed to look good, but very few are designed
               to make you better.
             </h3>
 
-            <p className="mx-auto mt-8 max-w-[860px] text-[16px] leading-relaxed text-white/70 md:text-[18px]">
+            <p className="mx-auto mt-8 max-w-[860px] text-[16px] font-medium leading-relaxed text-white md:text-[18px]">
               MURO exists to change that. Every piece we create is built to
               reinforce a state of mind — clarity, discipline, calm, focus,
               strength.
@@ -171,7 +170,9 @@ const About: React.FC = () => {
       </section>
 
       <section className="bg-white py-12 md:py-14">
-        <div className="mx-auto grid max-w-[1500px] grid-cols-1 gap-8 px-5 md:px-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-12">
+        <div
+          className={`${aboutContainerClass} grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-12`}
+        >
           <motion.div
             initial="hidden"
             whileInView="visible"
@@ -179,18 +180,15 @@ const About: React.FC = () => {
             variants={fadeIn}
             className="flex flex-col justify-center"
           >
-            <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-[#8B8B8B]">
+            <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-black">
               Our mission
             </p>
 
-            <h2
-              className="text-[32px] font-normal leading-[1.02] tracking-[2px] text-[#111111] md:text-[46px]"
-              style={{ fontFamily: serifFont }}
-            >
+            <h2 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
               We are not here to fill walls.
             </h2>
 
-            <p className="mt-7 max-w-[680px] text-[17px] leading-relaxed text-[#555555]">
+            <p className="mt-7 max-w-[680px] text-[17px] font-medium leading-relaxed text-black">
               We are here to shape the atmosphere — to create spaces that
               support becoming. MURO is for those who understand that growth is
               a process, and the environment is an active participant in it.
@@ -198,7 +196,7 @@ const About: React.FC = () => {
 
             <Link
               to="/products"
-              className="mt-9 inline-flex h-13 w-fit items-center gap-3 rounded-full bg-[#111111] px-8 py-4 text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039]"
+              className="mt-9 inline-flex h-[52px] w-fit items-center gap-3 rounded-full bg-[#111111] px-8 text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039]"
             >
               Start shaping your space
               <ArrowRight className="h-4 w-4" />
@@ -225,18 +223,20 @@ const About: React.FC = () => {
         </div>
       </section>
 
-      <section className="border-t border-[#E6E6E6] bg-[#F2F2F2] px-5 py-16 text-center md:px-8 md:py-20">
-        <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#777777]">
-          Final thought
-        </p>
+      <section className="border-t border-[#E6E6E6] bg-[#F2F2F2] py-16 text-center md:py-20">
+        <div className={aboutContainerClass}>
+          <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.24em] text-black">
+            Final thought
+          </p>
 
-        <h2
-          className="mx-auto max-w-[980px] text-[28px] font-normal leading-[1.08] tracking-[2px] text-[#111111] md:text-[40px]"
-          style={{ fontFamily: serifFont }}
-        >
-          Choose what surrounds you with intention. It is already shaping who
-          you are becoming.
-        </h2>
+          <h2
+            className="mx-auto max-w-[980px] uppercase text-[40px] font-normal leading-[1.08] tracking-[2px] text-[#111111]"
+            style={{ fontFamily: serifFont }}
+          >
+            Choose what surrounds you with intention. It is already shaping who
+            you are becoming.
+          </h2>
+        </div>
       </section>
     </main>
   );
@@ -257,13 +257,15 @@ const ValueCard = ({
     </div>
 
     <h4
-      className="text-[24px] font-normal leading-none tracking-[2px] text-white"
+      className="uppercase text-[24px] font-normal leading-none tracking-[2px] text-white"
       style={{ fontFamily: serifFont }}
     >
       {title}
     </h4>
 
-    <p className="mt-4 text-[14px] leading-relaxed text-white/65">{text}</p>
+    <p className="mt-4 text-[14px] font-medium leading-relaxed text-white">
+      {text}
+    </p>
   </div>
 );
 

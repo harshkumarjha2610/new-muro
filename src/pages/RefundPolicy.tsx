@@ -2,21 +2,24 @@ import React from "react";
 import PolicyPage from "./PolicyPage";
 
 const headingClass =
-  "pt-4 text-[21px] font-bold leading-none tracking-[-0.03em] text-[#111111] md:text-[26px]";
+  "pt-4 text-[22px] font-bold uppercase leading-none tracking-[2px] text-[#111111] md:text-[24px]";
+
+const promiseHeadingClass =
+  "mb-4 text-[22px] font-bold leading-none tracking-[2px] text-[#111111] md:text-[24px]";
 
 const RefundPolicy: React.FC = () => {
   return (
-    <PolicyPage title="Cancellation & Refund Policy">
+    <PolicyPage title="CANCELLATION & REFUND POLICY">
       <section className="space-y-8">
         <div className="rounded-[22px] bg-[#F2F2F2] p-6 md:p-8">
-          <p className="text-[18px] font-normal italic leading-snug tracking-[-0.03em] text-[#111111] md:text-[22px]">
+          <p className="text-[18px] font-normal italic leading-snug tracking-[2px] text-[#111111] md:text-[22px]">
             We stand behind the quality of every MURO product. If something is
             not right, we address it with clarity and fairness.
           </p>
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Order Cancellation</h2>
+          <h2 className={headingClass}>ORDER CANCELLATION</h2>
           <p>
             Orders may be cancelled within 24 hours of purchase, provided
             production or shipping has not begun. Once an order enters printing,
@@ -25,7 +28,7 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Returns & Replacements</h2>
+          <h2 className={headingClass}>RETURNS & REPLACEMENTS</h2>
           <p>
             Requests for return or replacement must be submitted within 7 days
             of delivery and are reviewed on a case-by-case basis under the
@@ -45,7 +48,7 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Non-Refundable Cases</h2>
+          <h2 className={headingClass}>NON-REFUNDABLE CASES</h2>
           <p>Returns or refunds are not accepted for:</p>
 
           <ul className="list-disc space-y-2 pl-5 text-[#555555] marker:text-[#111111]">
@@ -58,7 +61,7 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Delivery Responsibility</h2>
+          <h2 className={headingClass}>DELIVERY RESPONSIBILITY</h2>
           <p>
             Customers are responsible for providing accurate shipping details.
             Delivery delays caused by courier services, incorrect addresses, or
@@ -67,7 +70,7 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Refund Process</h2>
+          <h2 className={headingClass}>REFUND PROCESS</h2>
           <p>
             Approved refunds are issued to the original payment method within
             5–7 business days. Actual credit timing may vary depending on
@@ -76,7 +79,7 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Shipping Costs</h2>
+          <h2 className={headingClass}>SHIPPING COSTS</h2>
           <p>
             Unless a product defect or error is confirmed, return shipping costs
             are the responsibility of the customer.
@@ -84,24 +87,32 @@ const RefundPolicy: React.FC = () => {
         </div>
 
         <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>Inspection & Approval</h2>
+          <h2 className={headingClass}>INSPECTION & APPROVAL</h2>
           <p>
             All return or replacement requests are subject to verification to
             ensure eligibility under this policy.
           </p>
+        </div>
+
+        <div className="space-y-4 border-t border-[#E6E6E6]">
+          <h2 className={headingClass}>CONTACT SUPPORT</h2>
           <p>
-            To initiate a request, contact:{" "}
+            To initiate a cancellation, return, refund, or replacement request,
+            contact our support team at{" "}
             <a
               href="mailto:helpmuroposter@gmail.com"
               className="font-bold underline underline-offset-4 hover:text-[#006039]"
             >
               helpmuroposter@gmail.com
             </a>
+            .
           </p>
         </div>
 
-        <div className="mt-12 rounded-[22px] bg-[#F1F1F1] p-6 font-bold text-[#111111] md:p-8">
-          <p>
+        <div className="mt-12 rounded-[22px] bg-[#F1F1F1] p-6 text-[#111111] md:p-8">
+          <h2 className={promiseHeadingClass}>Muro Promise</h2>
+
+          <p className="font-bold tracking-[2px]">
             We design with intention, deliver with care, and evaluate every
             concern responsibly.
           </p>

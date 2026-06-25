@@ -95,8 +95,6 @@ const COLORS = {
   campaign: "#F2FF67",
 };
 
-const serifFont = "Georgia, 'Times New Roman', serif";
-
 const getFullImageUrl = (path?: string) => {
   if (!path) return "https://via.placeholder.com/600x800?text=No+Image";
 
@@ -133,6 +131,16 @@ const formatPrice = (price?: string | number) => {
 const toNumber = (value: any, fallback = 0) => {
   const numericValue = Number(value);
   return Number.isFinite(numericValue) ? numericValue : fallback;
+};
+
+const toTitleCase = (value?: string) => {
+  return String(value || "")
+    .trim()
+    .replace(/\s+/g, " ")
+    .toLowerCase()
+    .replace(/(^|[\s-])([a-z])/g, (_, space, letter) => {
+      return `${space}${letter.toUpperCase()}`;
+    });
 };
 
 const emitCartUpdated = (itemCount?: number) => {
@@ -598,6 +606,8 @@ const ProductDetails: React.FC = () => {
   }, [allProducts, product, id]);
 
   const productTitle = getProductTitle(product);
+  const formattedProductTitle = toTitleCase(productTitle);
+
   const productPrice = getSelectedProductPrice(product, selectedSize);
   const productOfferPrice = getActiveOfferPrice(productPrice, activeOffer);
 
@@ -773,25 +783,34 @@ const ProductDetails: React.FC = () => {
       className="min-h-screen overflow-x-hidden font-sans"
       style={{ backgroundColor: COLORS.page, color: COLORS.ink }}
     >
+      <style>
+        {`
+          .muro-apple-product-title {
+            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+            font-weight: 500 !important;
+            letter-spacing: 0 !important;
+            text-transform: none !important;
+          }
+        `}
+      </style>
+
       <section className="w-full pt-3 md:pt-4 pb-14">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 2xl:px-0">
           <div className="grid grid-cols-1 lg:grid-cols-[250px_minmax(500px,1fr)_430px] gap-3 lg:gap-2 items-start">
             <aside className="order-2 lg:order-1 lg:sticky lg:top-[125px] lg:max-h-[calc(100vh-145px)] lg:overflow-y-auto">
               <div className="flex lg:flex-col gap-3 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {galleryImages.map((image, index) => {
-                  const active = index === activeImageIndex;
-
                   return (
                     <button
                       key={`${image}-${index}`}
                       type="button"
                       onClick={() => setActiveImageIndex(index)}
-                      className={`relative shrink-0 w-[118px] h-[148px] lg:w-full lg:h-[270px] rounded-[12px] overflow-hidden bg-[#F2F2F2] transition-all`}
+                      className="relative shrink-0 w-[118px] h-[148px] lg:w-full lg:h-[270px] rounded-[12px] overflow-hidden bg-[#F2F2F2] transition-all"
                       aria-label={`View image ${index + 1}`}
                     >
                       <img
                         src={getFullImageUrl(image)}
-                        alt={`${productTitle} thumbnail ${index + 1}`}
+                        alt={`${formattedProductTitle} thumbnail ${index + 1}`}
                         className="w-full h-full object-contain p-5"
                       />
                     </button>
@@ -804,14 +823,14 @@ const ProductDetails: React.FC = () => {
               <button
                 type="button"
                 aria-label="Add to wishlist"
-                className="absolute top-1 right-1 z-10 h-10 w-10 rounded-full  flex items-center justify-center text-[#111111] hover:bg-white transition-colors"
+                className="absolute top-1 right-1 z-10 h-10 w-10 rounded-full flex items-center justify-center text-[#111111] hover:bg-white transition-colors"
               >
                 <Heart size={21} strokeWidth={1.4} />
               </button>
 
               <img
                 src={getFullImageUrl(mainImage)}
-                alt={productTitle}
+                alt={formattedProductTitle}
                 className="w-full h-full object-contain p-7 sm:p-10 lg:p-14 xl:p-16 drop-shadow-[0_12px_22px_rgba(0,0,0,0.08)]"
               />
             </div>
@@ -823,15 +842,11 @@ const ProductDetails: React.FC = () => {
                     <p className="text-[18px] md:text-[20px] text-[#A5A5A5] leading-tight">
                       {product.category || "Muro Poster"}
                     </p>
-                    <h1
-                      className="mt-1 text-[18px] md:text-[19px] font-medium leading-tight capitalize tracking-[2px] text-[#111111]"
-                      style={{ fontFamily: serifFont }}
-                    >
-                      {productTitle}
+
+                    <h1 className="muro-apple-product-title mt-1 text-[18px] md:text-[19px] leading-tight text-[#111111]">
+                      {formattedProductTitle}
                     </h1>
                   </div>
-
-                 
                 </div>
 
                 <div className="mb-4 flex flex-wrap items-center gap-2 text-[14px] font-semibold">
@@ -877,53 +892,6 @@ const ProductDetails: React.FC = () => {
                     })}
                   </div>
                 )}
-
-                {/* <div className="space-y-3 mb-4">
-                  <InfoOption
-                    label="Size"
-                    icon="↗"
-                    value={
-                      selectedSize ? getSizeName(selectedSize) : "Select size"
-                    }
-                    trailing={formatPrice(productPrice)}
-                  />
-
-                  <div className="rounded-[22px] border border-[#C9C9C9] p-3">
-                    <div className="flex items-center gap-2">
-                      <input
-                        value={couponCode}
-                        onChange={(e) => {
-                          setCouponCode(e.target.value.toUpperCase());
-                          setCouponResult(null);
-                        }}
-                        placeholder="Coupon code"
-                        className="h-[38px] min-w-0 flex-1 bg-transparent px-2 text-[13px] font-semibold uppercase tracking-[0.08em] outline-none placeholder:text-[#999999]"
-                      />
-
-                      <button
-                        type="button"
-                        onClick={handleApplyCoupon}
-                        disabled={couponLoading}
-                        className="h-[38px] rounded-full bg-[#111111] px-5 text-[12px] font-semibold text-white disabled:opacity-60"
-                      >
-                        {couponLoading ? "Checking" : "Apply"}
-                      </button>
-                    </div>
-
-                    {couponResult && (
-                      <p
-                        className={`px-2 pt-2 text-[12px] font-medium ${
-                          couponResult.valid ? "text-[#006039]" : "text-red-600"
-                        }`}
-                      >
-                        {couponResult.message ||
-                          (couponResult.valid
-                            ? "Coupon applied"
-                            : "Coupon is not valid")}
-                      </p>
-                    )}
-                  </div>
-                </div> */}
 
                 <button
                   type="button"
@@ -997,11 +965,11 @@ const ProductDetails: React.FC = () => {
                                 ? "border-[#111111]"
                                 : "border-transparent hover:border-[#CFCFCF]"
                             }`}
-                            title={getProductTitle(item)}
+                            title={toTitleCase(getProductTitle(item))}
                           >
                             <img
                               src={getFullImageUrl(itemImage)}
-                              alt={getProductTitle(item)}
+                              alt={toTitleCase(getProductTitle(item))}
                               className="h-full w-full object-contain p-2"
                             />
                           </button>
@@ -1073,7 +1041,8 @@ const ProductDetails: React.FC = () => {
           </div>
         </div>
       </section>
-      <CollectionHighlightsSection/>
+
+      <CollectionHighlightsSection />
 
       <section className="w-full py-12 md:py-16 bg-white">
         <div className="max-w-[1280px] mx-auto px-4 sm:px-5 2xl:px-0">
@@ -1099,7 +1068,7 @@ const ProductDetails: React.FC = () => {
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-x-4 md:gap-x-5 gap-y-8">
               {relatedProducts.map((item, index) => {
-                const itemTitle = getProductTitle(item);
+                const itemTitle = toTitleCase(getProductTitle(item));
                 const posterImage = getUploadedProductImage(item);
                 const itemSizePrices = normalizeSizePrices(item);
 
@@ -1148,7 +1117,7 @@ const ProductDetails: React.FC = () => {
                             {item.category || "Muro Poster"}
                           </p>
 
-                          <h3 className="mt-1 text-[15px] font-semibold text-[#111111] leading-snug">
+                          <h3 className="muro-apple-product-title mt-1 text-[15px] text-[#111111] leading-snug">
                             {itemTitle}
                           </h3>
                         </div>
