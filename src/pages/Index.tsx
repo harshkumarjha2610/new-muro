@@ -2127,7 +2127,7 @@ const Index: React.FC = () => {
           to="/products"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
-          Discover our Posters
+          Discover our posters
         </Link>
       </div>
 
@@ -2145,7 +2145,7 @@ const Index: React.FC = () => {
           to="/cutouts"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
-          Discover our Cutouts
+          Discover our cutouts
         </Link>
       </div>
 
@@ -2162,7 +2162,7 @@ const Index: React.FC = () => {
           to="/postcards"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
-          Discover our Postcard
+          Discover our postcard
         </Link>
       </div>
 

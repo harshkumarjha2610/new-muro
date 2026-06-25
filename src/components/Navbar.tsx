@@ -55,25 +55,26 @@ const defaultCategoryTree: CategoryTreeItem[] = [
     key: "Posters",
     id: "Posters",
     name: "Posters",
-    subcategories: [],
-  },
-  {
-    key: "aesthetic-and-vibe",
-    id: "aesthetic-and-vibe",
-    name: "Aesthetic & Vibe",
-    subcategories: [],
-  },
-  {
-    key: "love-and-connection",
-    id: "love-and-connection",
-    name: "Love & Connection",
-    subcategories: [],
-  },
-  {
-    key: "kids-learning-and-confidence",
-    id: "kids-learning-and-confidence",
-    name: "Kids – Learning & Confidence",
-    subcategories: [],
+    subcategories: [
+      {
+        id: "aesthetic-and-vibe",
+        subcategory_id: "aesthetic-and-vibe",
+        category_id: "Posters",
+        name: "Aesthetic & Vibe",
+      },
+      {
+        id: "love-and-connection",
+        subcategory_id: "love-and-connection",
+        category_id: "Posters",
+        name: "Love & Connection",
+      },
+      {
+        id: "kids-learning-and-confidence",
+        subcategory_id: "kids-learning-and-confidence",
+        category_id: "Posters",
+        name: "Kids – Learning & Confidence",
+      },
+    ],
   },
 ];
 
@@ -403,7 +404,7 @@ const Navbar = () => {
               <Menu className="h-6 w-6 text-black" strokeWidth={1.5} />
             </button>
 
-            <nav className="hidden items-center gap-5 text-[14px] lg:flex xl:gap-7">
+            <nav className="hidden items-center gap-5 text-[14px] min-[1175px]:flex xl:gap-7">
               <div
                 className="group relative flex h-[80px] items-center"
                 onMouseEnter={() => setHoveredCategoryKey("")}
@@ -549,7 +550,10 @@ const Navbar = () => {
               <Heart className="h-5 w-5 text-current" strokeWidth={1.7} />
             </button>
 
-            <div className="relative hidden items-center lg:flex" ref={profileRef}>
+            <div
+              className="relative hidden items-center min-[1175px]:flex"
+              ref={profileRef}
+            >
               {isLoggedIn ? (
                 <>
                   <button
