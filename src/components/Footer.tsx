@@ -187,7 +187,7 @@ const Footer = () => {
               <img
                 src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/paytm-icon.png"
                 alt="Paytm"
-                className="h-[8px] w-auto object-contain"
+                className="h-[30px] w-auto object-contain"
                 loading="lazy"
               />
               <img
