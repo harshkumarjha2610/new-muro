@@ -52,27 +52,27 @@ let navbarCartCountLoadedOnce = false;
 
 const defaultCategoryTree: CategoryTreeItem[] = [
   {
-    key: "Posters",
-    id: "Posters",
-    name: "Posters",
+    key: "Motivational and Mindset",
+    id: "Motivational and Mindset",
+    name: "Motivational and Mindset",
     subcategories: [
       {
-        id: "aesthetic-and-vibe",
-        subcategory_id: "aesthetic-and-vibe",
-        category_id: "Posters",
-        name: "Aesthetic & Vibe",
+        id: "Unstoppable Mindset",
+        subcategory_id: "Unstoppable Mindset",
+        category_id: "Motivational and Mindset",
+        name: "Unstoppable Mindset",
       },
       {
-        id: "love-and-connection",
-        subcategory_id: "love-and-connection",
-        category_id: "Posters",
-        name: "Love & Connection",
+        id: "Discipline and Focus",
+        subcategory_id: "Discipline and Focus",
+        category_id: "Motivational and mindset",
+        name: "Discipline and Focus",
       },
       {
-        id: "kids-learning-and-confidence",
-        subcategory_id: "kids-learning-and-confidence",
-        category_id: "Posters",
-        name: "Kids – Learning & Confidence",
+        id: "Work Ethic and Hustle",
+        subcategory_id: "Work Ethic and Hustle",
+        category_id: "Motivational and mindset",
+        name: "Work Ethic and Hustle",
       },
     ],
   },
@@ -430,7 +430,7 @@ const Navbar = () => {
                       >
                         <NavLink
                           to={`/products?cat=${encodeURIComponent(cat.name)}`}
-                          className={`flex items-center justify-between gap-3 border-l-2 px-6 py-3 font-montserrat text-[11px] font-semibold uppercase tracking-[0.07em] text-[#111] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039] ${isActive
+                          className={`flex items-center justify-between gap-3 border-l-2 px-6 py-3 font-montserrat text-[14px] font-medium text-[#101010] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039] ${isActive
                             ? "border-[#006039] bg-[#F4F4F2] text-[#006039]"
                             : "border-transparent"
                             }`}
@@ -450,7 +450,7 @@ const Navbar = () => {
                     activeHoveredCategory.subcategories.length > 0 && (
                       <div className="absolute left-[calc(100%-1px)] top-0 w-[290px] overflow-hidden rounded-br-[18px] border border-[#E5E5E5] bg-white py-3 shadow-xl">
                         <div className="mb-2 border-b border-[#F0F0F0] px-6 pb-2">
-                          <p className="font-montserrat text-[10px] font-bold uppercase tracking-[0.18em] text-[#1C1C1C]/45">
+                          <p className="font-montserrat text-[14px] font-medium text-[#101010]/45">
                             {activeHoveredCategory.name}
                           </p>
                         </div>
@@ -461,7 +461,7 @@ const Navbar = () => {
                             to={`/products?cat=${encodeURIComponent(
                               activeHoveredCategory.name,
                             )}&subcat=${encodeURIComponent(subcat.name)}`}
-                            className="block border-l-2 border-transparent px-6 py-2.5 font-montserrat text-[11px] font-medium uppercase tracking-[0.07em] text-[#111] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039]"
+                            className="block border-l-2 border-transparent px-6 py-2.5 font-montserrat text-[14px] font-medium text-[#101010] transition-colors hover:bg-[#F4F4F2] hover:text-[#006039]"
                             activeClassName="border-l-2 border-[#006039] bg-[#F4F4F2] text-[#006039]"
                           >
                             {subcat.name}
@@ -829,7 +829,7 @@ const Navbar = () => {
                                           subcat.name,
                                         )}`}
                                         onClick={() => setMobileOpen(false)}
-                                        className="py-0.5 text-[13px] font-medium text-[#666] hover:text-[#006039]"
+                                        className="py-0.5 text-[14px] font-medium text-[#666] hover:text-[#006039]"
                                       >
                                         {subcat.name}
                                       </Link>
