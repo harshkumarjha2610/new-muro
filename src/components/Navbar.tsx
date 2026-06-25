@@ -13,8 +13,6 @@ import {
 import { useState, useEffect, useRef, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { NavLink } from "@/components/NavLink";
-import { API } from "@/services/api";
-import { cartApi } from "@/services/cartApi";
 import logoImg from "@/assets/logo.png";
 import poster1Img from "@/assets/poster-1.jpg";
 import poster2Img from "@/assets/poster-2.jpg";
@@ -206,55 +204,9 @@ const Navbar = () => {
   };
 
   const fetchCartCount = async () => {
-    const token = localStorage.getItem("token");
-
-    if (!token) {
-      setCartCount(0);
-      return;
-    }
-
-    if (cartCountFetchingRef.current) return;
-
-    cartCountFetchingRef.current = true;
-
-    try {
-      const res = await cartApi.getCart();
-
-      const count = Number(
-        res?.data?.summary?.item_count ??
-        res?.summary?.item_count ??
-        res?.data?.item_count ??
-        0,
-      );
-
-      setCartCount(Number.isFinite(count) && count > 0 ? count : 0);
-    } catch (error) {
-      console.error("Failed to fetch cart count:", error);
-      setCartCount(0);
-    } finally {
-      cartCountFetchingRef.current = false;
-    }
+    // API calls removed
+    setCartCount(0);
   };
-
-  useEffect(() => {
-    const fetchActiveOffer = async () => {
-      try {
-        const response = await fetch(`${API_BASE}/offers/active`);
-        const json = await response.json().catch(() => null);
-
-        const rows = Array.isArray(json?.data)
-          ? json.data
-          : json?.data?.items || [];
-
-        setActiveOffer(rows[0] || null);
-      } catch (error) {
-        console.error("Failed to fetch active offer:", error);
-        setActiveOffer(null);
-      }
-    };
-
-    fetchActiveOffer();
-  }, []);
 
   useEffect(() => {
     setCategoryTree(defaultCategoryTree);
@@ -801,7 +753,7 @@ const Navbar = () => {
                                 onClick={() => toggleCategoryExpand(cat.key)}
                                 className="flex w-full items-center justify-between py-2 text-left text-[14px] font-semibold tracking-wide text-black hover:text-[#006039]"
                               >
-                                <span>{cat.name}</span>
+                                <span>{cat.name.toLowerCase().includes("motivational") ? "Posters" : cat.name}</span>
 
                                 <ChevronRight
                                   size={15}
@@ -844,7 +796,7 @@ const Navbar = () => {
                               onClick={() => setMobileOpen(false)}
                               className="block py-2 text-[14px] font-semibold tracking-wide text-black hover:text-[#006039]"
                             >
-                              {cat.name}
+                              {cat.name.toLowerCase().includes("motivational") ? "Posters" : cat.name}
                             </Link>
                           )}
                         </div>

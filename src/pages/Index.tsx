@@ -1327,7 +1327,8 @@ const EditorialTile = ({
         <img
           src={getFullImageUrl(imageUrl)}
           alt={title}
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.045]"
+          className="absolute inset-0 h-full w-full object-cover transition-transform ease-out group-hover:scale-[1.045]"
+          style={{ transitionDuration: "1200ms" }}
           loading="lazy"
         />
         <div className="absolute inset-0 bg-black/10 transition-colors group-hover:bg-black/20" />

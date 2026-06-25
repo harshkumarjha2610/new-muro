@@ -74,7 +74,8 @@ const About: React.FC = () => {
               <img
                 src={aboutHero}
                 alt="Minimalist wall art"
-                className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] hover:scale-[1.035]"
+                className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-[1.035]"
+                style={{ transitionDuration: "1200ms" }}
               />
             </motion.div>
 
@@ -213,7 +214,8 @@ const About: React.FC = () => {
             <img
               src={aboutInterior}
               alt="Atmosphere"
-              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] hover:scale-[1.035]"
+              className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-[1.035]"
+              style={{ transitionDuration: "1200ms" }}
             />
 
             <div className="absolute bottom-6 left-6 rounded-full bg-white px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#111111] shadow-sm">
