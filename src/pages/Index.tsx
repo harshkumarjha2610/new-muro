@@ -2174,6 +2174,7 @@ const Index: React.FC = () => {
         limit={PRODUCT_ROW_LIMIT}
       />
 
+      {/* Why Muro section commented out
       <section className={sectionSpacingClass}>
         <div className={pageContainerClass}>
           <SectionHeading
@@ -2211,7 +2212,9 @@ const Index: React.FC = () => {
           </div>
         </div>
       </section>
+      */}
 
+      {/* Customer Reviews section commented out
       <section className={sectionSpacingClass}>
         <div className={pageContainerClass}>
           <SectionHeading
@@ -2223,7 +2226,9 @@ const Index: React.FC = () => {
           <HomeReviewsSection />
         </div>
       </section>
+      */}
 
+      {/* Frequently Asked Questions section commented out
       <section className={sectionSpacingClass}>
         <div className={pageContainerClass}>
           <SectionHeading
@@ -2235,6 +2240,7 @@ const Index: React.FC = () => {
           <HomeFAQSection />
         </div>
       </section>
+      */}
 
       <NewsletterPopup
         open={newsletterOpen}

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Globe } from "lucide-react";
+import logoImg from "@/assets/logo.png";
 
 const Footer = () => {
   const handleNewsletterSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -157,9 +158,11 @@ const Footer = () => {
 
         <div className="mt-[34px] flex flex-col items-center justify-center text-center">
           <Link to="/" className="inline-flex items-center justify-center">
-            <span className="text-center text-[42px] font-bold uppercase leading-none tracking-[4px] text-black md:text-[48px]">
-              MURO POSTER
-            </span>
+            <img
+              src={logoImg}
+              alt="MURO Poster"
+              className="h-[42px] w-auto max-w-[160px] object-contain transition-all lg:h-[66px] lg:max-w-[260px]"
+            />
           </Link>
 
           <p className="mt-[26px] max-w-[900px] text-center text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">

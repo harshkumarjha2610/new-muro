@@ -69,9 +69,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id }) => {
           return (
             <div
               key={item.q}
-              className={`transition-all duration-300 ${
-                index !== 0 ? "border-t border-[#1C1C1C]/10" : ""
-              }`}
+              className={`transition-all duration-300 ${index !== 0 ? "border-t border-[#1C1C1C]/10" : ""
+                }`}
             >
               <button
                 type="button"
@@ -92,9 +91,8 @@ const FAQSection: React.FC<FAQSectionProps> = ({ id }) => {
               </button>
 
               <div
-                className={`overflow-hidden transition-all duration-300 ease-in-out ${
-                  isOpen ? "max-h-[220px] opacity-100" : "max-h-0 opacity-0"
-                }`}
+                className={`overflow-hidden transition-all duration-300 ease-in-out ${isOpen ? "max-h-[220px] opacity-100" : "max-h-0 opacity-0"
+                  }`}
               >
                 <div className="px-5 md:px-7 pb-5 md:pb-6">
                   <p className="text-[14px] md:text-[15px] leading-relaxed text-[#1C1C1C]/65 max-w-[900px]">
