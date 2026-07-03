@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
-import { motion } from "framer-motion";
-import { Heart } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Heart, ChevronLeft, ChevronRight, SlidersHorizontal, X, ChevronDown } from "lucide-react";
 import { API } from "@/services/api";
 
 const API_BASE =
@@ -265,6 +265,8 @@ const Products: React.FC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [sortBy] = useState<string>("default");
   const [selectedSize] = useState<string>("ALL");
+  const [filterOpen, setFilterOpen] = useState<boolean>(false);
+  const [expandedFilter, setExpandedFilter] = useState<string | null>(null);
 
   const itemsPerPage = 40;
 
@@ -357,25 +359,29 @@ const Products: React.FC = () => {
   );
 
   const availableSubcats = useMemo(() => {
-    if (!currentCatObj) return [];
-
-    return subcategories
-      .filter(
+    let list = [];
+    if (!currentCatObj) {
+      list = subcategories;
+    } else {
+      list = subcategories.filter(
         (sub) =>
           String(sub.category_id) ===
           String(currentCatObj.id || currentCatObj.category_id),
-      )
-      .filter((sub, index, arr) => {
-        const name = String(sub.name || "").trim().toUpperCase();
+      );
+    }
 
-        if (!name || name === selectedCategory) return false;
+    return list.filter((sub, index, arr) => {
+      const name = String(sub.name || "").trim().toUpperCase();
 
-        return (
-          arr.findIndex(
-            (item) => String(item.name || "").trim().toUpperCase() === name,
-          ) === index
-        );
-      });
+      if (!name) return false;
+      if (currentCatObj && name === selectedCategory) return false;
+
+      return (
+        arr.findIndex(
+          (item) => String(item.name || "").trim().toUpperCase() === name,
+        ) === index
+      );
+    });
   }, [currentCatObj, selectedCategory, subcategories]);
 
   const filteredProducts = useMemo(() => {
@@ -438,10 +444,9 @@ const Products: React.FC = () => {
   const totalItems = filteredProducts.length;
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const visibleCount = currentPage * itemsPerPage;
 
-  const currentItems = sortedProducts.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = sortedProducts.slice(0, visibleCount);
 
   const pageHeading =
     selectedSubCategory !== "ALL"
@@ -461,34 +466,16 @@ const Products: React.FC = () => {
             selectedCategory,
           )} posters for modern spaces. Choose from premium wall art prints designed for homes, offices, studios and creative rooms.`;
 
-  const handlePageChange = (newPage: number) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth",
-      });
+  const handleShowMore = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
     }
   };
 
-  const getPageNumbers = () => {
-    let start = Math.max(1, currentPage - 2);
-    let end = Math.min(totalPages, start + 4);
-
-    if (end - start < 4) {
-      start = Math.max(1, end - 4);
-    }
-
-    const pages = [];
-
-    for (let i = start; i <= end; i += 1) {
-      pages.push(i);
-    }
-
-    return pages;
-  };
+  const hasMore = visibleCount < totalItems;
 
   return (
+    <>
     <main className="min-h-screen bg-white text-[#101010] selection:bg-[#101010] selection:text-white">
       <style>
         {`
@@ -498,63 +485,115 @@ const Products: React.FC = () => {
             letter-spacing: 0 !important;
             text-transform: none !important;
           }
+          #muro-category-scroll::-webkit-scrollbar {
+            display: none;
+          }
         `}
       </style>
 
-      <section className="mx-auto max-w-[1320px] px-5 pb-8 pt-12 md:px-7 md:pb-10 md:pt-16 lg:px-8">
+      <section className="mx-auto max-w-[1320px] px-5 pb-6 pt-12 md:px-7 md:pb-8 md:pt-16 lg:px-8">
         <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
           <motion.h1
             key={`${selectedCategory}-${selectedSubCategory}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="text-[34px] uppercase leading-none tracking-[2px] text-[#101010] md:text-[42px] lg:text-[48px]"
+            className="text-[36px] font-normal leading-tight text-[#101010] md:text-[44px] lg:text-[48px]"
             style={{ fontFamily: serifFont }}
           >
-            {String(pageHeading).toUpperCase()}
+            {pageHeading}
           </motion.h1>
 
-          <p className="max-w-[670px] text-[14px] font-medium leading-relaxed text-[#101010] md:text-[15px]">
+          <p className="max-w-[670px] text-[13px] font-normal leading-relaxed text-[#1C1C1C]/75 md:text-[14px]">
             {pageDescription}
           </p>
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
-        {/* FILTERS LEFT ALIGNED FROM START */}
-        {availableSubcats.length > 0 && (
-          <div className="flex w-full flex-wrap items-center justify-start gap-x-[42px] gap-y-3 pb-5">
+      {/* HORIZONTAL CATEGORY SCROLL BAR */}
+      <section className="mx-auto max-w-[1320px] px-5 mb-8 md:px-7 lg:px-8">
+        <div className="relative flex items-center border-b border-[#E5E5E5] pb-4">
+          {/* Left Arrow */}
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center text-[#101010] hover:opacity-60"
+            onClick={() => {
+              const el = document.getElementById("muro-category-scroll");
+              if (el) el.scrollBy({ left: -150, behavior: "smooth" });
+            }}
+          >
+            <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+
+          {/* Scrollable Container */}
+          <div
+            id="muro-category-scroll"
+            className="flex-1 overflow-x-auto flex items-center gap-8 px-2"
+            style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+          >
+            {/* Show "All" as first option */}
+            <button
+              type="button"
+              onClick={handleClearFilters}
+              className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
+                selectedSubCategory === "ALL"
+                  ? "border-b-2 border-black pb-0.5 font-semibold text-black"
+                  : "text-[#77736B] hover:text-black"
+              }`}
+            >
+              All Posters
+            </button>
+
             {availableSubcats.map((sub) => {
               const name = sub.name || "";
               const nameUpper = name.toUpperCase();
+              const isActive = selectedSubCategory === nameUpper;
 
               return (
                 <button
                   key={sub.id || name}
                   type="button"
                   onClick={() => handleSubCategoryClick(nameUpper)}
-                  className={`text-left text-[13px] tracking-wide transition-colors hover:underline ${
-                    selectedSubCategory === nameUpper
-                      ? "font-bold text-[#006039]"
-                      : "font-medium text-[#101010]"
+                  className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
+                    isActive
+                      ? "border-b-2 border-black pb-0.5 font-semibold text-black"
+                      : "text-[#77736B] hover:text-black"
                   }`}
                 >
                   {toTitleCase(name)}
                 </button>
               );
             })}
-
-            {selectedSubCategory !== "ALL" && (
-              <button
-                type="button"
-                onClick={handleClearFilters}
-                className="text-left text-[13px] font-medium tracking-wide text-[#77736B] transition-colors hover:text-[#101010] hover:underline"
-              >
-                Clear
-              </button>
-            )}
           </div>
-        )}
+
+          {/* Right Arrow */}
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center text-[#101010] hover:opacity-60"
+            onClick={() => {
+              const el = document.getElementById("muro-category-scroll");
+              if (el) el.scrollBy({ left: 150, behavior: "smooth" });
+            }}
+          >
+            <ChevronRight className="h-4 w-4" strokeWidth={2.5} />
+          </button>
+
+          {/* Vertical Separator */}
+          <div className="h-4 w-[1px] bg-[#E5E5E5] mx-3" />
+
+          {/* Filter Icon */}
+          <button
+            type="button"
+            className="flex h-8 w-8 items-center justify-center text-[#101010] hover:opacity-60"
+            aria-label="Filters"
+            onClick={() => setFilterOpen(true)}
+          >
+            <SlidersHorizontal className="h-4 w-4" strokeWidth={2} />
+          </button>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
 
         {loading ? (
           <div className="flex min-h-[45vh] items-center justify-center">
@@ -579,44 +618,148 @@ const Products: React.FC = () => {
           </div>
         )}
 
-        {totalPages > 1 && (
-          <div className="mt-14 flex items-center justify-center gap-2">
-            <button
-              type="button"
-              disabled={currentPage === 1}
-              onClick={() => handlePageChange(currentPage - 1)}
-              className="rounded-full border border-[#101010] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#101010] transition-colors hover:bg-[#101010] hover:text-white disabled:pointer-events-none disabled:opacity-35"
-            >
-              Prev
-            </button>
+        {/* Show More section */}
+        {totalItems > 0 && (
+          <div className="mt-14 flex flex-col items-center gap-5">
+            <p className="text-[14px] text-[#101010]">
+              You have viewed{" "}
+              <span className="font-semibold">
+                {Math.min(visibleCount, totalItems)}
+              </span>{" "}
+              of{" "}
+              <span className="font-semibold">{totalItems}</span>{" "}
+              products
+            </p>
 
-            {getPageNumbers().map((page) => (
+            {/* Progress bar */}
+            <div className="h-[3px] w-full max-w-[320px] bg-[#E5E5E5] rounded-full overflow-hidden">
+              <div
+                className="h-full bg-[#101010] rounded-full transition-all duration-500"
+                style={{
+                  width: `${Math.min((Math.min(visibleCount, totalItems) / totalItems) * 100, 100)}%`,
+                }}
+              />
+            </div>
+
+            {hasMore && (
               <button
-                key={page}
                 type="button"
-                onClick={() => handlePageChange(page)}
-                className={`h-9 w-9 rounded-full border text-[12px] font-semibold transition-colors ${
-                  currentPage === page
-                    ? "border-[#101010] bg-[#101010] text-white"
-                    : "border-[#101010] text-[#101010] hover:bg-[#101010] hover:text-white"
-                }`}
+                onClick={handleShowMore}
+                className="rounded-full border border-[#101010] px-8 py-2.5 text-[13px] font-semibold text-[#101010] transition-colors hover:bg-[#101010] hover:text-white"
               >
-                {page}
+                Show more
               </button>
-            ))}
-
-            <button
-              type="button"
-              disabled={currentPage === totalPages}
-              onClick={() => handlePageChange(currentPage + 1)}
-              className="rounded-full border border-[#101010] px-5 py-2 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#101010] transition-colors hover:bg-[#101010] hover:text-white disabled:pointer-events-none disabled:opacity-35"
-            >
-              Next
-            </button>
+            )}
           </div>
         )}
       </section>
     </main>
+
+    {/* FILTER SIDE PANEL */}
+    <AnimatePresence>
+      {filterOpen && (
+        <>
+          {/* Backdrop overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-[80] bg-black/30"
+            onClick={() => setFilterOpen(false)}
+          />
+
+          {/* Slide-in panel */}
+          <motion.aside
+            initial={{ x: "100%" }}
+            animate={{ x: 0 }}
+            exit={{ x: "100%" }}
+            transition={{ type: "tween", duration: 0.3 }}
+            className="fixed right-0 top-0 z-[90] flex h-screen w-[380px] max-w-[90vw] flex-col bg-white shadow-2xl"
+          >
+            {/* Header */}
+            <div className="flex h-[64px] shrink-0 items-center justify-between border-b border-[#E5E5E5] px-6">
+              <div className="flex items-center gap-2">
+                <span className="text-[16px] font-semibold text-[#101010]">Filter</span>
+                <span className="text-[14px] font-normal text-[#77736B]">0</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setFilterOpen(false)}
+                className="inline-flex h-8 w-8 items-center justify-center rounded-full hover:bg-[#F4F4F2]"
+                aria-label="Close filters"
+              >
+                <X className="h-5 w-5 text-[#101010]" strokeWidth={1.5} />
+              </button>
+            </div>
+
+            {/* Filter options */}
+            <div className="flex-1 overflow-y-auto px-6 py-2">
+              {[
+                "Colour",
+                "Occasion",
+                "Orientation",
+                "Price",
+                "Room",
+                "Size",
+                "Theme",
+              ].map((filterName) => (
+                <div key={filterName} className="border-b border-[#F0F0F0]">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setExpandedFilter(
+                        expandedFilter === filterName ? null : filterName,
+                      )
+                    }
+                    className="flex w-full items-center justify-between py-4 text-left"
+                  >
+                    <span className="text-[14px] font-medium text-[#101010]">
+                      {filterName}
+                    </span>
+                    <ChevronDown
+                      className={`h-4 w-4 text-[#77736B] transition-transform duration-200 ${
+                        expandedFilter === filterName ? "rotate-180" : ""
+                      }`}
+                      strokeWidth={2}
+                    />
+                  </button>
+
+                  {/* Expanded content placeholder */}
+                  <AnimatePresence>
+                    {expandedFilter === filterName && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="pb-4 text-[13px] text-[#77736B]">
+                          No {filterName.toLowerCase()} filters available yet.
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+
+            {/* Footer button */}
+            <div className="shrink-0 border-t border-[#E5E5E5] p-5">
+              <button
+                type="button"
+                onClick={() => setFilterOpen(false)}
+                className="flex h-[50px] w-full items-center justify-center rounded-full bg-[#101010] text-[14px] font-semibold text-white transition-colors hover:bg-[#333]"
+              >
+                View results ({totalItems})
+              </button>
+            </div>
+          </motion.aside>
+        </>
+      )}
+    </AnimatePresence>
+    </>  
   );
 };
 
