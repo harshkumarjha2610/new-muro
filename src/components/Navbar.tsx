@@ -340,11 +340,12 @@ const Navbar = () => {
 
   return (
     <header className="sticky top-0 z-50 w-full bg-white">
-      <div className="flex min-h-[30px] w-full items-center justify-center bg-[#F1F1F1] px-4 py-1 text-center font-montserrat text-[11px] font-semibold text-black sm:text-[13px] md:text-[14px]">
+      <div className="flex min-h-[30px] w-full items-center justify-center bg-[#FAF182] px-4 py-1 text-center font-montserrat text-[11px] font-semibold text-black sm:text-[13px] md:text-[14px]">
         {announcementText}
       </div>
 
-      <div className="w-full border-b border-[#101010]/10 bg-white">
+      {/* <div className="w-full border-b border-[#101010]/10 bg-white"> */}
+      <div className="w-full bg-white">
         <div className="relative mx-auto flex h-[64px] w-full max-w-[1540px] items-center justify-between px-4 sm:px-5 lg:h-[80px] lg:px-6">
           <div className="flex min-w-0 flex-1 items-center gap-5 md:gap-7">
             <button
