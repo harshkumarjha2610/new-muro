@@ -165,7 +165,7 @@ const Footer = () => {
             />
           </Link>
 
-          <p className="mt-[26px] max-w-[900px] text-center text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
+          <p className="mt-[10px] max-w-[900px] text-center text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
             Copyright © 2026 MURO Poster. Operated by Saar Graphics, India. All rights reserved.
           </p>
         </div>
