@@ -15,6 +15,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import NotFound from "./pages/NotFound";
 import About from "./pages/About";
+import Sustainability from "./pages/Sustainability";
+import OurProducts from "./pages/OurProducts";
+import Collaborations from "./pages/Collaborations";
 import ShippingPolicy from "./pages/ShippingPolicy";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import RefundPolicy from "./pages/RefundPolicy";
@@ -52,6 +55,9 @@ const App = () => (
             <Route path="/login" element={<Auth />} />
             <Route path="/signup" element={<Auth />} />
             <Route path="/about" element={<About />} />
+            <Route path="/sustainability" element={<Sustainability />} />
+            <Route path="/our-products" element={<OurProducts />} />
+            <Route path="/collaborations" element={<Collaborations />} />
             <Route path="/postcards" element={<Postcards />} />
             <Route path="/postcards/:id" element={<PostcardDetails />} />
             <Route path="/cutouts" element={<Cutouts />} />

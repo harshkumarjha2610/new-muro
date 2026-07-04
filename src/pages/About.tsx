@@ -1,274 +1,116 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { motion, Variants } from "framer-motion";
-import { ArrowRight, Quote, Sparkles, Target, Eye } from "lucide-react";
-
-import aboutHero from "@/assets/about-hero.jpg";
-import aboutInterior from "@/assets/about-interior.jpg";
-
-const COLORS = {
-  page: "#FFFFFF",
-  paper: "#F2F2F2",
-  ink: "#111111",
-  muted: "#777777",
-  line: "#E6E6E6",
-  accent: "#F1F1F1",
-  green: "#006039",
-};
 
 const serifFont = "Georgia, 'Times New Roman', serif";
 
-const aboutContainerClass = "w-full px-[clamp(16px,10vw,170px)]";
-
-const mainHeadingClass =
-  "uppercase text-[40px] font-normal leading-[1.05] tracking-[2px] text-[#111111]";
+const containerClass = "max-w-[1200px] mx-auto px-4 md:px-8";
 
 const About: React.FC = () => {
-  const fadeIn: Variants = {
-    hidden: { opacity: 0, y: 28 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.75, ease: "easeOut" },
-    },
-  };
-
   return (
-    <main
-      className="min-h-screen bg-white text-[#111111] font-sans selection:bg-[#111111] selection:text-white"
-      style={{ backgroundColor: COLORS.page, color: COLORS.ink }}
-    >
-      <section className="border-b border-[#E6E6E6] bg-white">
-        <div className={`${aboutContainerClass} py-10 md:py-12`}>
-          <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeIn}
-            className="max-w-[1120px]"
-          >
-            <p className="mb-5 inline-flex rounded-full bg-[#F1F1F1] px-4 py-2 text-[11px] font-bold uppercase tracking-[0.18em] text-[#111111]">
-              About MURO Poster
-            </p>
-
-            <h1 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
-              Environment is not background. It is influence.
-            </h1>
-
-            <p className="mt-5 max-w-[680px] text-[15px] font-medium leading-relaxed text-black md:text-[17px]">
-              What surrounds you is shaping you — every day.
-            </p>
-          </motion.div>
+    <main className="min-h-screen bg-white text-[#111111] font-sans selection:bg-[#111111] selection:text-white pt-10 pb-20">
+      
+      {/* Section 1: About Us */}
+      <section className={`${containerClass} grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start mb-24`}>
+        <div className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden" style={{ aspectRatio: '3/4' }}>
+          <img 
+            src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2069&auto=format&fit=crop" 
+            alt="Interior" 
+            className="w-full h-full object-cover"
+          />
         </div>
-      </section>
-
-      <section className="bg-white py-10 md:py-12">
-        <div className={aboutContainerClass}>
-          <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1fr)] lg:gap-12">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.97 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.75 }}
-              viewport={{ once: true }}
-              className="relative min-h-[460px] overflow-hidden rounded-[24px] bg-[#F2F2F2] md:min-h-[660px]"
-            >
-              <img
-                src={aboutHero}
-                alt="Minimalist wall art"
-                className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-[1.035]"
-                style={{ transitionDuration: "1200ms" }}
-              />
-            </motion.div>
-
-            <motion.div
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true }}
-              variants={fadeIn}
-              className="flex flex-col justify-center rounded-[24px] border border-[#E6E6E6] bg-white p-6 md:p-10 lg:p-12"
-            >
-              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-black">
-                The conviction
-              </p>
-
-              <h2 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
-                MURO POSTER was built on a simple belief: the space around you
-                quietly shapes who you become.
-              </h2>
-
-              <p className="mt-7 text-[16px] font-medium leading-relaxed text-black">
-                What you see every day doesn’t stay on the surface; it settles
-                into your mind, influencing how you think, feel and move through
-                life.
-              </p>
-
-              <p className="mt-5 text-[16px] font-medium leading-relaxed text-black">
-                Most people treat walls as something to fill, but we see them
-                differently. To us, they are part of your mental environment — a
-                place where ideas are reinforced and identity takes form.
-              </p>
-
-              <div className="mt-8 rounded-[22px] bg-[#F1F1F1] p-6">
-                <p
-                  className="text-[20px] font-normal italic leading-snug tracking-[2px] text-[#111111]"
-                  style={{ fontFamily: serifFont }}
-                >
-                  “When your environment reflects purpose, you naturally begin
-                  to live with it.”
-                </p>
-              </div>
-            </motion.div>
+        <div className="pt-10">
+          <h1 className="text-[36px] md:text-[44px] text-center md:text-left font-normal mb-8 text-[#111111]" style={{ fontFamily: serifFont }}>
+            About us
+          </h1>
+          <div className="space-y-6 text-[15px] md:text-[16px] leading-relaxed text-[#333333]">
+            <p>
+              Postery is a Swedish brand bringing together carefully curated and distinctive art prints. We are a curious and creative team based in Gothenburg, Sweden, and we believe in diversity, value and quality. We are united by our love for art, and we are passionate about trends, interiors and design that help create that personal space. We enjoy the aesthetics of the world, and we invite everyone to join and contribute — to explore the beauty of art and design.
+            </p>
+            <p>
+              Inspired by Scandinavian design heritage, we curate art prints that combine timeless aesthetics with contemporary creativity. Each collection is thoughtfully selected by our art directors, bringing together influences from modern art, design and visual culture. Our posters, frames and hanging accessories are designed to complement modern living spaces and to stand the test of time as staples of a thoughtfully curated home.
+            </p>
+            <p>
+              Over the years, Postery's collections and gallery walls have been featured in several respected interior and design publications, including <strong>Elle Decoration</strong>, <strong>The World of Interiors</strong>, <strong>Residence</strong>, <strong>Nya Rum</strong> and <strong>Bo Living</strong>. These features reflect our ongoing commitment to bringing inspiring art and thoughtful design into modern interiors.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="bg-[#111111] py-12 text-white md:py-14">
-        <div className={aboutContainerClass}>
-          <motion.div
-            initial={{ opacity: 0, y: 32 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.75 }}
-            className="mx-auto max-w-[1050px] text-center"
-          >
-            <Quote
-              className="mx-auto mb-7 h-11 w-11 text-[#F1F1F1]"
-              strokeWidth={1.5}
-            />
-
-            <h3
-              className="uppercase text-[40px] font-normal leading-[1.05] tracking-[2px] text-white"
-              style={{ fontFamily: serifFont }}
-            >
-              Most spaces are designed to look good, but very few are designed
-              to make you better.
-            </h3>
-
-            <p className="mx-auto mt-8 max-w-[860px] text-[16px] font-medium leading-relaxed text-white md:text-[18px]">
-              MURO exists to change that. Every piece we create is built to
-              reinforce a state of mind — clarity, discipline, calm, focus,
-              strength.
-            </p>
-          </motion.div>
-
-          <div className="mt-12 grid grid-cols-1 gap-4 md:grid-cols-3">
-            <ValueCard
-              icon={Eye}
-              title="Clarity"
-              text="Visual reminders that keep your direction visible."
-            />
-            <ValueCard
-              icon={Target}
-              title="Focus"
-              text="Minimal pieces that support your daily discipline."
-            />
-            <ValueCard
-              icon={Sparkles}
-              title="Atmosphere"
-              text="A cleaner environment for stronger intent."
-            />
-          </div>
-        </div>
-      </section>
-
-      <section className="bg-white py-12 md:py-14">
-        <div
-          className={`${aboutContainerClass} grid grid-cols-1 gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)] lg:gap-12`}
-        >
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeIn}
-            className="flex flex-col justify-center"
-          >
-            <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.22em] text-black">
-              Our mission
-            </p>
-
-            <h2 className={mainHeadingClass} style={{ fontFamily: serifFont }}>
-              We are not here to fill walls.
-            </h2>
-
-            <p className="mt-7 max-w-[680px] text-[17px] font-medium leading-relaxed text-black">
-              We are here to shape the atmosphere — to create spaces that
-              support becoming. MURO is for those who understand that growth is
-              a process, and the environment is an active participant in it.
-            </p>
-
-            <Link
-              to="/products"
-              className="mt-9 inline-flex h-[52px] w-fit items-center gap-3 rounded-full bg-[#111111] px-8 text-[12px] font-bold uppercase tracking-[0.18em] text-white transition-colors hover:bg-[#006039]"
-            >
-              Start shaping your space
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, scale: 0.97 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.75 }}
-            viewport={{ once: true }}
-            className="relative min-h-[420px] overflow-hidden rounded-[24px] bg-[#F2F2F2] md:min-h-[620px]"
-          >
-            <img
-              src={aboutInterior}
-              alt="Atmosphere"
-              className="absolute inset-0 h-full w-full object-cover transition-transform hover:scale-[1.035]"
-              style={{ transitionDuration: "1200ms" }}
-            />
-
-            <div className="absolute bottom-6 left-6 rounded-full bg-white px-5 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-[#111111] shadow-sm">
-              Est. 2026
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <section className="border-t border-[#E6E6E6] bg-[#F2F2F2] py-16 text-center md:py-20">
-        <div className={aboutContainerClass}>
-          <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.24em] text-black">
-            Final thought
+      {/* Section 2: Purpose and Partners */}
+      <section className={`${containerClass} mb-24 space-y-16`}>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-16 items-start">
+          <h2 className="text-[28px] font-normal text-[#111111]" style={{ fontFamily: serifFont }}>Our purpose</h2>
+          <p className="text-[15px] md:text-[16px] leading-relaxed text-[#333333]">
+            Our purpose is to make high-quality art accessible to homes around the world. We believe that beautiful design should be available to everyone and that art has the power to transform everyday spaces. At Postery, we aim to inspire creativity and help people discover pieces that reflect their personality and style. Our ambition is to share our passion for art and design while making it easier for people everywhere to create interiors that feel personal, inspiring and unique.
           </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-6 md:gap-16 items-start">
+          <h2 className="text-[28px] font-normal text-[#111111]" style={{ fontFamily: serifFont }}>Our partners</h2>
+          <p className="text-[15px] md:text-[16px] leading-relaxed text-[#333333]">
+            Collaboration is an important part of Postery's journey. Over the years we have worked with selected global retailers and creative partners to bring curated art collections to new audiences. Our collaborations include projects with international brands such as <strong>H&M</strong>, <strong>Lefties (Inditex)</strong> and <strong>Lagerhaus</strong>, where Postery collections have been introduced in retail environments across different markets. Through these partnerships we continue to explore new ways of sharing art and design with a wider community.
+          </p>
+        </div>
+      </section>
 
-          <h2
-            className="mx-auto max-w-[980px] uppercase text-[40px] font-normal leading-[1.08] tracking-[2px] text-[#111111]"
-            style={{ fontFamily: serifFont }}
-          >
-            Choose what surrounds you with intention. It is already shaping who
-            you are becoming.
-          </h2>
+      {/* Section 3: Full width image banner */}
+      <section className={`${containerClass} mb-24`}>
+        <div className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[16/9] md:aspect-[2.5/1]">
+          <img 
+            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" 
+            alt="Gallery Wall" 
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="mt-12 text-center max-w-[800px] mx-auto">
+          <p className="text-[15px] md:text-[16px] leading-relaxed text-[#333333] mb-8 font-medium">
+            If you are looking for inspiration for your next art print or ideas for styling your home, our Magazine is where creativity and design come together. Through artist features, styling guides and curated interiors, we share inspiration for creating personal spaces with posters and gallery walls.
+          </p>
+          <button className="px-8 py-3 rounded-full border border-[#111111] text-[#111111] hover:bg-[#111111] hover:text-white transition-colors text-[14px] font-medium">
+            Discover our Magazine
+          </button>
+        </div>
+      </section>
+
+      {/* Section 4: Three columns (Sustainability, Products, Collaborations) */}
+      <section className={`${containerClass} mb-24`}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
+          {/* Item 1 */}
+          <div>
+            <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+              <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" alt="Sustainability" className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-[28px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Sustainability</h3>
+            <p className="text-[15px] leading-relaxed text-[#333333] mb-6 h-16">
+              Learn how we work to reduce our environmental impact and improve the way our products are made.
+            </p>
+            <Link to="/sustainability" className="text-[13px] font-bold tracking-wider uppercase text-[#111111] hover:underline">Read More</Link>
+          </div>
+          {/* Item 2 */}
+          <div>
+            <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+              <img src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1843&auto=format&fit=crop" alt="Our products" className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-[28px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Our products</h3>
+            <p className="text-[15px] leading-relaxed text-[#333333] mb-6 h-16">
+              Discover the materials, craftsmanship and design behind our posters, frames and hanging accessories.
+            </p>
+            <Link to="/our-products" className="text-[13px] font-bold tracking-wider uppercase text-[#111111] hover:underline">Read More</Link>
+          </div>
+          {/* Item 3 */}
+          <div>
+            <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+              <img src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2070&auto=format&fit=crop" alt="Collaborations" className="w-full h-full object-cover" />
+            </div>
+            <h3 className="text-[28px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Collaborations</h3>
+            <p className="text-[15px] leading-relaxed text-[#333333] mb-6 h-16">
+              Discover the artists and creative collaborations that shape our collections and bring new artistic perspectives to Postery.
+            </p>
+            <Link to="/collaborations" className="text-[13px] font-bold tracking-wider uppercase text-[#111111] hover:underline">Read More</Link>
+          </div>
         </div>
       </section>
     </main>
   );
 };
-
-const ValueCard = ({
-  icon: Icon,
-  title,
-  text,
-}: {
-  icon: React.ElementType;
-  title: string;
-  text: string;
-}) => (
-  <div className="rounded-[24px] border border-white/10 bg-white/[0.06] p-7">
-    <div className="mb-8 flex h-12 w-12 items-center justify-center rounded-full bg-[#F1F1F1] text-[#111111]">
-      <Icon size={20} strokeWidth={1.8} />
-    </div>
-
-    <h4
-      className="uppercase text-[24px] font-normal leading-none tracking-[2px] text-white"
-      style={{ fontFamily: serifFont }}
-    >
-      {title}
-    </h4>
-
-    <p className="mt-4 text-[14px] font-medium leading-relaxed text-white">
-      {text}
-    </p>
-  </div>
-);
 
 export default About;
