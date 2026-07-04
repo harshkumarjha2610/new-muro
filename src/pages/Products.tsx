@@ -195,7 +195,6 @@ const ProductCard = ({
   const productPrice = getLowestProductPrice(product);
   const [imgIdx, setImgIdx] = React.useState(0);
   const [hovered, setHovered] = React.useState(false);
-  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const currentOffer = (product.active_offer ||
     activeOffer) as ActiveOffer | null;
@@ -204,22 +203,33 @@ const ProductCard = ({
   const title = toTitleCase(product.title || product.name || "Product");
   const brand = product.category || product.subcategory || "Muro Poster";
 
-  // Auto-cycle images on hover
-  React.useEffect(() => {
-    if (hovered && allImages.length > 1) {
-      intervalRef.current = setInterval(() => {
-        setImgIdx((prev) => (prev + 1) % allImages.length);
-      }, 700);
-    } else {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-      if (!hovered) setImgIdx(0);
-    }
-    return () => {
-      if (intervalRef.current) clearInterval(intervalRef.current);
-    };
-  }, [hovered, allImages.length]);
+  const handlePrev = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setImgIdx((prev) => (prev - 1 + allImages.length) % allImages.length);
+  };
+
+  const handleNext = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setImgIdx((prev) => (prev + 1) % allImages.length);
+  };
+
+  const handleMouseEnter = () => {
+    setHovered(true);
+    // Immediately jump to second image on hover if available
+    if (allImages.length > 1) setImgIdx(1);
+  };
+
+  const handleMouseLeave = () => {
+    setHovered(false);
+    setImgIdx(0);
+  };
 
   if (allImages.length === 0 || !productId) return null;
+
+  // When hovered, show full-bleed cover image; when not, show padded poster view
+  const isHovered = hovered && allImages.length > 1;
 
   return (
     <motion.div
@@ -233,57 +243,100 @@ const ProductCard = ({
         className="group block w-full"
       >
         <article className="w-full">
-          {/* Image container */}
+          {/* card-frame */}
           <div
-            className="relative w-full overflow-hidden rounded-[13px] bg-[#F3F3F1]"
+            className="relative w-full rounded-[13px] bg-[#F3F3F1] overflow-hidden"
             style={{ aspectRatio: '0.72' }}
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
           >
-            {/* Wishlist */}
+            {/* card-image: slides list */}
+            <ul className="absolute inset-0 m-0 p-0 list-none">
+              {allImages.map((src, i) => (
+                <li
+                  key={i}
+                  className="absolute inset-0"
+                  style={{
+                    opacity: i === imgIdx ? 1 : 0,
+                    zIndex: i === imgIdx ? 1 : 0,
+                    transition: 'opacity 0s',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: isHovered ? '0' : '48px',
+                  }}
+                >
+                  <img
+                    src={src}
+                    alt={`${title} ${i + 1}`}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: isHovered ? 'cover' : 'contain',
+                      display: 'block',
+                      borderRadius: isHovered ? '13px' : '0',
+                    }}
+                    loading="lazy"
+                  />
+                </li>
+              ))}
+            </ul>
+
+            {/* card-image__arrows — always in DOM, shown/hidden via opacity */}
+            {allImages.length > 1 && (
+              <div
+                className="absolute inset-0 z-30 pointer-events-none"
+                style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.15s' }}
+              >
+                {/* Prev */}
+                <button
+                  type="button"
+                  aria-label="Previous image"
+                  onClick={handlePrev}
+                  className="pointer-events-auto absolute left-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-[#111] shadow-sm hover:bg-white transition-colors"
+                >
+                  <ChevronLeft className="h-4 w-4" strokeWidth={2} />
+                </button>
+                {/* Next */}
+                <button
+                  type="button"
+                  aria-label="Next image"
+                  onClick={handleNext}
+                  className="pointer-events-auto absolute right-2 top-1/2 -translate-y-1/2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/85 text-[#111] shadow-sm hover:bg-white transition-colors"
+                >
+                  <ChevronRight className="h-4 w-4" strokeWidth={2} />
+                </button>
+              </div>
+            )}
+
+            {/* Wishlist button */}
             <button
               type="button"
               aria-label="Add to wishlist"
               onClick={(event) => event.preventDefault()}
-              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-[#111]/70 backdrop-blur-sm transition-colors hover:bg-white hover:text-[#006039]"
+              className="absolute right-3 top-3 z-40 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-[#111]/70 backdrop-blur-sm transition-colors hover:bg-white hover:text-[#006039]"
             >
               <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
-            {/* All images with smooth crossfade */}
-            {allImages.map((src, i) => (
-              <div
-                key={i}
-                className="absolute inset-0 flex items-center justify-center px-7 py-8"
-                style={{
-                  opacity: i === imgIdx ? 1 : 0,
-                  zIndex: i === imgIdx ? 1 : 0,
-                  transition: 'opacity 0.6s ease-in-out',
-                }}
-              >
-                <img
-                  src={src}
-                  alt={`${title} ${i + 1}`}
-                  className="max-h-full max-w-full object-contain drop-shadow-[0_12px_14px_rgba(0,0,0,0.10)]"
-                  loading="lazy"
-                />
-              </div>
-            ))}
-
-            {/* Dot indicators — shown when hovered and >1 image */}
+            {/* card-image__indicators: dot indicators as <ol><li> */}
             {allImages.length > 1 && (
-              <div
-                className="absolute bottom-2.5 left-1/2 z-20 flex -translate-x-1/2 gap-1 transition-opacity duration-300"
-                style={{ opacity: hovered ? 1 : 0 }}
+              <ol
+                className="absolute bottom-2.5 left-1/2 z-40 flex -translate-x-1/2 gap-1 m-0 p-0 list-none"
+                style={{ opacity: hovered ? 1 : 0, transition: 'opacity 0.15s' }}
               >
                 {allImages.map((_, i) => (
-                  <div
-                    key={i}
-                    className="h-1.5 rounded-full bg-white transition-all duration-400"
-                    style={{ width: i === imgIdx ? '16px' : '6px', opacity: i === imgIdx ? 1 : 0.55 }}
-                  />
+                  <li key={i}>
+                    <button
+                      type="button"
+                      aria-label={`Go to image ${i + 1}`}
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); setImgIdx(i); }}
+                      className="block h-1.5 rounded-full bg-white transition-all duration-200"
+                      style={{ width: i === imgIdx ? '16px' : '6px', opacity: i === imgIdx ? 1 : 0.55 }}
+                    />
+                  </li>
                 ))}
-              </div>
+              </ol>
             )}
           </div>
 
