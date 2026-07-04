@@ -38,7 +38,7 @@ export const cartApi = {
     });
   },
 
-  addItem: (payload: { product_id: string | number; qty: number }) => {
+  addItem: (payload: { product_id: string | number; qty: number; size_id?: number }) => {
     return request("/cart/add", {
       method: "POST",
       body: JSON.stringify(payload),

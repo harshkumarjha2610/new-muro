@@ -96,6 +96,32 @@ const getUploadedProductImage = (product: any) => {
   );
 };
 
+const getProductImages = (product: any): string[] => {
+  const imageRows = Array.isArray(product?.product_images)
+    ? product.product_images
+    : Array.isArray(product?.images)
+      ? product.images
+      : [];
+
+  const sorted = imageRows
+    .slice()
+    .sort((a: any, b: any) => Number(a.sort_order || 0) - Number(b.sort_order || 0));
+
+  const urls = sorted
+    .map((img: any) => img.image_url || img.url || img.file_url || img.path || "")
+    .filter(Boolean);
+
+  const fallbacks = [
+    product?.main_poster_url,
+    product?.zoom_in_url,
+    product?.image_url,
+    product?.wall_poster_url,
+  ].filter(Boolean);
+
+  const merged = [...new Set([...urls, ...fallbacks])];
+  return merged.length > 0 ? merged : [];
+};
+
 const getLowestProductPrice = (product: any) => {
   const sizeRows = Array.isArray(product?.size_prices)
     ? product.size_prices
@@ -164,9 +190,12 @@ const ProductCard = ({
   activeOffer: ActiveOffer | null;
   index: number;
 }) => {
-  const productImage = getUploadedProductImage(product);
+  const allImages = getProductImages(product).map(getFullImageUrl);
   const productId = getProductId(product);
   const productPrice = getLowestProductPrice(product);
+  const [imgIdx, setImgIdx] = React.useState(0);
+  const [hovered, setHovered] = React.useState(false);
+  const intervalRef = React.useRef<ReturnType<typeof setInterval> | null>(null);
 
   const currentOffer = (product.active_offer ||
     activeOffer) as ActiveOffer | null;
@@ -175,7 +204,22 @@ const ProductCard = ({
   const title = toTitleCase(product.title || product.name || "Product");
   const brand = product.category || product.subcategory || "Muro Poster";
 
-  if (!productImage || !productId) return null;
+  // Auto-cycle images on hover
+  React.useEffect(() => {
+    if (hovered && allImages.length > 1) {
+      intervalRef.current = setInterval(() => {
+        setImgIdx((prev) => (prev + 1) % allImages.length);
+      }, 700);
+    } else {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      if (!hovered) setImgIdx(0);
+    }
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    };
+  }, [hovered, allImages.length]);
+
+  if (allImages.length === 0 || !productId) return null;
 
   return (
     <motion.div
@@ -189,38 +233,74 @@ const ProductCard = ({
         className="group block w-full"
       >
         <article className="w-full">
-          <div className="relative flex aspect-[0.78] w-full items-center justify-center overflow-hidden rounded-[13px] bg-[#F3F3F1] px-8 py-9 md:px-10 md:py-11">
+          {/* Image container */}
+          <div
+            className="relative w-full overflow-hidden rounded-[13px] bg-[#F3F3F1]"
+            style={{ aspectRatio: '0.72' }}
+            onMouseEnter={() => setHovered(true)}
+            onMouseLeave={() => setHovered(false)}
+          >
+            {/* Wishlist */}
             <button
               type="button"
               aria-label="Add to wishlist"
               onClick={(event) => event.preventDefault()}
-              className="absolute right-4 top-4 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#111]/70 transition-colors hover:bg-white hover:text-[#006039]"
+              className="absolute right-3 top-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-[#111]/70 backdrop-blur-sm transition-colors hover:bg-white hover:text-[#006039]"
             >
-              <Heart className="h-5 w-5" strokeWidth={1.45} />
+              <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
-            <img
-              src={getFullImageUrl(productImage)}
-              alt={title}
-              className="max-h-full max-w-full object-contain drop-shadow-[0_14px_16px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-              loading="lazy"
-            />
+            {/* All images with smooth crossfade */}
+            {allImages.map((src, i) => (
+              <div
+                key={i}
+                className="absolute inset-0 flex items-center justify-center px-7 py-8"
+                style={{
+                  opacity: i === imgIdx ? 1 : 0,
+                  zIndex: i === imgIdx ? 1 : 0,
+                  transition: 'opacity 0.6s ease-in-out',
+                }}
+              >
+                <img
+                  src={src}
+                  alt={`${title} ${i + 1}`}
+                  className="max-h-full max-w-full object-contain drop-shadow-[0_12px_14px_rgba(0,0,0,0.10)]"
+                  loading="lazy"
+                />
+              </div>
+            ))}
+
+            {/* Dot indicators — shown when hovered and >1 image */}
+            {allImages.length > 1 && (
+              <div
+                className="absolute bottom-2.5 left-1/2 z-20 flex -translate-x-1/2 gap-1 transition-opacity duration-300"
+                style={{ opacity: hovered ? 1 : 0 }}
+              >
+                {allImages.map((_, i) => (
+                  <div
+                    key={i}
+                    className="h-1.5 rounded-full bg-white transition-all duration-400"
+                    style={{ width: i === imgIdx ? '16px' : '6px', opacity: i === imgIdx ? 1 : 0.55 }}
+                  />
+                ))}
+              </div>
+            )}
           </div>
 
-          <div className="mt-4 grid grid-cols-[1fr_auto] items-start gap-4 px-1">
+          <div className="mt-3 grid grid-cols-[1fr_auto] items-start gap-3 px-1">
             <div className="min-w-0">
               <p className="truncate text-[13px] leading-none text-[#A19D96]">
                 {brand}
               </p>
 
-              <h3 className="muro-apple-product-title mt-2 min-h-[38px] text-[14px] leading-snug text-[#101010] md:text-[15px]">
+              <h3 className="muro-apple-product-title mt-1.5 min-h-[34px] text-[14px] leading-snug text-[#101010]">
                 {title}
               </h3>
             </div>
 
             <div className="text-right">
-              <div className="flex flex-wrap items-center justify-end gap-2">
-                <span className="text-[13px] font-semibold text-[#101010] md:text-[14px]">
+              <div className="flex flex-wrap items-center justify-end gap-1.5">
+                <span className="text-[13px] font-semibold text-[#101010]">
                   {formatPrice(offerPrice.finalPrice)}
                 </span>
 
@@ -491,28 +571,28 @@ const Products: React.FC = () => {
         `}
       </style>
 
-      <section className="mx-auto max-w-[1320px] px-5 pb-6 pt-12 md:px-7 md:pb-8 md:pt-16 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-[0.9fr_1.1fr] md:items-start">
+      <section className="mx-auto max-w-[1320px] px-5 pb-3 pt-5 md:px-7 md:pb-4 md:pt-6 lg:px-8">
+        <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr] md:items-center">
           <motion.h1
             key={`${selectedCategory}-${selectedSubCategory}`}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.35 }}
-            className="text-[36px] font-normal leading-tight text-[#101010] md:text-[44px] lg:text-[48px]"
-            style={{ fontFamily: serifFont }}
+            className="font-normal leading-tight text-[#101010]"
+            style={{ fontSize: '32.0924px', fontFamily: serifFont }}
           >
             {pageHeading}
           </motion.h1>
 
-          <p className="max-w-[670px] text-[13px] font-normal leading-relaxed text-[#1C1C1C]/75 md:text-[14px]">
+          <p className="max-w-[670px] font-normal leading-relaxed text-[#1C1C1C]/75 pl-8 md:pl-12" style={{ fontSize: '14px' }}>
             {pageDescription}
           </p>
         </div>
       </section>
 
       {/* HORIZONTAL CATEGORY SCROLL BAR */}
-      <section className="mx-auto max-w-[1320px] px-5 mb-8 md:px-7 lg:px-8">
-        <div className="relative flex items-center border-b border-[#E5E5E5] pb-4">
+      <section className="mx-auto max-w-[1320px] px-5 mb-5 md:px-7 lg:px-8">
+        <div className="relative flex items-center border-b border-[#E8E8E8] pb-3">
           {/* Left Arrow */}
           <button
             type="button"
@@ -525,10 +605,10 @@ const Products: React.FC = () => {
             <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
           </button>
 
-          {/* Scrollable Container */}
+          {/* Scrollable Container — no left-arrow, starts flush */}
           <div
             id="muro-category-scroll"
-            className="flex-1 overflow-x-auto flex items-center gap-8 px-2"
+            className="flex-1 overflow-x-auto flex items-center gap-7 pr-2"
             style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
           >
             {/* Show "All" as first option */}
@@ -537,8 +617,8 @@ const Products: React.FC = () => {
               onClick={handleClearFilters}
               className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
                 selectedSubCategory === "ALL"
-                  ? "border-b-2 border-black pb-0.5 font-semibold text-black"
-                  : "text-[#77736B] hover:text-black"
+                  ? "border-b-[1.5px] border-[#101010] pb-0.5 font-medium text-[#101010]"
+                  : "text-[#101010]/60 hover:text-[#101010]"
               }`}
             >
               All Posters
@@ -556,8 +636,8 @@ const Products: React.FC = () => {
                   onClick={() => handleSubCategoryClick(nameUpper)}
                   className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
                     isActive
-                      ? "border-b-2 border-black pb-0.5 font-semibold text-black"
-                      : "text-[#77736B] hover:text-black"
+                      ? "border-b-[1.5px] border-[#101010] pb-0.5 font-medium text-[#101010]"
+                      : "text-[#101010]/60 hover:text-[#101010]"
                   }`}
                 >
                   {toTitleCase(name)}
@@ -606,7 +686,7 @@ const Products: React.FC = () => {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-9 sm:gap-x-5 md:grid-cols-3 lg:grid-cols-4">
+          <div className="grid grid-cols-2 gap-x-2 gap-y-4 sm:gap-x-3 sm:gap-y-5 md:grid-cols-3 lg:grid-cols-4">
             {currentItems.map((product, index) => (
               <ProductCard
                 key={String(getProductId(product) || index)}

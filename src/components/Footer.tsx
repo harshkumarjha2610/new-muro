@@ -161,7 +161,8 @@ const Footer = () => {
             <img
               src={logoImg}
               alt="MURO Poster"
-              className="h-[42px] w-auto max-w-[160px] object-contain transition-all lg:h-[66px] lg:max-w-[260px]"
+              className="h-[36px] w-auto max-w-[140px] object-contain transition-all lg:h-[58px] lg:max-w-[230px]"
+
             />
           </Link>
 

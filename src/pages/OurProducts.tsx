@@ -5,11 +5,11 @@ const serifFont = "Georgia, 'Times New Roman', serif";
 const containerClass = "max-w-[1200px] mx-auto px-4 md:px-8";
 
 const BottomThreeColumns = () => (
-  <section className={`${containerClass} mb-24`}>
+  <section className={`${containerClass} mb-8 mt-16`}>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
       {/* Item 1 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="About us" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>About us</h3>
@@ -20,7 +20,7 @@ const BottomThreeColumns = () => (
       </div>
       {/* Item 2 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2070&auto=format&fit=crop" alt="Our products" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Our products</h3>
@@ -31,7 +31,7 @@ const BottomThreeColumns = () => (
       </div>
       {/* Item 3 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" alt="Sustainability" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Sustainability</h3>
@@ -117,22 +117,46 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Highlighted Product: The Wavy Frame */}
-      <section className="bg-[#f7f5f0] pt-16 pb-16 mb-24">
-        <div className="max-w-[1400px] mx-auto px-4 md:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-            <div className="lg:col-span-1 rounded-[12px] overflow-hidden" style={{ aspectRatio: '4/5' }}>
-              <img src="https://images.unsplash.com/photo-1629196914555-52054ff456e7?q=80&w=1964&auto=format&fit=crop" alt="Wavy Frame Setup" className="w-full h-full object-cover" />
+      <section className="bg-[#f0ede6] mb-24 overflow-hidden">
+        <div className="max-w-[1400px] mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr_minmax(320px,420px)] items-stretch min-h-[480px]">
+            {/* Left image: bedroom with framed artwork */}
+            <div className="overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=2080&auto=format&fit=crop"
+                alt="Bedroom with framed artwork"
+                className="w-full h-full object-cover"
+                style={{ minHeight: '480px' }}
+              />
             </div>
-            <div className="lg:col-span-1 rounded-[12px] overflow-hidden" style={{ aspectRatio: '4/5' }}>
-              <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2070&auto=format&fit=crop" alt="Wavy Frame Detail" className="w-full h-full object-cover" />
+            {/* Right image: close-up of wavy frame */}
+            <div className="overflow-hidden">
+              <img
+                src="https://images.unsplash.com/photo-1629196914555-52054ff456e7?q=80&w=1964&auto=format&fit=crop"
+                alt="Wavy Frame close-up"
+                className="w-full h-full object-cover"
+                style={{ minHeight: '480px' }}
+              />
             </div>
-            <div className="lg:col-span-1 flex flex-col items-center text-center px-6 lg:px-12 py-10">
-              <span className="text-[11px] font-bold tracking-[0.2em] uppercase text-[#111111] mb-4">POSTERY ATELIER</span>
-              <h2 className="text-[28px] font-normal text-[#111111] mb-6" style={{ fontFamily: serifFont }}>The Wavy Frame</h2>
-              <p className="text-[14px] leading-relaxed text-[#111111] mb-8">
-                Discover the Wavy Frame by Postery - a premium picture frame featuring a unique wavy design. Its innovative design can elevate any space and become the centerpiece of your home. Made for the bold and playful; Wavy Frame comes available in a diverse palette of colors. Perfect for creating a truly unique gallery wall.
+            {/* Text panel */}
+            <div className="flex flex-col items-center justify-center text-center px-10 py-14 bg-[#f0ede6]">
+              <span className="text-[10px] font-bold tracking-[0.22em] uppercase text-[#555555] mb-3">POSTERY ATELIER</span>
+              <h2 className="text-[28px] font-normal text-[#111111] mb-5" style={{ fontFamily: serifFont }}>The Wavy Frame</h2>
+              <p className="text-[13px] leading-relaxed text-[#333333] mb-8">
+                Discover the{" "}
+                <span className="underline">Wavy Frame</span> by Postery – a premium picture
+                frame featuring a unique wavy design. Its innovative design
+                can elevate any space and become the centerpiece of your
+                home.{" "}
+                <span className="underline">Made for the bold and playful; Wavy Frame</span> comes
+                available in a diverse palette of colors. Perfect for creating a
+                truly unique{" "}
+                <span className="underline">gallery wall</span>.
               </p>
-              <Link to="/products" className="inline-block px-8 py-3 rounded-full border border-[#111111] text-[#111111] text-[13px] font-bold hover:bg-[#111111] hover:text-white transition-colors">
+              <Link
+                to="/products"
+                className="inline-block px-7 py-2.5 rounded-full border border-[#111111] text-[#111111] text-[12px] hover:bg-[#111111] hover:text-white transition-colors"
+              >
                 Discover the Wavy Frame
               </Link>
             </div>

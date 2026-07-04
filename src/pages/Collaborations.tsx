@@ -5,11 +5,11 @@ const serifFont = "Georgia, 'Times New Roman', serif";
 const containerClass = "max-w-[1200px] mx-auto px-4 md:px-8";
 
 const BottomThreeColumns = () => (
-  <section className={`${containerClass} mb-24 mt-16`}>
+  <section className={`${containerClass} mb-8 mt-16`}>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
       {/* Item 1 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="About us" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>About us</h3>
@@ -20,7 +20,7 @@ const BottomThreeColumns = () => (
       </div>
       {/* Item 2 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2070&auto=format&fit=crop" alt="Our products" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Our products</h3>
@@ -31,7 +31,7 @@ const BottomThreeColumns = () => (
       </div>
       {/* Item 3 */}
       <div>
-        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[4/5] mb-6">
+        <div className="bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[3/4] mb-6">
           <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop" alt="Sustainability" className="w-full h-full object-cover" />
         </div>
         <h3 className="text-[24px] font-normal text-[#111111] mb-4" style={{ fontFamily: serifFont }}>Sustainability</h3>
@@ -48,12 +48,12 @@ const collabData = [
   {
     title: "Moomin™",
     description: "Step into the wonderful world of Moomin and his friends!",
-    image: "https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop"
+    image: "/moomin_grid_poster_1783128981101.png"
   },
   {
     title: "Pippi Longstocking™",
     description: "Pippi Longstocking is a timeless character created by Swedish author Astrid Lindgren.",
-    image: "https://images.unsplash.com/photo-1629196914555-52054ff456e7?q=80&w=1964&auto=format&fit=crop"
+    image: "/pippi_longstocking_wavy_1783128965148.png"
   },
   {
     title: "The Beatles™",
@@ -86,7 +86,7 @@ const Collaborations: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-[1fr_1.2fr] gap-10 md:gap-16 items-center">
           <div className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden" style={{ aspectRatio: '1/1' }}>
             <img 
-              src="https://images.unsplash.com/photo-1579783900401-5e300ac11dc9?q=80&w=1945&auto=format&fit=crop" 
+              src="/hero_moomin_poster_1783128948876.png" 
               alt="Collaborations Hero" 
               className="w-full h-full object-cover"
             />

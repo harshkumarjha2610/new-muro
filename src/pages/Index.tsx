@@ -2124,12 +2124,12 @@ const Index: React.FC = () => {
       </section>
 
       <div className="flex justify-center py-2 md:py-3 bg-white">
-        <Link
+        {/* <Link
           to="/products"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
           Discover our posters
-        </Link>
+        </Link> */}
       </div>
 
       <div>
@@ -2142,12 +2142,12 @@ const Index: React.FC = () => {
       />
 
       <div className="flex justify-center py-2 md:py-3 bg-white">
-        <Link
+        {/* <Link
           to="/cutouts"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
           Discover our cutouts
-        </Link>
+        </Link> */}
       </div>
 
 
@@ -2159,12 +2159,12 @@ const Index: React.FC = () => {
       />
 
       <div className="flex justify-center py-2 md:py-3 bg-white">
-        <Link
+        {/* <Link
           to="/postcards"
           className="inline-flex h-[50px] items-center justify-center rounded-full border border-black/30 bg-white px-12 text-[15px] font-medium text-black transition-all hover:border-black hover:bg-[#F4F4F2]"
         >
           Discover our postcard
-        </Link>
+        </Link> */}
       </div>
 
       <EditorialGridSection items={roomEditorialTiles} columns={3} />

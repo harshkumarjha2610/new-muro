@@ -25,6 +25,13 @@ const generateProducts = (startId: number, count: number) => {
     "https://images.unsplash.com/photo-1580136608260-4eb11f4b24fe?q=80&w=2052&auto=format&fit=crop"  // painting
   ];
 
+  const hoverImages = [
+    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1594122230689-45899d9e6f69?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1618221118493-9cfa1a1c00da?q=80&w=2070&auto=format&fit=crop"
+  ];
+
   return Array.from({ length: count }).map((_, i) => {
     const id = startId + i;
     const isPremium = Math.random() > 0.5;
@@ -35,6 +42,7 @@ const generateProducts = (startId: number, count: number) => {
       price: isPremium ? 9.99 : 6.99,
       originalPrice: isPremium ? 17.99 : 12.99,
       image: images[id % images.length],
+      hoverImage: hoverImages[id % hoverImages.length],
       isNew: id % 7 === 0
     };
   });
@@ -91,7 +99,12 @@ const Sustainability: React.FC = () => {
                    <img 
                       src={product.image} 
                       alt={product.title} 
-                      className="max-w-full max-h-full object-contain shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-transform duration-500 group-hover:scale-[1.02]"
+                      className="absolute max-w-full max-h-full object-contain shadow-[0_4px_12px_rgba(0,0,0,0.1)] transition-opacity duration-500 group-hover:opacity-0"
+                    />
+                   <img 
+                      src={product.hoverImage} 
+                      alt={`${product.title} framed`} 
+                      className="absolute w-full h-full object-cover transition-opacity duration-500 opacity-0 group-hover:opacity-100"
                     />
                 </div>
               </div>
