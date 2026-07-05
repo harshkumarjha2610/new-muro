@@ -625,7 +625,7 @@ const Products: React.FC = () => {
       </style>
 
       <section className="mx-auto max-w-[1320px] px-5 pb-3 pt-5 md:px-7 md:pb-4 md:pt-6 lg:px-8">
-        <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr] md:items-center">
+        <div className="grid gap-4 md:grid-cols-[0.85fr_1.15fr] md:items-start">
           <motion.h1
             key={`${selectedCategory}-${selectedSubCategory}`}
             initial={{ opacity: 0, y: 10 }}
@@ -637,7 +637,7 @@ const Products: React.FC = () => {
             {pageHeading}
           </motion.h1>
 
-          <p className="max-w-[670px] font-normal leading-relaxed text-[#1C1C1C]/75 pl-8 md:pl-12" style={{ fontSize: '14px' }}>
+          <p className="max-w-[670px] font-normal leading-relaxed text-[#101010] pl-8 md:pl-12" style={{ fontSize: '14px' }}>
             {pageDescription}
           </p>
         </div>
@@ -646,19 +646,8 @@ const Products: React.FC = () => {
       {/* HORIZONTAL CATEGORY SCROLL BAR */}
       <section className="mx-auto max-w-[1320px] px-5 mb-5 md:px-7 lg:px-8">
         <div className="relative flex items-center border-b border-[#E8E8E8] pb-3">
-          {/* Left Arrow */}
-          <button
-            type="button"
-            className="flex h-8 w-8 items-center justify-center text-[#101010] hover:opacity-60"
-            onClick={() => {
-              const el = document.getElementById("muro-category-scroll");
-              if (el) el.scrollBy({ left: -150, behavior: "smooth" });
-            }}
-          >
-            <ChevronLeft className="h-4 w-4" strokeWidth={2.5} />
-          </button>
 
-          {/* Scrollable Container — no left-arrow, starts flush */}
+          {/* Scrollable Container */}
           <div
             id="muro-category-scroll"
             className="flex-1 overflow-x-auto flex items-center gap-7 pr-2"
@@ -671,7 +660,7 @@ const Products: React.FC = () => {
               className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
                 selectedSubCategory === "ALL"
                   ? "border-b-[1.5px] border-[#101010] pb-0.5 font-medium text-[#101010]"
-                  : "text-[#101010]/60 hover:text-[#101010]"
+                  : "text-[#101010] hover:text-[#101010]"
               }`}
             >
               All Posters
@@ -690,7 +679,7 @@ const Products: React.FC = () => {
                   className={`whitespace-nowrap text-[13px] md:text-[14px] font-normal tracking-wide transition-colors ${
                     isActive
                       ? "border-b-[1.5px] border-[#101010] pb-0.5 font-medium text-[#101010]"
-                      : "text-[#101010]/60 hover:text-[#101010]"
+                      : "text-[#101010] hover:text-[#101010]"
                   }`}
                 >
                   {toTitleCase(name)}
