@@ -6,7 +6,7 @@ const PrivacyPolicy: React.FC = () => {
       <div className="max-w-[1540px] mx-auto pl-16 pr-12 sm:pl-24 sm:pr-16 lg:pl-32 lg:pr-24 pt-4 pb-12 md:pt-6 md:pb-16">
 
         {/* Page Title */}
-        <h3 className="mb-4 text-[30px] font-semibold text-[#333333]">
+        <h3 className="mb-4 text-[27px] font-semibold text-[#333333]">
           Privacy policy
         </h3>
 
