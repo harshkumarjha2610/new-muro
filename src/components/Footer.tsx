@@ -61,7 +61,7 @@ const Footer = () => {
         }
 
         #muro-footer .muro-footer-heading {
-          letter-spacing: 2px !important;
+          letter-spacing: 1px !important;
           font-weight: 400 !important;
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
         }
