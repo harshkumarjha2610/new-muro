@@ -14,25 +14,33 @@ const About: React.FC = () => {
 
       <main className="min-h-screen bg-white text-[#111111] font-sans selection:bg-[#111111] selection:text-white pb-20">
 
-        {/* Section 1: About Us
-            - Below ~930px: title + text above, image below (stacked)
-            - At ~930px+: text LEFT, image RIGHT (two columns)
-        */}
-        <section className="mx-auto max-w-[1400px] px-6 md:px-12 pt-12 mb-12">
+        {/* Section 1: About Us */}
+        <section className="mx-auto max-w-[1400px] px-4 md:px-8 pt-10 mb-16">
+          <div className="grid grid-cols-1 min-[930px]:grid-cols-[1.05fr_1fr] lg:grid-cols-[615px_1fr] gap-x-12 lg:gap-x-16 items-start">
 
-          {/* Two-column layout at md+ */}
-          <div className="grid grid-cols-1 min-[930px]:grid-cols-[1.2fr_1fr] lg:grid-cols-[649px_1fr] gap-x-10 lg:gap-x-14 items-start">
+            {/* Image Side */}
+            <div
+              className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden mt-8 min-[930px]:mt-0 min-[930px]:order-1"
+              style={{ aspectRatio: '881 / 945' }}
+            >
+              <img
+                src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2069&auto=format&fit=crop"
+                alt="Interior"
+                className="w-full h-full object-cover object-top"
+              />
+            </div>
 
-            {/* Text first in DOM = above image on mobile, right side on desktop via order */}
-            <div className="flex flex-col justify-start min-[930px]:pt-2 min-[930px]:order-2">
+            {/* Text Side */}
+            <div className="flex flex-col justify-start min-[930px]:pt-12 min-[930px]:order-2 max-w-[480px] min-[930px]:max-w-none mx-auto min-[930px]:mx-0">
+              {/* Centered Heading exactly like Image 1 */}
               <h1
-                className="text-[32px] min-[930px]:text-[28px] lg:text-[32px] leading-[1.1] font-normal text-[#111111] mb-5 text-center min-[930px]:text-center"
+                className="text-[32px] min-[930px]:text-[36px] lg:text-[42px] leading-[1.1] font-normal text-[#111111] mb-8 text-center"
                 style={{ fontFamily: serifFont }}
               >
                 About us
               </h1>
 
-              <div className="space-y-2 text-[13.5px] min-[930px]:text-[13px] lg:text-[13.5px] leading-[1.6] text-[#111111]">
+              <div className="space-y-4 text-[14px] min-[930px]:text-[13.5px] lg:text-[14px] leading-[1.65] text-[#111111]">
                 <p>
                   Postery is a Swedish brand bringing together carefully curated and
                   distinctive art prints. We are a curious and creative team based in
@@ -40,7 +48,7 @@ const About: React.FC = () => {
                   We are united by our love for art, and we are passionate about
                   trends, interiors and design that help create that personal space.
                   We enjoy the aesthetics of the world, and we invite everyone to join
-                  and contribute to explore the beauty of art and design.
+                  and contribute – to explore the beauty of art and design.
                 </p>
                 <p>
                   Inspired by Scandinavian design heritage, we curate art prints that
@@ -58,28 +66,16 @@ const About: React.FC = () => {
                   <strong>The World of Interiors</strong>, <strong>Residence</strong>,{" "}
                   <strong>Nya Rum</strong> and <strong>Bo Living</strong>. These
                   features reflect our ongoing commitment to bringing inspiring art and
-                  thoughtful design into modern interiors.
+                  thoughtfully design into modern interiors.
                 </p>
               </div>
-            </div>
-
-            {/* Image second in DOM = below text on mobile, left side on desktop via order */}
-            <div
-              className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden mt-8 min-[930px]:mt-0 min-[930px]:order-1"
-              style={{ aspectRatio: '881 / 945' }}
-            >
-              <img
-                src="https://images.unsplash.com/photo-1513694203232-719a280e022f?q=80&w=2069&auto=format&fit=crop"
-                alt="Interior"
-                className="w-full h-full object-cover object-top"
-              />
             </div>
 
           </div>
         </section>
 
         {/* Section 2: Purpose and Partners */}
-        <section className={`${containerClass} mb-12 mt-2 space-y-10 min-[1044px]:space-y-12`}>
+        <section className={`${containerClass} mb-16 space-y-10 min-[1044px]:space-y-12`}>
           <div className="grid grid-cols-1 min-[1044px]:grid-cols-[0.95fr_2.35fr] gap-3 min-[1044px]:gap-8 items-start">
             <h2
               className="text-[26px] min-[1044px]:text-[28px] leading-[1.05] font-normal text-[#111111]"
@@ -87,7 +83,6 @@ const About: React.FC = () => {
             >
               Our purpose
             </h2>
-
             <p className="text-[15px] min-[1044px]:text-[14px] leading-[1.65] text-[#111111] max-w-[680px]">
               Our purpose is to make high-quality art accessible to homes around the
               world. We believe that beautiful design should be available to
@@ -107,7 +102,6 @@ const About: React.FC = () => {
             >
               Our partners
             </h2>
-
             <p className="text-[15px] min-[1044px]:text-[14px] leading-[1.65] text-[#111111] max-w-[680px]">
               Collaboration is an important part of Postery&apos;s journey. Over the
               years we have worked with selected global retailers and creative
@@ -123,7 +117,7 @@ const About: React.FC = () => {
         </section>
 
         {/* Section 3: Full width image banner */}
-        <section className={`${containerClass} mb-8`}>
+        <section className={`${containerClass} mb-16`}>
           <div className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden aspect-[16/9] md:aspect-[2/1]">
             <img
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
@@ -140,54 +134,51 @@ const About: React.FC = () => {
               interiors, we share inspiration for creating personal spaces with
               posters and gallery walls.
             </p>
-
             <button className="px-8 py-3 rounded-full border border-[#111111] text-[#111111] hover:bg-[#111111] hover:text-white transition-colors text-[14px] font-medium">
               Discover our Magazine
             </button>
           </div>
         </section>
 
-        {/* Section 4: Three columns */}
-        <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-0">
-          <div className="grid grid-cols-1 min-[980px]:grid-cols-3 gap-y-10 min-[980px]:gap-x-2 min-[980px]:gap-y-6">
+        {/* Section 4: Three cards layout configured exactly like Image 2 */}
+        <section className={`${containerClass} mb-8`}>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-6 lg:gap-x-8">
 
             {/* Card 1 */}
-            <div className="bg-white rounded-xl p-1">
+            <div className="flex flex-col">
               <div
-                className="bg-[#f2f2f2] rounded-xl overflow-hidden mb-4"
-                style={{ aspectRatio: '952 / 1284' }}
-                // above 980px use fixed height instead
+                className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden mb-5"
+                style={{ aspectRatio: '1 / 1' }}
               >
                 <img
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
                   alt="Sustainability"
                   className="w-full h-full object-cover object-center"
-                  style={{ height: undefined }}
                 />
               </div>
               <h3
-                className="text-[22px] min-[980px]:text-[28px] font-normal text-[#111111] mb-3"
+                className="text-[22px] md:text-[24px] lg:text-[26px] font-normal text-[#111111] mb-3 tracking-tight"
                 style={{ fontFamily: serifFont }}
               >
                 Sustainability
               </h3>
-              <p className="text-[15px] leading-[1.6] text-[#111111] mb-3">
+              <p className="text-[14px] leading-[1.5] text-[#333333] mb-4 flex-grow">
                 Learn how we work to reduce our environmental impact and improve the
                 way our products are made.
               </p>
               <Link
                 to="/sustainability"
-                className="text-[13px] font-bold tracking-wider uppercase text-[#111111] underline hover:opacity-70"
+                className="text-[12px] font-semibold tracking-widest uppercase text-[#111111] underline hover:opacity-70"
               >
                 Read More
               </Link>
             </div>
 
             {/* Card 2 */}
-            <div className="bg-white rounded-xl p-1">
+            <div className="flex flex-col">
               <div
-                className="bg-[#f2f2f2] rounded-xl overflow-hidden mb-4"
-                style={{ aspectRatio: '952 / 1284' }}
+                className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden mb-5"
+                style={{ aspectRatio: '1 / 1' }}
               >
                 <img
                   src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1843&auto=format&fit=crop"
@@ -196,28 +187,28 @@ const About: React.FC = () => {
                 />
               </div>
               <h3
-                className="text-[22px] min-[980px]:text-[28px] font-normal text-[#111111] mb-3"
+                className="text-[22px] md:text-[24px] lg:text-[26px] font-normal text-[#111111] mb-3 tracking-tight"
                 style={{ fontFamily: serifFont }}
               >
                 Our products
               </h3>
-              <p className="text-[15px] leading-[1.6] text-[#111111] mb-3">
+              <p className="text-[14px] leading-[1.5] text-[#333333] mb-4 flex-grow">
                 Discover the materials, craftsmanship and design behind our posters,
                 frames and hanging accessories.
               </p>
               <Link
                 to="/our-products"
-                className="text-[13px] font-bold tracking-wider uppercase text-[#111111] underline hover:opacity-70"
+                className="text-[12px] font-semibold tracking-widest uppercase text-[#111111] underline hover:opacity-70"
               >
                 Read More
               </Link>
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white rounded-xl p-1">
+            <div className="flex flex-col">
               <div
-                className="bg-[#f2f2f2] rounded-xl overflow-hidden mb-4"
-                style={{ aspectRatio: '952 / 1284' }}
+                className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden mb-5"
+                style={{ aspectRatio: '1 / 1' }}
               >
                 <img
                   src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2070&auto=format&fit=crop"
@@ -226,18 +217,18 @@ const About: React.FC = () => {
                 />
               </div>
               <h3
-                className="text-[22px] min-[980px]:text-[28px] font-normal text-[#111111] mb-3"
+                className="text-[22px] md:text-[24px] lg:text-[26px] font-normal text-[#111111] mb-3 tracking-tight"
                 style={{ fontFamily: serifFont }}
               >
                 Collaborations
               </h3>
-              <p className="text-[15px] leading-[1.6] text-[#111111] mb-3">
+              <p className="text-[14px] leading-[1.5] text-[#333333] mb-4 flex-grow">
                 Discover the artists and creative collaborations that shape our
                 collections and bring new artistic perspectives to Postery.
               </p>
               <Link
                 to="/collaborations"
-                className="text-[13px] font-bold tracking-wider uppercase text-[#111111] underline hover:opacity-70"
+                className="text-[12px] font-semibold tracking-widest uppercase text-[#111111] underline hover:opacity-70"
               >
                 Read More
               </Link>
