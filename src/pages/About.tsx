@@ -148,7 +148,7 @@ const About: React.FC = () => {
         </section>
 
         {/* Section 4: Three columns */}
-        <section className="max-w-[1850px] mx-auto px-1 md:px-2 mb-0">
+        <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-0">
           <div className="grid grid-cols-1 min-[980px]:grid-cols-3 gap-y-10 min-[980px]:gap-x-2 min-[980px]:gap-y-6">
 
             {/* Card 1 */}
