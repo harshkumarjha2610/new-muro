@@ -31,7 +31,6 @@ import Postcards from "./pages/Postcards";
 import PostcardDetails from "./pages/PostcardDetails";
 import Cutouts from "./pages/Cutouts";
 import CutoutDetails from "./pages/CutoutDetails";
-
 const queryClient = new QueryClient();
 
 const IsAdmin = ({ children }: { children: JSX.Element }) => {
