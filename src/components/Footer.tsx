@@ -9,7 +9,7 @@ const Footer = () => {
   };
 
   const footerHeadingClass =
-    "muro-footer-heading mb-[26px] text-left text-[16px] font-semibold uppercase leading-none text-black";
+    "muro-footer-heading mb-[26px] text-left text-[16px] font-normal uppercase leading-none text-black";
 
   const footerLinkClass =
     "block w-fit text-left text-[16px] font-normal leading-[1.62] tracking-[-0.01em] text-black transition-colors hover:text-black/65";
@@ -56,19 +56,23 @@ const Footer = () => {
 
         #muro-footer .muro-newsletter-title {
           font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
-          font-weight: 700 !important;
+          font-weight: 400 !important;
           letter-spacing: -0.02em !important;
         }
 
         #muro-footer .muro-footer-heading {
           letter-spacing: 2px !important;
-          font-weight: 700 !important;
+          font-weight: 400 !important;
+          font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
         }
       `}</style>
 
       <div className="muro-footer-container pt-[58px] pb-[54px]">
-        <div className="grid grid-cols-1 items-start gap-y-14 xl:grid-cols-[minmax(0,760px)_1fr] xl:gap-x-[100px] 2xl:gap-x-[125px]">
-          <div className="w-full max-w-[760px] text-left">
+        {/* Above 1106px: newsletter left, links right */}
+        {/* Below 1106px: newsletter top full width, links below in grid */}
+        <div className="grid grid-cols-1 items-start gap-y-14 min-[785px]:grid-cols-2 min-[785px]:gap-x-10 xl:grid-cols-[minmax(0,760px)_1fr] xl:gap-x-[100px] 2xl:gap-x-[125px]">
+          {/* Newsletter section */}
+          <div className="w-full text-left">
             <h5
               className="muro-newsletter-title mb-[20px] text-[16px] leading-none text-black md:text-[17px]"
               style={{
@@ -81,23 +85,22 @@ const Footer = () => {
 
             <form
               onSubmit={handleNewsletterSubmit}
-              className="flex w-full max-w-[735px] flex-col gap-3 sm:flex-row sm:items-center"
+              className="flex w-full flex-row items-center gap-3"
             >
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="h-[54px] min-w-0 flex-1 rounded-full border border-[#9E9E9E] bg-white px-[22px] text-[16px] font-normal text-black outline-none placeholder:text-black/70 focus:border-black"
+                className="h-[54px] min-w-0 flex-1 rounded-full border border-[#9E9E9E] bg-white px-[22px] text-[15px] font-normal text-black outline-none placeholder:text-black/70 focus:border-black"
               />
-
               <button
                 type="submit"
-                className="h-[54px] w-full shrink-0 rounded-full bg-[#211D1D] px-[24px] text-[16px] font-normal text-white transition-colors hover:bg-black sm:w-auto"
+                className="h-[54px] shrink-0 rounded-full bg-[#211D1D] px-[22px] text-[15px] font-normal text-white transition-colors hover:bg-black whitespace-nowrap"
               >
                 Sign up
               </button>
             </form>
 
-            <p className="mt-[20px] max-w-[735px] text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
+            <p className="mt-[20px] text-[13px] font-normal leading-[1.55] tracking-[-0.01em] text-black">
               By subscribing, you agree to receive our newsletter and our{" "}
               <Link to="/privacy" className="underline hover:text-black/65">
                 Privacy Policy
@@ -106,9 +109,15 @@ const Footer = () => {
             </p>
           </div>
 
-          <div className="grid w-full grid-cols-2 gap-x-10 gap-y-10 sm:grid-cols-4 xl:flex xl:justify-between xl:gap-0">
-            <div className="min-w-0 text-left xl:w-[140px]">
-              <h4 className={footerHeadingClass}>SHOP</h4>
+          {/* Links section:
+              <538px : 2 cols
+              538–782px : 2 cols
+              782–1106px : 4 cols all in one row
+              1106px+ : flex row side by side with newsletter
+          */}
+          <div className="grid w-full grid-cols-2 gap-x-6 gap-y-10 min-[542px]:grid-cols-4 min-[542px]:gap-x-4 min-[785px]:grid-cols-2 min-[785px]:gap-x-8 min-[1112px]:grid-cols-4 min-[1112px]:gap-y-0 xl:flex xl:justify-between xl:gap-0">
+            <div className="min-w-0 text-left min-[1106px]:w-[140px]">
+              <p className={footerHeadingClass}>SHOP</p>
               <nav className="flex flex-col items-start">
                 <Link to="/business" className={footerLinkClass}>Business</Link>
                 <Link to="/products" className={footerLinkClass}>Posters</Link>
@@ -120,8 +129,8 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div className="min-w-0 text-left xl:w-[150px]">
-              <h4 className={footerHeadingClass}>ABOUT US</h4>
+            <div className="min-w-0 text-left min-[1106px]:w-[150px]">
+              <p className={footerHeadingClass}>ABOUT US</p>
               <nav className="flex flex-col items-start">
                 <Link to="/about" className={footerLinkClass}>About us</Link>
                 <Link to="/our-products" className={footerLinkClass}>Our products</Link>
@@ -131,7 +140,7 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div className="min-w-0 text-left xl:w-[170px]">
+            <div className="min-w-0 text-left min-[1106px]:w-[170px]">
               <h4 className={footerHeadingClass}>SUPPORT</h4>
               <nav className="flex flex-col items-start">
                 <Link to="/customer-service" className={footerLinkClass}>Customer service</Link>
@@ -144,7 +153,7 @@ const Footer = () => {
               </nav>
             </div>
 
-            <div className="min-w-0 text-left xl:w-[120px]">
+            <div className="min-w-0 text-left min-[1106px]:w-[120px]">
               <h4 className={footerHeadingClass}>FOLLOW US</h4>
               <nav className="flex flex-col items-start">
                 <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Instagram</a>
