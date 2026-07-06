@@ -64,7 +64,7 @@ const App = () => (
             <Route path="/cutouts/:id" element={<CutoutDetails />} />
             <Route path="/shipping-policy" element={<ShippingPolicy />} />
             <Route path="/privacy" element={<PrivacyPolicy />} />
-            <Route path="/cancellation-refund" element={<RefundPolicy />} />
+            <Route path="/refund-policy" element={<RefundPolicy />} />
             <Route path="/terms" element={<TermsAndConditions />} />
             <Route path="/faq" element={<FAQ />} />
             <Route path="/contact" element={<Contact />} />

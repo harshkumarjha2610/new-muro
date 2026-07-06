@@ -143,12 +143,14 @@ const Footer = () => {
             <div className="min-w-0 text-left min-[1106px]:w-[170px]">
               <h4 className={footerHeadingClass}>SUPPORT</h4>
               <nav className="flex flex-col items-start">
-                <Link to="/customer-service" className={footerLinkClass}>Customer service</Link>
+                {/* <Link to="/customer-service" className={footerLinkClass}>Customer service</Link> */}
                 <Link to="/contact" className={footerLinkClass}>Contact us</Link>
                 <Link to="/shipping-policy" className={footerLinkClass}>Shipping policy</Link>
-                <Link to="/return-policy" className={footerLinkClass}>Return policy</Link>
+                <Link to="/refund-policy" className={footerLinkClass}>Refund policy</Link>
+                {/* <Link to="/return-policy" className={footerLinkClass}>Return policy</Link> */}
                 <Link to="/privacy" className={footerLinkClass}>Privacy policy</Link>
-                <Link to="/ai-policy" className={footerLinkClass}>AI policy</Link>
+                <Link to="/refund-policy" className={footerLinkClass}>Cancellation Policy</Link>
+                {/* <Link to="/ai-policy" className={footerLinkClass}>AI policy</Link> */}
                 <Link to="/terms" className={footerLinkClass}>Terms &amp; conditions</Link>
               </nav>
             </div>

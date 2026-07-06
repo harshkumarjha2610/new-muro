@@ -1,124 +1,129 @@
 import React from "react";
-import PolicyPage from "./PolicyPage";
-
-const headingClass =
-  "pt-4 text-[22px] font-bold uppercase leading-none tracking-[2px] text-[#111111] md:text-[24px]";
-
-const promiseHeadingClass =
-  "mb-4 text-[22px] font-bold leading-none tracking-[2px] text-[#111111] md:text-[24px]";
 
 const RefundPolicy: React.FC = () => {
   return (
-    <PolicyPage title="CANCELLATION & REFUND POLICY">
-      <section className="space-y-8">
-        <div className="rounded-[22px] bg-[#F2F2F2] p-6 md:p-8">
-          <p className="text-[18px] font-normal italic leading-snug tracking-[2px] text-[#111111] md:text-[22px]">
-            We stand behind the quality of every MURO product. If something is
-            not right, we address it with clarity and fairness.
-          </p>
-        </div>
+    <main className="min-h-screen bg-white text-[#333333] font-sans antialiased">
+      <div className="max-w-[1540px] mx-auto pl-16 pr-12 sm:pl-24 sm:pr-16 lg:pl-32 lg:pr-24 pt-4 pb-12 md:pt-6 md:pb-16">
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>ORDER CANCELLATION</h2>
-          <p>
-            Orders may be cancelled within 24 hours of purchase, provided
-            production or shipping has not begun. Once an order enters printing,
-            packaging, or dispatch, cancellation is no longer possible.
-          </p>
-        </div>
+        {/* Page Title */}
+        <h3 className="mb-4 text-[27px] font-semibold text-[#333333]">
+          Cancellation & refund policy
+        </h3>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>RETURNS & REPLACEMENTS</h2>
-          <p>
-            Requests for return or replacement must be submitted within 7 days
-            of delivery and are reviewed on a case-by-case basis under the
-            following conditions:
-          </p>
+        {/* Intro */}
+        <p className="mb-4 text-[13.5px] md:text-[14px] font-semibold leading-[1.5] text-[#333333]">
+          We stand behind the quality of every MURO product. If something is not right, we address it with clarity and fairness.
+        </p>
 
-          <ul className="list-disc space-y-2 pl-5 text-[#555555] marker:text-[#111111]">
+        {/* Order Cancellation */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            ORDER CANCELLATION
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Orders may be cancelled within 24 hours of purchase, provided production or shipping has not begun. Once an order enters printing, packaging, or dispatch, cancellation is no longer possible.
+          </p>
+        </section>
+
+        {/* Returns & Replacements */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            RETURNS & REPLACEMENTS
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Requests for return or replacement must be submitted within 7 days of delivery and are reviewed on a case-by-case basis under the following conditions:
+          </p>
+          <ul className="mb-2 list-disc pl-5 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333] space-y-0">
             <li>Product arrived damaged</li>
             <li>Incorrect item received</li>
             <li>Confirmed non-delivery</li>
           </ul>
-
-          <p>
-            To support your request, clear photos or relevant documentation may
-            be required. Items must remain unused and in original condition.
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            To support your request, clear photos or relevant documentation may be required. Items must remain unused and in original condition.
           </p>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>NON-REFUNDABLE CASES</h2>
-          <p>Returns or refunds are not accepted for:</p>
-
-          <ul className="list-disc space-y-2 pl-5 text-[#555555] marker:text-[#111111]">
+        {/* Non-Refundable Cases */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            NON-REFUNDABLE CASES
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Returns or refunds are not accepted for:
+          </p>
+          <ul className="mb-2 list-disc pl-5 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333] space-y-0">
             <li>Change of mind</li>
             <li>Incorrect selection made by the customer</li>
-            <li>
-              Minor color variations due to screen or lighting differences
-            </li>
+            <li>Minor color variations due to screen or lighting differences</li>
           </ul>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>DELIVERY RESPONSIBILITY</h2>
-          <p>
-            Customers are responsible for providing accurate shipping details.
-            Delivery delays caused by courier services, incorrect addresses, or
-            failed delivery attempts may not qualify for refund.
+        {/* Delivery Responsibility */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            DELIVERY RESPONSIBILITY
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Customers are responsible for providing accurate shipping details. Delivery delays caused by courier services, incorrect addresses, or failed delivery attempts may not qualify for refund.
           </p>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>REFUND PROCESS</h2>
-          <p>
-            Approved refunds are issued to the original payment method within
-            5–7 business days. Actual credit timing may vary depending on
-            banking or payment provider processing.
+        {/* Refund Process */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            REFUND PROCESS
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Approved refunds are issued to the original payment method within 5–7 business days. Actual credit timing may vary depending on banking or payment provider processing.
           </p>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>SHIPPING COSTS</h2>
-          <p>
-            Unless a product defect or error is confirmed, return shipping costs
-            are the responsibility of the customer.
+        {/* Shipping Costs */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            SHIPPING COSTS
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            Unless a product defect or error is confirmed, return shipping costs are the responsibility of the customer.
           </p>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>INSPECTION & APPROVAL</h2>
-          <p>
-            All return or replacement requests are subject to verification to
-            ensure eligibility under this policy.
+        {/* Inspection & Approval */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            INSPECTION & APPROVAL
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            All return or replacement requests are subject to verification to ensure eligibility under this policy.
           </p>
-        </div>
+        </section>
 
-        <div className="space-y-4 border-t border-[#E6E6E6]">
-          <h2 className={headingClass}>CONTACT SUPPORT</h2>
-          <p>
-            To initiate a cancellation, return, refund, or replacement request,
-            contact our support team at{" "}
-            <a
-              href="mailto:helpmuroposter@gmail.com"
-              className="font-bold underline underline-offset-4 hover:text-[#006039]"
-            >
+        {/* Contact Support */}
+        <section className="mb-4">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            CONTACT SUPPORT
+          </h2>
+          <p className="mb-2 text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            To initiate a cancellation, return, refund, or replacement request, contact our support team at{" "}
+            <a href="mailto:helpmuroposter@gmail.com" className="text-[#0000ee] underline hover:text-[#0000aa]">
               helpmuroposter@gmail.com
             </a>
             .
           </p>
-        </div>
+        </section>
 
-        <div className="mt-12 rounded-[22px] bg-[#F1F1F1] p-6 text-[#111111] md:p-8">
-          <h2 className={promiseHeadingClass}>Muro Promise</h2>
-
-          <p className="font-bold tracking-[2px]">
-            We design with intention, deliver with care, and evaluate every
-            concern responsibly.
+        {/* Muro Promise */}
+        <section className="mb-8">
+          <h2 className="mb-2 text-[16px] md:text-[17px] font-bold leading-snug text-[#111111]">
+            Muro Promise
+          </h2>
+          <p className="text-[13.5px] md:text-[14px] font-semibold leading-[1.6] text-[#333333]">
+            We design with intention, deliver with care, and evaluate every concern responsibly.
           </p>
-        </div>
-      </section>
-    </PolicyPage>
+        </section>
+
+      </div>
+    </main>
   );
 };
 
