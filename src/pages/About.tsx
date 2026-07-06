@@ -21,7 +21,7 @@ const About: React.FC = () => {
         <section className="mx-auto max-w-[1400px] px-4 md:px-8 pt-8 mb-12">
 
           {/* Two-column layout at md+ */}
-          <div className="grid grid-cols-1 min-[930px]:grid-cols-[1.2fr_1fr] lg:grid-cols-[1.4fr_1fr] gap-x-10 lg:gap-x-14 items-start">
+          <div className="grid grid-cols-1 min-[930px]:grid-cols-[1.2fr_1fr] lg:grid-cols-[649px_1fr] gap-x-10 lg:gap-x-14 items-start">
 
             {/* Text first in DOM = above image on mobile, right side on desktop via order */}
             <div className="flex flex-col justify-start min-[930px]:pt-2 min-[930px]:order-2">
@@ -148,7 +148,7 @@ const About: React.FC = () => {
         </section>
 
         {/* Section 4: Three columns */}
-        <section className="max-w-[1400px] mx-auto px-4 md:px-8 mb-0">
+        <section className="max-w-[1850px] mx-auto px-1 md:px-2 mb-0">
           <div className="grid grid-cols-1 min-[980px]:grid-cols-3 gap-y-10 min-[980px]:gap-x-2 min-[980px]:gap-y-6">
 
             {/* Card 1 */}
