@@ -325,9 +325,9 @@ const Navbar = () => {
   };
 
   const navBase =
-    "font-montserrat text-[14px] font-medium text-[#101010] hover:text-[#006039] transition-colors whitespace-nowrap";
+    "font-montserrat text-[14px] font-medium text-[#101010] hover:text-[#101010] transition-colors whitespace-nowrap";
 
-  const navActive = "text-[#006039]";
+  const navActive = "text-[#101010]";
 
   const displayCartCount = cartCount > 99 ? "99+" : cartCount;
 
@@ -357,7 +357,7 @@ const Navbar = () => {
               <Menu className="h-6 w-6 text-black" strokeWidth={1.5} />
             </button>
 
-            <nav className="hidden items-center gap-5 text-[14px] min-[1175px]:flex xl:gap-7">
+            <nav className="hidden items-center gap-2 text-[12px] min-[989px]:flex min-[1105px]:gap-4 min-[1105px]:text-[14px] xl:gap-6">
               <div
                 className="group relative flex h-[80px] items-center"
                 onMouseEnter={() => setHoveredCategoryKey("")}
@@ -504,7 +504,7 @@ const Navbar = () => {
             </button>
 
             <div
-              className="relative hidden items-center min-[1175px]:flex"
+              className="relative hidden items-center min-[1100px]:flex"
               ref={profileRef}
             >
               {isLoggedIn ? (
