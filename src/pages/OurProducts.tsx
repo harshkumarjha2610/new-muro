@@ -48,7 +48,7 @@ const BottomThreeColumns = () => (
         </div>
 
         <h3
-          className="text-[22px] md:text-[24px] lg:text-[26px] font-normal text-[#111111] mb-3 tracking-tight"
+          className="text-[16px] md:text-[20px] lg:text-[22px] font-normal text-[#444444] mb-3 tracking-tight"
           style={{ fontFamily: serifFont }}
         >
           Our products
@@ -104,9 +104,8 @@ const OurProducts: React.FC = () => {
   return (
     <main className="min-h-screen bg-white text-[#111111] font-sans selection:bg-[#111111] selection:text-white pb-20">
       {/* Hero Section */}
-      <section className="mx-auto max-w-[1400px] px-4 md:px-8 pt-10 mb-20">
+      <section className={`${containerClass} pt-10 mb-20`}>
         <div className="grid grid-cols-1 min-[930px]:grid-cols-[1.05fr_1fr] lg:grid-cols-[615px_1fr] gap-y-10 gap-x-12 lg:gap-x-16 items-start">
-          {/* Left Image */}
           <div
             className="w-full bg-[#f2f2f2] rounded-[16px] overflow-hidden"
             style={{ aspectRatio: "881 / 945" }}
@@ -118,7 +117,6 @@ const OurProducts: React.FC = () => {
             />
           </div>
 
-          {/* Right Text */}
           <div className="flex flex-col justify-start max-w-[480px] min-[930px]:max-w-none mx-auto min-[930px]:mx-0">
             <h1
               className="text-[32px] min-[930px]:text-[36px] lg:text-[42px] leading-[1.1] font-normal text-[#111111] mb-8 text-center"
@@ -127,7 +125,7 @@ const OurProducts: React.FC = () => {
               Our products
             </h1>
 
-            <div className="space-y-4 text-[14px] min-[930px]:text-[13.5px] lg:text-[14px] leading-[1.65] text-[#111111]">
+            <div className="space-y-4 font-semibold text-[14px] min-[930px]:text-[13.5px] lg:text-[14px] leading-[1.60] text-[#111111]">
               <p>
                 At Postery, our products are designed to highlight the art while
                 fitting naturally into modern interiors. From premium posters
@@ -147,8 +145,8 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Posters Section */}
-      <section className="w-full mb-[46px]">
-        <div className="max-w-[1420px] mx-auto px-6 md:px-12 lg:px-[80px] xl:px-[96px] grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
+      <section className={`${containerClass} mb-[46px]`}>
+        <div className="grid grid-cols-1 md:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[56px] items-start">
           <h2
             className="text-[28px] md:text-[30px] lg:text-[32px] font-normal text-[#111111] leading-[1.2]"
             style={{ fontFamily: serifFont }}
@@ -156,7 +154,7 @@ const OurProducts: React.FC = () => {
             Posters
           </h2>
 
-          <div className="text-[14px] leading-[1.45] text-[#111111] space-y-[10px]">
+          <div className="text-[14px] font-semibold leading-[1.40] text-[#111111] space-y-[10px]">
             <p>
               Our <span className="font-bold">poster selection</span> is one of
               the widest you&apos;ll find. Whatever your style, space, or mood,
@@ -192,8 +190,8 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Frames Section */}
-      <section className="w-full mb-24">
-        <div className="max-w-[1420px] mx-auto px-6 md:px-12 lg:px-[80px] xl:px-[96px] grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
+      <section className={`${containerClass} mb-16`}>
+        <div className="grid grid-cols-1 md:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[56px] items-start">
           <h2
             className="text-[28px] md:text-[30px] lg:text-[32px] font-normal text-[#111111] leading-[1.2]"
             style={{ fontFamily: serifFont }}
@@ -201,7 +199,7 @@ const OurProducts: React.FC = () => {
             Frames
           </h2>
 
-          <div className="text-[14px] leading-[1.45] text-[#111111] space-y-[10px]">
+          <div className="text-[14px] font-semibold leading-[1.40] text-[#111111] space-y-[10px]">
             <p>
               Our <span className="font-bold">frames</span> are made to do
               justice to the art they hold. Whatever your style, wall, or
@@ -242,10 +240,9 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Wavy Frame Section */}
-      <section className="bg-[#f4f1eb] mb-24">
-        <div className="max-w-[1440px] mx-auto px-4 md:px-8 lg:px-[96px] py-5">
+      <section className="bg-[#f4f1eb] mb-16">
+        <div className={`${containerClass} py-10`}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1.15fr] gap-3 items-stretch">
-            {/* Left Image */}
             <div className="w-full h-[520px] lg:h-[620px] overflow-hidden rounded-[10px]">
               <img
                 src="https://images.unsplash.com/photo-1616594039964-ae9021a400a0?q=80&w=2080&auto=format&fit=crop"
@@ -254,7 +251,6 @@ const OurProducts: React.FC = () => {
               />
             </div>
 
-            {/* Middle Image */}
             <div className="w-full h-[520px] lg:h-[620px] overflow-hidden rounded-[10px]">
               <img
                 src="https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?q=80&w=1964&auto=format&fit=crop"
@@ -263,7 +259,6 @@ const OurProducts: React.FC = () => {
               />
             </div>
 
-            {/* Right Text */}
             <div className="flex flex-col items-center justify-center text-center px-6 lg:px-10 py-14 md:col-span-2 lg:col-span-1">
               <span className="text-[12px] font-medium uppercase text-[#111111] mb-5">
                 POSTERY ATELIER
@@ -298,9 +293,8 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Ribbed Frames Section */}
-      <section className="w-full mb-[42px]">
-        <div className="max-w-[1440px] mx-auto px-6 md:px-12 lg:px-[80px] xl:px-[96px] grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-cols-[minmax(0,610px)_minmax(0,650px)] xl:grid-cols-[minmax(0,620px)_minmax(0,660px)] gap-y-10 md:gap-x-[50px] lg:gap-x-[65px] items-start">
-          {/* Left Content */}
+      <section className={`${containerClass} mb-[42px]`}>
+        <div className="grid grid-cols-1 md:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:grid-cols-[minmax(0,610px)_minmax(0,650px)] xl:grid-cols-[minmax(0,620px)_minmax(0,660px)] gap-y-10 md:gap-x-[50px] lg:gap-x-[65px] items-start">
           <div className="pt-1 md:pt-2">
             <h2
               className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2] mb-[30px]"
@@ -309,7 +303,7 @@ const OurProducts: React.FC = () => {
               Ribbed Frames
             </h2>
 
-            <div className="max-w-[610px] text-[14px] leading-[1.45] text-[#111111] space-y-[10px]">
+            <div className="max-w-[610px] font-semibold text-[14px] leading-[1.40] text-[#111111] space-y-[10px]">
               <p>
                 Defined by its elegant ribbed structure, the Ribbed Frame
                 introduces a sculptural dimension to wall art. Its textured
@@ -336,7 +330,6 @@ const OurProducts: React.FC = () => {
             </Link>
           </div>
 
-          {/* Right Image */}
           <div className="w-full h-[500px] md:h-[560px] lg:h-[620px] xl:h-[650px] overflow-hidden rounded-[12px]">
             <img
               src="https://images.unsplash.com/photo-1579783902614-a3fb3927b6a5?q=80&w=1945&auto=format&fit=crop"
@@ -348,46 +341,42 @@ const OurProducts: React.FC = () => {
       </section>
 
       {/* Accessories and Poster Hangers */}
-      <section className="w-full mb-[48px]">
-        <div className="max-w-[1420px] mx-auto px-6 md:px-12 lg:px-[80px] xl:px-[96px]">
-          {/* Accessories */}
-          <div className="grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
-            <h2
-              className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
-              style={{ fontFamily: serifFont }}
-            >
-              Accessories
-            </h2>
+      <section className={`${containerClass} mb-[48px]`}>
+        <div className="grid grid-cols-1 md:grid-cols-[300px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] items-start">
+          <h2
+            className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
+            style={{ fontFamily: serifFont }}
+          >
+            Accessories
+          </h2>
 
-            <div className="max-w-[760px] text-[14px] leading-[1.45] text-[#111111]">
-              <p>
-                We offer great alternatives to traditional nails when mounting
-                frames and posters onto a wall. Discover the innovative
-                self-adhesive Tesa products you can easily apply to your wall and
-                remove without a trace, or check out the easy-to-use picture
-                hook compatible with all types of picture frames.
-              </p>
-            </div>
+          <div className="max-w-[760px] font-semibold text-[14px] leading-[1.45] text-[#111111]">
+            <p>
+              We offer great alternatives to traditional nails when mounting
+              frames and posters onto a wall. Discover the innovative
+              self-adhesive Tesa products you can easily apply to your wall and
+              remove without a trace, or check out the easy-to-use picture hook
+              compatible with all types of picture frames.
+            </p>
           </div>
+        </div>
 
-          {/* Poster Hangers */}
-          <div className="mt-[46px] grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
-            <h2
-              className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
-              style={{ fontFamily: serifFont }}
-            >
-              Poster Hangers
-            </h2>
+        <div className="mt-[46px] grid grid-cols-1 md:grid-cols-[300px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] items-start">
+          <h2
+            className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
+            style={{ fontFamily: serifFont }}
+          >
+            Poster Hangers
+          </h2>
 
-            <div className="max-w-[760px] text-[14px] leading-[1.45] text-[#111111]">
-              <p>
-                We offer great alternatives to traditional nails when mounting
-                frames and posters onto a wall. Discover the innovative
-                self-adhesive Tesa products you can easily apply to your wall and
-                remove without a trace, or check out the easy-to-use picture
-                hook compatible with all types of picture frames.
-              </p>
-            </div>
+          <div className="max-w-[760px] font-semibold text-[14px] leading-[1.45] text-[#111111]">
+            <p>
+              We offer great alternatives to traditional nails when mounting
+              frames and posters onto a wall. Discover the innovative
+              self-adhesive Tesa products you can easily apply to your wall and
+              remove without a trace, or check out the easy-to-use picture hook
+              compatible with all types of picture frames.
+            </p>
           </div>
         </div>
       </section>
