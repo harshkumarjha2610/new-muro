@@ -427,22 +427,22 @@ const defaultHeroSlides: HomeHeroSlide[] = [
     button_text: "Start Curating →",
     button_link: "/products",
   },
-  {
-    image_url:
-      "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1800&auto=format&fit=crop",
-    title: "Art For Every Space.",
-    subtitle: "Bring warmth, mood and personality into your room.",
-    button_text: "Explore Posters →",
-    button_link: "/products",
-  },
-  {
-    image_url:
-      "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1800&auto=format&fit=crop",
-    title: "Curated Wall Prints.",
-    subtitle: "Simple, premium and meaningful posters for modern homes.",
-    button_text: "Shop Now →",
-    button_link: "/products",
-  },
+  // {
+  //   image_url:
+  //     "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1800&auto=format&fit=crop",
+  //   title: "Art For Every Space.",
+  //   subtitle: "Bring warmth, mood and personality into your room.",
+  //   button_text: "Explore Posters →",
+  //   button_link: "/products",
+  // },
+  // {
+  //   image_url:
+  //     "https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=1800&auto=format&fit=crop",
+  //   title: "Curated Wall Prints.",
+  //   subtitle: "Simple, premium and meaningful posters for modern homes.",
+  //   button_text: "Shop Now →",
+  //   button_link: "/products",
+  // },
 ];
 
 const defaultCategoryTiles: HomeCategoryTile[] = [
@@ -476,7 +476,7 @@ const collectionHighlightTiles: HomeCategoryTile[] = [
     button_text: "Discover",
     button_link: "/products",
     image_url:
-      "https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=1400&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=1400&auto=format&fit=crop",
   },
   {
     title: "Bestsellers",
@@ -912,30 +912,78 @@ const SectionHeading = ({
   );
 };
 
-const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
-  const cleanSlides = slides.length > 0 ? slides : defaultHeroSlides;
-  const activeSlide = cleanSlides[0] || defaultHeroSlides[0];
+// const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
+//   const cleanSlides = slides.length > 0 ? slides : defaultHeroSlides;
+//   const activeSlide = cleanSlides[0] || defaultHeroSlides[0];
 
+//   return (
+//     <section className="relative w-full overflow-hidden bg-[#F4F4F2]">
+//       <div className="relative h-[calc(100svh-110px)] min-h-[540px] w-full lg:min-h-[620px]">
+//         <Link
+//           to={activeSlide.button_link || "/products"}
+//           className="relative block h-full w-full"
+//         >
+//           {/* STATIC IMAGE ONLY - NO FADE, NO SCALE, NO SLIDER EFFECT */}
+//           <img
+//             src={getFullImageUrl(activeSlide.image_url)}
+//             alt={activeSlide.title}
+//             className="absolute inset-0 h-full w-full object-cover"
+//             draggable={false}
+//           />
+
+//           {/* READABILITY OVERLAY ONLY */}
+//           <div className="absolute inset-0 bg-black/20" />
+//           <div className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-black/72 via-black/28 to-transparent" />
+
+//           {/* TEXT ALIGNED WITH NAVBAR HAMBURGER */}
+//           <div className="absolute inset-0 z-10 flex items-end">
+//             <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 md:pb-14 2xl:px-0">
+//               <div className="max-w-[620px]">
+//                 <h1
+//                   className="uppercase text-[30px] font-bold leading-[0.95] tracking-[2px] text-white md:text-[36px]"
+//                   style={headingStyle}
+//                 >
+//                   {toUpperText(activeSlide.title)}
+//                 </h1>
+
+//                 {activeSlide.subtitle && (
+//                   <p className="mt-5 max-w-[620px] text-[13px] font-normal leading-relaxed text-white/90 md:text-[14px]">
+//                     {toTitleCase(activeSlide.subtitle)}
+//                   </p>
+//                 )}
+
+//                 {activeSlide.button_text && (
+//                   <span className="mt-4 inline-flex border-b border-white pb-1 text-[12px] font-bold uppercase tracking-[0.22em] text-white md:text-[13px]">
+//                     {toUpperText(activeSlide.button_text)}
+//                   </span>
+//                 )}
+//               </div>
+//             </div>
+//           </div>
+//         </Link>
+//       </div>
+//     </section>
+//   );
+// };
+const HomeHeroSlider = () => {
   return (
     <section className="relative w-full overflow-hidden bg-[#F4F4F2]">
       <div className="relative h-[calc(100svh-110px)] min-h-[540px] w-full lg:min-h-[620px]">
         <Link
-          to={activeSlide.button_link || "/products"}
+          to="/products"
           className="relative block h-full w-full"
         >
-          {/* STATIC IMAGE ONLY - NO FADE, NO SCALE, NO SLIDER EFFECT */}
           <img
-            src={getFullImageUrl(activeSlide.image_url)}
-            alt={activeSlide.title}
+            src={heroBanner}
+            alt="Transform Your Walls"
             className="absolute inset-0 h-full w-full object-cover"
             draggable={false}
           />
 
-          {/* READABILITY OVERLAY ONLY */}
           <div className="absolute inset-0 bg-black/20" />
+
           <div className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-black/72 via-black/28 to-transparent" />
 
-          {/* TEXT ALIGNED WITH NAVBAR HAMBURGER */}
           <div className="absolute inset-0 z-10 flex items-end">
             <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 md:pb-14 2xl:px-0">
               <div className="max-w-[620px]">
@@ -943,20 +991,16 @@ const HomeHeroSlider = ({ slides }: { slides: HomeHeroSlide[] }) => {
                   className="uppercase text-[30px] font-bold leading-[0.95] tracking-[2px] text-white md:text-[36px]"
                   style={headingStyle}
                 >
-                  {toUpperText(activeSlide.title)}
+                  TRANSFORM YOUR WALLS.
                 </h1>
 
-                {activeSlide.subtitle && (
-                  <p className="mt-5 max-w-[620px] text-[13px] font-normal leading-relaxed text-white/90 md:text-[14px]">
-                    {toTitleCase(activeSlide.subtitle)}
-                  </p>
-                )}
+                <p className="mt-5 max-w-[620px] text-[13px] font-normal leading-relaxed text-white/90 md:text-[14px]">
+                  Premium Poster Prints Curated For Beautiful Living.
+                </p>
 
-                {activeSlide.button_text && (
-                  <span className="mt-4 inline-flex border-b border-white pb-1 text-[12px] font-bold uppercase tracking-[0.22em] text-white md:text-[13px]">
-                    {toUpperText(activeSlide.button_text)}
-                  </span>
-                )}
+                <span className="mt-4 inline-flex border-b border-white pb-1 text-[12px] font-bold uppercase tracking-[0.22em] text-white md:text-[13px]">
+                  START CURATING →
+                </span>
               </div>
             </div>
           </div>
@@ -1409,10 +1453,43 @@ const EditorialGridSection = ({
   );
 };
 
+// export const CollectionHighlightsSection = () => {
+//   return <EditorialGridSection items={collectionHighlightTiles} columns={2} />;
+// };
 export const CollectionHighlightsSection = () => {
-  return <EditorialGridSection items={collectionHighlightTiles} columns={2} />;
+  return (
+    <motion.section
+      variants={fadeInUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      className="w-full bg-white py-5 md:py-7"
+    >
+      <div className="w-[calc(100%-32px)] sm:w-[calc(100%-48px)] lg:w-[calc(100%-64px)] max-w-[1320px] mx-auto">
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+          className="grid grid-cols-1 gap-[16px] md:grid-cols-2"
+        >
+          {collectionHighlightTiles.map((item, index) => (
+            <EditorialTile
+              key={`${item.title}-${index}`}
+              title={item.title}
+              subtitle={item.subtitle}
+              buttonText={item.button_text}
+              buttonLink={item.button_link}
+              imageUrl={item.image_url}
+              index={index}
+              aspectStyle={editorialTwoTileStyle}
+            />
+          ))}
+        </motion.div>
+      </div>
+    </motion.section>
+  );
 };
-
 type FAQItem = {
   question: string;
   answer: string;
@@ -1804,13 +1881,13 @@ const Index: React.FC = () => {
     setNewsletterOpen(false);
   };
 
-  const heroSlides = useMemo(
-    () =>
-      homeContent.hero_slides.length > 0
-        ? homeContent.hero_slides
-        : defaultHeroSlides,
-    [homeContent.hero_slides],
-  );
+  // const heroSlides = useMemo(
+  //   () =>
+  //     homeContent.hero_slides.length > 0
+  //       ? homeContent.hero_slides
+  //       : defaultHeroSlides,
+  //   [homeContent.hero_slides],
+  // );
   const categoryTiles = useMemo(
     () =>
       homeContent.category_tiles.length > 0
@@ -2086,7 +2163,8 @@ const Index: React.FC = () => {
         }
       `}</style>
 
-      <HomeHeroSlider slides={heroSlides} />
+      {/* <HomeHeroSlider slides={heroSlides} /> */}
+      <HomeHeroSlider />
 
       <section className={sectionSpacingClass}>
         <div className={productGridContainerClass}>
