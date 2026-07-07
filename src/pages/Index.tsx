@@ -985,7 +985,7 @@ const HomeHeroSlider = () => {
           <div className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-black/72 via-black/28 to-transparent" />
 
           <div className="absolute inset-0 z-10 flex items-end">
-            <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 md:pb-14 2xl:px-0">
+            <div className="mx-auto w-full max-w-[1600px] px-6 pb-10 sm:px-8 md:px-12 lg:px-16 md:pb-14">
               <div className="max-w-[620px]">
                 <h1
                   className="uppercase text-[30px] font-bold leading-[0.95] tracking-[2px] text-white md:text-[36px]"
