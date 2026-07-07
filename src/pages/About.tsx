@@ -15,13 +15,11 @@ const About: React.FC = () => {
       />
 
       <main className="min-h-screen bg-white text-[#111111] font-sans selection:bg-[#111111] selection:text-white pb-20">
-
         {/* =========================================================
             SECTION 1: ABOUT US HERO
         ========================================================= */}
         <section className={`${containerClass} pt-10 md:pt-12 mb-20`}>
           <div className="grid grid-cols-1 min-[930px]:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:grid-cols-[615px_minmax(0,1fr)] gap-y-10 gap-x-12 lg:gap-x-16 items-start">
-
             {/* Image Side */}
             <div
               className="w-full bg-[#f2f2f2] rounded-[12px] overflow-hidden"
@@ -36,7 +34,6 @@ const About: React.FC = () => {
 
             {/* Text Side */}
             <div className="flex flex-col justify-start max-w-[480px] min-[930px]:max-w-none mx-auto min-[930px]:mx-0">
-
               <h1
                 className="text-[32px] min-[930px]:text-[36px] lg:text-[42px] leading-[1.1] font-normal text-[#111111] mb-8 text-center"
                 style={{ fontFamily: serifFont }}
@@ -69,18 +66,15 @@ const About: React.FC = () => {
                 <p>
                   Over the years, Postery&apos;s collections and gallery walls
                   have been featured in several respected interior and design
-                  publications, including Elle Decoration,{" "}
-                  The World of Interiors,{" "}
-                  Residence, Nya Rum and{" "}
-                  Bo Living. These features reflect our ongoing
-                  commitment to bringing inspiring art and thoughtfully design
-                  into modern interiors.
+                  publications, including Elle Decoration, The World of
+                  Interiors, Residence, Nya Rum and Bo Living. These features
+                  reflect our ongoing commitment to bringing inspiring art and
+                  thoughtfully design into modern interiors.
                 </p>
               </div>
             </div>
           </div>
         </section>
-
 
         {/* =========================================================
             SECTION 2: OUR PURPOSE
@@ -88,7 +82,6 @@ const About: React.FC = () => {
         <section className="w-full mb-[48px]">
           <div className={`${containerClass}`}>
             <div className="grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
-
               <h2
                 className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
                 style={{ fontFamily: serifFont }}
@@ -110,14 +103,12 @@ const About: React.FC = () => {
           </div>
         </section>
 
-
         {/* =========================================================
             SECTION 3: OUR PARTNERS
         ========================================================= */}
         <section className="w-full mb-[64px]">
           <div className={`${containerClass}`}>
             <div className="grid grid-cols-1 md:grid-cols-[260px_minmax(0,760px)] lg:grid-cols-[300px_minmax(0,760px)] xl:grid-cols-[320px_minmax(0,760px)] gap-y-4 md:gap-x-[40px] lg:gap-x-[48px] xl:gap-x-[56px] items-start">
-
               <h2
                 className="text-[28px] md:text-[29px] lg:text-[30px] font-normal text-[#111111] leading-[1.2]"
                 style={{ fontFamily: serifFont }}
@@ -130,23 +121,20 @@ const About: React.FC = () => {
                 Over the years we have worked with selected global retailers
                 and creative partners to bring curated art collections to new
                 audiences. Our collaborations include projects with
-                international brands such as H&amp;M,{" "}
-                Lefties (Inditex) and{" "}
-                Lagerhaus, where Postery collections have been
-                introduced in retail environments across different markets.
-                Through these partnerships we continue to explore new ways of
-                sharing art and design with a wider community.
+                international brands such as H&amp;M, Lefties (Inditex) and
+                Lagerhaus, where Postery collections have been introduced in
+                retail environments across different markets. Through these
+                partnerships we continue to explore new ways of sharing art and
+                design with a wider community.
               </p>
             </div>
           </div>
         </section>
 
-
         {/* =========================================================
             SECTION 4: LARGE IMAGE
         ========================================================= */}
         <section className={`${containerClass} mb-20`}>
-
           <div className="w-full bg-[#f2f2f2] rounded-[12px] overflow-hidden aspect-[16/9] md:aspect-[2.15/1]">
             <img
               src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop"
@@ -156,7 +144,6 @@ const About: React.FC = () => {
           </div>
 
           <div className="mt-7 text-center max-w-[760px] mx-auto">
-
             <p className="text-[14px] font-semibold leading-[1.55] text-[#111111] mb-8">
               If you are looking for inspiration for your next art print or
               ideas for styling your home, our Magazine is where creativity and
@@ -168,22 +155,17 @@ const About: React.FC = () => {
             <button className="inline-flex items-center justify-center min-w-[205px] h-[46px] px-7 rounded-full border border-[#999999] text-[#111111] text-[14px] font-medium hover:bg-[#111111] hover:text-white hover:border-[#111111] transition-colors">
               Discover our Magazine
             </button>
-
           </div>
         </section>
-
 
         {/* =========================================================
             SECTION 5: BOTTOM THREE CARDS
         ========================================================= */}
         <section className={`${containerClass} mb-8`}>
-
           <div className="grid grid-cols-1 md:grid-cols-3 gap-y-12 gap-x-4">
-
             {/* Card 1 */}
             <div className="flex flex-col">
-
-              <div className="w-full bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5 aspect-square">
+              <div className="w-full h-[420px] md:h-[480px] lg:h-[520px] bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5">
                 <img
                   src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=2070&auto=format&fit=crop"
                   alt="Sustainability"
@@ -209,14 +191,11 @@ const About: React.FC = () => {
               >
                 Read More
               </Link>
-
             </div>
-
 
             {/* Card 2 */}
             <div className="flex flex-col">
-
-              <div className="w-full bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5 aspect-square">
+              <div className="w-full h-[420px] md:h-[480px] lg:h-[520px] bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5">
                 <img
                   src="https://images.unsplash.com/photo-1544457070-4cd773b4d71e?q=80&w=1843&auto=format&fit=crop"
                   alt="Our products"
@@ -242,14 +221,11 @@ const About: React.FC = () => {
               >
                 Read More
               </Link>
-
             </div>
-
 
             {/* Card 3 */}
             <div className="flex flex-col">
-
-              <div className="w-full bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5 aspect-square">
+              <div className="w-full h-[420px] md:h-[480px] lg:h-[520px] bg-[#f2f2f2] rounded-[12px] overflow-hidden mb-5">
                 <img
                   src="https://images.unsplash.com/photo-1505691938895-1758d7feb511?q=80&w=2070&auto=format&fit=crop"
                   alt="Collaborations"
@@ -275,12 +251,9 @@ const About: React.FC = () => {
               >
                 Read More
               </Link>
-
             </div>
-
           </div>
         </section>
-
       </main>
     </>
   );
