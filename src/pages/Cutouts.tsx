@@ -1,11 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Heart,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Heart } from "lucide-react";
 
 const API_BASE =
   import.meta.env.VITE_API_BASE_URL || "https://muroposter.com/api";
@@ -128,14 +124,13 @@ const toTitleCase = (value?: string) => {
 const getActiveOfferPrice = (
   price: number,
   offer?: ActiveOffer | null,
-  apiFinalPrice?: number,
+  apiFinalPrice?: number
 ): OfferPrice => {
   if (apiFinalPrice && apiFinalPrice > 0 && apiFinalPrice < price) {
     return {
       originalPrice: price,
       finalPrice: apiFinalPrice,
-      discountAmount:
-        Math.round((price - apiFinalPrice) * 100) / 100,
+      discountAmount: Math.round((price - apiFinalPrice) * 100) / 100,
       hasOffer: true,
     };
   }
@@ -156,7 +151,7 @@ const getActiveOfferPrice = (
 
   const finalPrice = Math.max(
     0,
-    Math.round((price - discountAmount) * 100) / 100,
+    Math.round((price - discountAmount) * 100) / 100
   );
 
   return {
@@ -190,6 +185,10 @@ const fetchActiveOffers = async (): Promise<ActiveOffer[]> => {
   }
 };
 
+/*
+  FIXED:
+  Changed /Cutouts to /cutouts
+*/
 const fetchCutoutRows = async (): Promise<CutoutProduct[]> => {
   const response = await fetch(`${API_BASE}/cutouts`, {
     headers: {
@@ -205,9 +204,13 @@ const fetchCutoutRows = async (): Promise<CutoutProduct[]> => {
 
   const items = Array.isArray(json?.data?.items)
     ? json.data.items
-    : Array.isArray(json?.items)
-      ? json.items
-      : [];
+    : Array.isArray(json?.data)
+      ? json.data
+      : Array.isArray(json?.items)
+        ? json.items
+        : Array.isArray(json)
+          ? json
+          : [];
 
   return items;
 };
@@ -222,8 +225,7 @@ const getCutoutImages = (product: CutoutProduct): string[] => {
   const uploadedImages = imageRows
     .slice()
     .sort(
-      (a, b) =>
-        Number(a.sort_order || 0) - Number(b.sort_order || 0),
+      (a, b) => Number(a.sort_order || 0) - Number(b.sort_order || 0)
     )
     .map(
       (image) =>
@@ -231,7 +233,7 @@ const getCutoutImages = (product: CutoutProduct): string[] => {
         image.url ||
         image.file_url ||
         image.path ||
-        "",
+        ""
     )
     .filter(Boolean);
 
@@ -258,32 +260,30 @@ const CutoutCard = ({
   const [imgIdx, setImgIdx] = useState(0);
   const [hovered, setHovered] = useState(false);
 
-  const basePrice = safeNumber(
-    product.total_price || product.price,
-  );
+  const basePrice = safeNumber(product.total_price || product.price);
 
   const apiFinalPrice = safeNumber(
-    product.final_price || product.offer_price,
+    product.final_price || product.offer_price
   );
 
-  const currentOffer =
-    product.active_offer || activeOffer || null;
+  const currentOffer = product.active_offer || activeOffer || null;
 
   const offerPrice = getActiveOfferPrice(
     basePrice,
     currentOffer,
-    apiFinalPrice,
+    apiFinalPrice
   );
 
   const title = toTitleCase(product.product_name || "CutOut");
 
   const brand =
-    product.product_type === "sqft"
-      ? "Sqft CutOut"
-      : "Muro CutOut";
+    product.product_type === "sqft" ? "Sqft CutOut" : "Muro CutOut";
 
-  const detailUrl =
-    product.detail_url || `/cutouts/${product.id}`;
+  /*
+    FIXED:
+    Changed /Cutouts/:id to /cutouts/:id
+  */
+  const detailUrl = product.detail_url || `/cutouts/${product.id}`;
 
   const handlePrev = (event: React.MouseEvent) => {
     event.preventDefault();
@@ -291,7 +291,7 @@ const CutoutCard = ({
 
     setImgIdx(
       (previous) =>
-        (previous - 1 + allImages.length) % allImages.length,
+        (previous - 1 + allImages.length) % allImages.length
     );
   };
 
@@ -299,9 +299,7 @@ const CutoutCard = ({
     event.preventDefault();
     event.stopPropagation();
 
-    setImgIdx(
-      (previous) => (previous + 1) % allImages.length,
-    );
+    setImgIdx((previous) => (previous + 1) % allImages.length);
   };
 
   const handleMouseEnter = () => {
@@ -399,10 +397,7 @@ const CutoutCard = ({
                   onClick={handlePrev}
                   className="pointer-events-auto absolute left-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#111] shadow-sm transition-colors hover:bg-white"
                 >
-                  <ChevronLeft
-                    className="h-4 w-4"
-                    strokeWidth={2}
-                  />
+                  <ChevronLeft className="h-4 w-4" strokeWidth={2} />
                 </button>
 
                 <button
@@ -411,10 +406,7 @@ const CutoutCard = ({
                   onClick={handleNext}
                   className="pointer-events-auto absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full bg-white/85 text-[#111] shadow-sm transition-colors hover:bg-white"
                 >
-                  <ChevronRight
-                    className="h-4 w-4"
-                    strokeWidth={2}
-                  />
+                  <ChevronRight className="h-4 w-4" strokeWidth={2} />
                 </button>
               </div>
             )}
@@ -428,10 +420,7 @@ const CutoutCard = ({
               }}
               className="absolute right-3 top-3 z-40 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/70 text-[#111]/70 backdrop-blur-sm transition-colors hover:bg-white hover:text-[#006039]"
             >
-              <Heart
-                className="h-4 w-4"
-                strokeWidth={1.45}
-              />
+              <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
             {allImages.length > 1 && (
@@ -454,10 +443,8 @@ const CutoutCard = ({
                       }}
                       className="block h-1.5 rounded-full bg-white transition-all duration-200"
                       style={{
-                        width:
-                          imageIndex === imgIdx ? "16px" : "6px",
-                        opacity:
-                          imageIndex === imgIdx ? 1 : 0.55,
+                        width: imageIndex === imgIdx ? "16px" : "6px",
+                        opacity: imageIndex === imgIdx ? 1 : 0.55,
                       }}
                     />
                   </li>
@@ -505,15 +492,9 @@ const CutoutCard = ({
 
 const Cutouts: React.FC = () => {
   const [products, setProducts] = useState<CutoutProduct[]>([]);
-
-  const [activeOffers, setActiveOffers] = useState<
-    ActiveOffer[]
-  >([]);
-
+  const [activeOffers, setActiveOffers] = useState<ActiveOffer[]>([]);
   const [loading, setLoading] = useState(true);
-
   const [errorText, setErrorText] = useState("");
-
   const [currentPage, setCurrentPage] = useState(1);
 
   const itemsPerPage = 40;
@@ -534,9 +515,7 @@ const Cutouts: React.FC = () => {
       } catch (error: any) {
         console.error("Failed to fetch cutouts:", error);
 
-        setErrorText(
-          error?.message || "Failed to fetch cutouts",
-        );
+        setErrorText(error?.message || "Failed to fetch cutouts");
 
         setProducts([]);
         setActiveOffers([]);
@@ -550,25 +529,17 @@ const Cutouts: React.FC = () => {
 
   const totalItems = products.length;
 
-  const totalPages = Math.ceil(
-    totalItems / itemsPerPage,
-  );
+  const totalPages = Math.ceil(totalItems / itemsPerPage);
 
-  const visibleCount =
-    currentPage * itemsPerPage;
+  const visibleCount = currentPage * itemsPerPage;
 
-  const currentItems = products.slice(
-    0,
-    visibleCount,
-  );
+  const currentItems = products.slice(0, visibleCount);
 
   const hasMore = visibleCount < totalItems;
 
   const handleShowMore = () => {
     if (currentPage < totalPages) {
-      setCurrentPage(
-        (previous) => previous + 1,
-      );
+      setCurrentPage((previous) => previous + 1);
     }
   };
 
@@ -593,8 +564,6 @@ const Cutouts: React.FC = () => {
         `}
       </style>
 
-      {/* PAGE HEADING */}
-
       <section className="mx-auto max-w-[1320px] px-5 pb-8 pt-5 md:px-7 md:pb-10 md:pt-6 lg:px-8">
         <div className="relative grid gap-4 md:min-h-[72px] md:grid-cols-[0.85fr_1.15fr] md:items-start">
           <motion.h1
@@ -615,7 +584,7 @@ const Cutouts: React.FC = () => {
               fontFamily: serifFont,
             }}
           >
-            CutOuts
+            Cutouts
           </motion.h1>
 
           <p
@@ -624,25 +593,20 @@ const Cutouts: React.FC = () => {
               fontSize: "14px",
             }}
           >
-            Discover our collection of premium CutOuts from MURO
-            Poster. Explore unique decorative designs created to add
-            personality, creativity and visual impact to modern
-            spaces.
+            Discover our collection of premium Cutouts from MURO Poster.
+            Explore unique decorative designs created to add personality,
+            creativity and visual impact to modern spaces.
           </p>
         </div>
       </section>
-
-      {/* DIVIDER */}
 
       <section className="mx-auto mb-5 max-w-[1320px] px-5 pt-2 md:px-7 md:pt-4 lg:px-8">
         <div className="border-b border-[#E8E8E8] pb-3">
           <p className="text-[13px] font-medium tracking-wide text-[#101010] md:text-[14px]">
-            All CutOuts
+            All Cutouts
           </p>
         </div>
       </section>
-
-      {/* PRODUCTS */}
 
       <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
         {loading ? (
@@ -676,9 +640,7 @@ const Cutouts: React.FC = () => {
                   key={key}
                   product={product}
                   activeOffer={
-                    product.active_offer ||
-                    activeOffers[0] ||
-                    null
+                    product.active_offer || activeOffers[0] || null
                   }
                   index={index}
                 />
@@ -687,23 +649,14 @@ const Cutouts: React.FC = () => {
           </div>
         )}
 
-        {/* SHOW MORE */}
-
         {totalItems > 0 && (
           <div className="mt-14 flex flex-col items-center gap-5">
             <p className="text-[14px] text-[#101010]">
               You have viewed{" "}
               <span className="font-semibold">
-                {Math.min(
-                  visibleCount,
-                  totalItems,
-                )}
+                {Math.min(visibleCount, totalItems)}
               </span>{" "}
-              of{" "}
-              <span className="font-semibold">
-                {totalItems}
-              </span>{" "}
-              products
+              of <span className="font-semibold">{totalItems}</span> products
             </p>
 
             <div className="h-[3px] w-full max-w-[320px] overflow-hidden rounded-full bg-[#E5E5E5]">
@@ -711,13 +664,8 @@ const Cutouts: React.FC = () => {
                 className="h-full rounded-full bg-[#101010] transition-all duration-500"
                 style={{
                   width: `${Math.min(
-                    (Math.min(
-                      visibleCount,
-                      totalItems,
-                    ) /
-                      totalItems) *
-                    100,
-                    100,
+                    (Math.min(visibleCount, totalItems) / totalItems) * 100,
+                    100
                   )}%`,
                 }}
               />

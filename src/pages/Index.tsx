@@ -445,24 +445,47 @@ const defaultHeroSlides: HomeHeroSlide[] = [
   // },
 ];
 
+// const defaultCategoryTiles: HomeCategoryTile[] = [
+//   {
+//     title: "Posters",
+//     subtitle: "New prints to refresh your walls",
+//     button_text: "Discover",
+//     button_link: "/new-arrivals",
+//     image_url: "images/posters.webp",
+//   },
+//   {
+//     title: "Cutouts",
+//     subtitle: "Playful prints to bring joy to their space",
+//     button_text: "Explore",
+//     button_link: "/products?cat=Kids%20Art%20Prints",
+//     image_url: "images/cutouts.webp",
+//   },
+//   {
+//     title: "Postcard",
+//     subtitle: "Front and back postcard products ",
+//     button_text: "Explore",
+//     button_link: "/postcards",
+//     image_url: "images/postcards.webp",
+//   },
+// ];
 const defaultCategoryTiles: HomeCategoryTile[] = [
   {
     title: "Posters",
     subtitle: "New prints to refresh your walls",
     button_text: "Discover",
-    button_link: "/new-arrivals",
+    button_link: "/products",
     image_url: "images/posters.webp",
   },
   {
     title: "Cutouts",
     subtitle: "Playful prints to bring joy to their space",
     button_text: "Explore",
-    button_link: "/products?cat=Kids%20Art%20Prints",
+    button_link: "/cutouts",
     image_url: "images/cutouts.webp",
   },
   {
     title: "Postcard",
-    subtitle: "Front and back postcard products ",
+    subtitle: "Front and back postcard products",
     button_text: "Explore",
     button_link: "/postcards",
     image_url: "images/postcards.webp",
