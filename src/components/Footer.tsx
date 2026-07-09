@@ -158,10 +158,10 @@ const Footer = () => {
             <div className="min-w-0 text-left min-[1106px]:w-[120px]">
               <h4 className={footerHeadingClass}>FOLLOW US</h4>
               <nav className="flex flex-col items-start">
-                <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Instagram</a>
-                <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Facebook</a>
-                <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>TikTok</a>
-                <a href="https://www.pinterest.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Pinterest</a>
+                <a href="https://x.com/Muroposter" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Instagram</a>
+                <a href="https://www.facebook.com/muroposter/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Facebook</a>
+                {/* <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>TikTok</a> */}
+                <a href="https://in.pinterest.com/muroposter/" target="_blank" rel="noopener noreferrer" className={footerLinkClass}>Pinterest</a>
               </nav>
             </div>
           </div>
