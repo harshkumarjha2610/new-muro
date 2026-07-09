@@ -77,10 +77,13 @@ const serifFont =
   "Georgia, 'Times New Roman', serif";
 
 const getFullImageUrl = (path?: string) => {
-  if (!path)
+  if (!path) {
     return "https://via.placeholder.com/300x400?text=No+Image";
+  }
 
-  if (path.startsWith("http")) return path;
+  if (path.startsWith("http")) {
+    return path;
+  }
 
   const cleanPath = path.startsWith("/")
     ? path.substring(1)
@@ -175,9 +178,7 @@ const getUploadedProductImage = (product: any) => {
   );
 };
 
-const getProductImages = (
-  product: any,
-): string[] => {
+const getProductImages = (product: any): string[] => {
   const imageRows = Array.isArray(
     product?.product_images,
   )
@@ -419,9 +420,7 @@ const ProductCard = ({
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    padding: isHovered
-                      ? "0"
-                      : "48px",
+                    padding: isHovered ? "0" : "48px",
                   }}
                 >
                   <img
@@ -474,9 +473,10 @@ const ProductCard = ({
             <button
               type="button"
               aria-label="Add to wishlist"
-              onClick={(event) =>
-                event.preventDefault()
-              }
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
               className="absolute right-3 top-3 z-40 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/70"
             >
               <Heart
@@ -576,7 +576,6 @@ const Products: React.FC = () => {
   const [expandedFilter, setExpandedFilter] =
     useState<string | null>(null);
 
-  // PRICE FILTER STATE
   const [
     selectedPriceRanges,
     setSelectedPriceRanges,
@@ -637,12 +636,15 @@ const Products: React.FC = () => {
           offerRes,
         ] = await Promise.all([
           API.getProducts().catch(() => []),
+
           API.adminGetCategories().catch(
             () => [],
           ),
+
           API.adminGetSubcategories().catch(
             () => [],
           ),
+
           fetchActiveOffer(),
         ]);
 
@@ -711,9 +713,12 @@ const Products: React.FC = () => {
 
       const key = name.toUpperCase();
 
-      if (!name || seen.has(key)) return false;
+      if (!name || seen.has(key)) {
+        return false;
+      }
 
       seen.add(key);
+
       return true;
     });
   }, [categories]);
@@ -749,13 +754,16 @@ const Products: React.FC = () => {
           .trim()
           .toUpperCase();
 
-        if (!name) return false;
+        if (!name) {
+          return false;
+        }
 
         if (
           currentCatObj &&
           name === selectedCategory
-        )
+        ) {
           return false;
+        }
 
         return (
           arr.findIndex(
@@ -809,13 +817,13 @@ const Products: React.FC = () => {
               .toUpperCase();
 
             return (
-              name === selectedSize.toUpperCase()
+              name ===
+              selectedSize.toUpperCase()
             );
           },
         );
       }
 
-      // PRICE FILTER
       const productPrice =
         getLowestProductPrice(product);
 
@@ -828,7 +836,9 @@ const Products: React.FC = () => {
                 item.id === selectedId,
             );
 
-            if (!range) return true;
+            if (!range) {
+              return true;
+            }
 
             if (range.max === null) {
               return productPrice >= range.min;
@@ -908,7 +918,15 @@ const Products: React.FC = () => {
         <style>
           {`
             .muro-apple-product-title {
-              font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Arial, sans-serif !important;
+              font-family:
+                -apple-system,
+                BlinkMacSystemFont,
+                "SF Pro Display",
+                "SF Pro Text",
+                "Helvetica Neue",
+                Arial,
+                sans-serif !important;
+
               font-weight: 500 !important;
             }
 
@@ -918,25 +936,45 @@ const Products: React.FC = () => {
           `}
         </style>
 
-        <section className="mx-auto max-w-[1320px] px-5 pb-8 pt-5 md:px-7 lg:px-8">
-          <div className="relative grid gap-4 md:grid-cols-[0.85fr_1.15fr]">
-            <h1
-              className="font-normal leading-tight"
+        {/* PAGE HEADING - MATCHES CUTOUTS */}
+
+        <section className="mx-auto max-w-[1320px] px-5 pb-8 pt-5 md:px-7 md:pb-10 md:pt-6 lg:px-8">
+          <div className="relative grid gap-4 md:min-h-[72px] md:grid-cols-[0.85fr_1.15fr] md:items-start">
+            <motion.h1
+              initial={{
+                opacity: 0,
+                y: 10,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              transition={{
+                duration: 0.35,
+              }}
+              className="font-normal leading-tight text-[#101010]"
               style={{
                 fontSize: "32.0924px",
                 fontFamily: serifFont,
               }}
             >
               {pageHeading}
-            </h1>
+            </motion.h1>
 
-            <p className="max-w-[670px] text-[14px] leading-relaxed">
+            <p
+              className="max-w-[670px] font-normal leading-relaxed text-[#101010] md:absolute md:left-[calc(50%+2.5rem)] md:top-0 md:max-w-[min(670px,calc(50%-2.5rem-1rem))] lg:left-[calc(50%+5rem)] lg:max-w-[min(670px,calc(50%-5rem-1rem))]"
+              style={{
+                fontSize: "14px",
+              }}
+            >
               {pageDescription}
             </p>
           </div>
         </section>
 
-        <section className="mx-auto mb-5 max-w-[1320px] px-5 md:px-7 lg:px-8">
+        {/* CATEGORY NAVIGATION */}
+
+        <section className="mx-auto mb-5 max-w-[1320px] px-5 pt-2 md:px-7 md:pt-4 lg:px-8">
           <div className="flex items-center border-b border-[#E8E8E8] pb-3">
             <div
               id="muro-category-scroll"
@@ -979,6 +1017,8 @@ const Products: React.FC = () => {
           </div>
         </section>
 
+        {/* PRODUCTS */}
+
         <section className="mx-auto max-w-[1320px] px-5 pb-16 md:px-7 lg:px-8">
           {loading ? (
             <div className="flex min-h-[45vh] items-center justify-center">
@@ -1018,6 +1058,8 @@ const Products: React.FC = () => {
           )}
         </section>
       </main>
+
+      {/* FILTER DRAWER */}
 
       <AnimatePresence>
         {filterOpen && (
@@ -1140,9 +1182,7 @@ const Products: React.FC = () => {
 
                                       return (
                                         <button
-                                          key={
-                                            range.id
-                                          }
+                                          key={range.id}
                                           type="button"
                                           onClick={() =>
                                             togglePriceRange(

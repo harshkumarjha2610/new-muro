@@ -392,34 +392,7 @@ const getHomeProductBrand = (item?: HomeProduct | null) => {
     return "CutOut";
   return item?.category || "Muro Poster";
 };
-const getHomeProductImageClasses = (item?: HomeProduct | null) => {
-  if (item?.product_type === "postcard") {
-    return {
-      containerClass:
-        "relative flex w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] p-[10px] sm:p-[14px] lg:p-[18px]",
-      imageClass:
-        "block h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.025]",
-    };
-  }
 
-  if (
-    item?.product_type === "cutout" ||
-    item?.product_type === "sqft"
-  ) {
-    return {
-      containerClass:
-        "relative flex w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] p-[18px] sm:p-[24px] lg:p-[30px]",
-      imageClass:
-        "block h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.025]",
-    };
-  }
-
-  return {
-    containerClass: productImageBoxClass,
-    imageClass:
-      "max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]",
-  };
-};
 const getHomeProductLink = (item: HomeProduct, fallback: string) => {
   if (item.product_type === "postcard") return `/postcards/${item.id}`;
   if (item.product_type === "cutout" || item.product_type === "sqft")
@@ -788,6 +761,20 @@ const uniqueHomeItems = (items: HomeProduct[]): HomeProduct[] => {
 
 const homeItemKey = (item: HomeProduct) =>
   `${item.product_type || "poster"}-${Number(item.id || 0)}`;
+
+const shuffleHomeItems = (items: HomeProduct[]) => {
+  const shuffled = uniqueHomeItems(items).slice();
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [shuffled[index], shuffled[swapIndex]] = [
+      shuffled[swapIndex],
+      shuffled[index],
+    ];
+  }
+
+  return shuffled;
+};
 
 const fillHomeProductRow = ({
   primary,
@@ -1235,91 +1222,6 @@ const PosterProductCard = ({
   );
 };
 
-// const HomeProductCard = ({
-//   item,
-//   index = 0,
-// }: {
-//   item: HomeProduct;
-//   index?: number;
-// }) => {
-//   const image = getHomeProductImage(item);
-//   const titleText = toTitleCase(getHomeProductTitle(item));
-//   const brandText = toTitleCase(getHomeProductBrand(item));
-//   const finalPrice = getHomeProductPrice(item);
-//   const originalPrice =
-//     safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
-//   const hasOffer = originalPrice > 0 && originalPrice > finalPrice;
-//   const offerLabel = String(
-//     (item as any)?.active_offer?.label || (item as any)?.offer_label || "",
-//   ).trim();
-
-//   if (!image) return null;
-
-//   return (
-//     <motion.div variants={fadeInUp} custom={index}>
-//       <Link
-//         to={getHomeProductLink(item, "/products")}
-//         className="group block w-full"
-//       >
-//         <article className="w-full">
-//           <div className={productImageBoxClass} style={productImageBoxStyle}>
-//             <button
-//               type="button"
-//               aria-label="Add to wishlist"
-//               className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
-//               onClick={(e) => e.preventDefault()}
-//             >
-//               <Heart className="h-4 w-4" strokeWidth={1.45} />
-//             </button>
-
-//             <img
-//               src={getFullImageUrl(image)}
-//               alt={titleText}
-//               className="max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
-//               loading="lazy"
-//             />
-//           </div>
-
-//           <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
-//             <div className="min-w-0 muro-product-font">
-//               <p className="muro-product-category truncate text-[13px] leading-none">
-//                 {brandText}
-//               </p>
-
-//               <h3 className="muro-product-title mt-2 min-h-[40px] text-[14px] leading-snug md:text-[14px]">
-//                 {titleText}
-//               </h3>
-//             </div>
-
-//             <div className="w-[104px] shrink-0 text-right">
-//               <p className="mb-2 text-[13px] font-medium leading-none text-[#A19D96]">
-//                 {toTitleCase("New")}
-//               </p>
-
-//               <div className="flex flex-wrap items-center justify-end gap-2">
-//                 <span className="muro-product-price text-[13px] text-[#101010] md:text-[14px]">
-//                   {formatPrice(finalPrice)}
-//                 </span>
-
-//                 {hasOffer && (
-//                   <span className="muro-product-old-price text-[12px] text-[#A19D96] line-through">
-//                     {formatPrice(originalPrice)}
-//                   </span>
-//                 )}
-//               </div>
-
-//               {hasOffer && offerLabel && (
-//                 <p className="muro-offer-label mt-2 text-[10px] uppercase tracking-[0.18em] text-[#006039]">
-//                   {toUpperText(offerLabel)}
-//                 </p>
-//               )}
-//             </div>
-//           </div>
-//         </article>
-//       </Link>
-//     </motion.div>
-//   );
-// };
 const HomeProductCard = ({
   item,
   index = 0,
@@ -1331,25 +1233,12 @@ const HomeProductCard = ({
   const titleText = toTitleCase(getHomeProductTitle(item));
   const brandText = toTitleCase(getHomeProductBrand(item));
   const finalPrice = getHomeProductPrice(item);
-
   const originalPrice =
-    safeNumber(item.original_price) ||
-    safeNumber((item as any).originalPrice);
-
-  const hasOffer =
-    originalPrice > 0 &&
-    originalPrice > finalPrice;
-
+    safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
+  const hasOffer = originalPrice > 0 && originalPrice > finalPrice;
   const offerLabel = String(
-    (item as any)?.active_offer?.label ||
-    (item as any)?.offer_label ||
-    "",
+    (item as any)?.active_offer?.label || (item as any)?.offer_label || "",
   ).trim();
-
-  const {
-    containerClass,
-    imageClass,
-  } = getHomeProductImageClasses(item);
 
   if (!image) return null;
 
@@ -1357,41 +1246,28 @@ const HomeProductCard = ({
     <motion.div variants={fadeInUp} custom={index}>
       <Link
         to={getHomeProductLink(item, "/products")}
-        state={{ productData: item }}
         className="group block w-full"
       >
         <article className="w-full">
-
-          <div
-            className={containerClass}
-            style={productImageBoxStyle}
-          >
+          <div className={productImageBoxClass} style={productImageBoxStyle}>
             <button
               type="button"
               aria-label="Add to wishlist"
               className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
-              onClick={(event) => {
-                event.preventDefault();
-                event.stopPropagation();
-              }}
+              onClick={(e) => e.preventDefault()}
             >
-              <Heart
-                className="h-4 w-4"
-                strokeWidth={1.45}
-              />
+              <Heart className="h-4 w-4" strokeWidth={1.45} />
             </button>
 
             <img
               src={getFullImageUrl(image)}
               alt={titleText}
-              className={imageClass}
+              className="max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
               loading="lazy"
-              draggable={false}
             />
           </div>
 
           <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
-
             <div className="min-w-0 muro-product-font">
               <p className="muro-product-category truncate text-[13px] leading-none">
                 {brandText}
@@ -1425,7 +1301,6 @@ const HomeProductCard = ({
                 </p>
               )}
             </div>
-
           </div>
         </article>
       </Link>
@@ -1629,6 +1504,44 @@ export const CollectionHighlightsSection = () => {
     </motion.section>
   );
 };
+
+const moodThemeFallbackImage =
+  "https://images.unsplash.com/photo-1618220179428-22790b461013?w=1800&auto=format&fit=crop";
+
+const MoodThemeCollectionsSection = () => {
+  return (
+    <motion.section
+      variants={fadeInUp}
+      initial="hidden"
+      whileInView="show"
+      viewport={{ once: true, margin: "-80px" }}
+      className="w-full bg-white py-5 md:py-7"
+    >
+      <div className={pageContainerClass}>
+        <Link to="/products" className="group block">
+          <div
+            className="relative overflow-hidden rounded-[12px] bg-[#F4F4F2]"
+            style={{ aspectRatio: "1320 / 720" }}
+          >
+            <img
+              src={getFullImageUrl("images/mood-theme.webp")}
+              alt="Prints brought together by mood and theme"
+              className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1200ms] ease-out group-hover:scale-[1.025]"
+              loading="lazy"
+              onError={(event) => {
+                const image = event.currentTarget;
+                if (image.src !== moodThemeFallbackImage) {
+                  image.src = moodThemeFallbackImage;
+                }
+              }}
+            />
+          </div>
+        </Link>
+      </div>
+    </motion.section>
+  );
+};
+
 type FAQItem = {
   question: string;
   answer: string;
@@ -2098,6 +2011,15 @@ const Index: React.FC = () => {
           type: "cutout",
         });
 
+        const shuffledCutoutPool = shuffleHomeItems(cutoutPool);
+        const shuffledPostcardPool = shuffleHomeItems(postcardPool);
+        const shuffledCutoutItems = shuffleHomeItems(
+          cutoutPool.length > 0 ? cutoutPool : cutoutItems,
+        );
+        const shuffledPostcardItems = shuffleHomeItems(
+          postcardPool.length > 0 ? postcardPool : postcardItems,
+        );
+
         const firstProductRow = fillHomeProductRow({
           primary: posterPool,
           fallback: posterPool,
@@ -2111,15 +2033,15 @@ const Index: React.FC = () => {
         });
 
         const thirdProductRow = fillHomeProductRow({
-          primary: postcardItems,
-          fallback: [...postcardPool, ...posterPool],
-          startIndex: PRODUCT_ROW_LIMIT * 2,
+          primary: shuffledPostcardItems,
+          fallback: [...shuffledPostcardPool, ...posterPool],
+          startIndex: 0,
         });
 
         const fourthProductRow = fillHomeProductRow({
-          primary: cutoutItems,
-          fallback: [...cutoutPool, ...posterPool],
-          startIndex: PRODUCT_ROW_LIMIT * 3,
+          primary: shuffledCutoutItems,
+          fallback: [...shuffledCutoutPool, ...posterPool],
+          startIndex: 0,
         });
 
         setHomeContent(homeRes);
@@ -2353,8 +2275,9 @@ const Index: React.FC = () => {
         <EditorialGridSection items={categoryTiles} columns={3} />
       </div>
 
+      {/* Product grid order: Posters, Cutouts, Postcards, Posters again */}
       <HomeProductShowcase
-        items={homeNewArrivals}
+        items={homeCutouts}
         limit={PRODUCT_ROW_LIMIT}
       />
 
@@ -2366,7 +2289,6 @@ const Index: React.FC = () => {
           Discover our cutouts
         </Link> */}
       </div>
-
 
       <CollectionHighlightsSection />
 
@@ -2387,7 +2309,7 @@ const Index: React.FC = () => {
       <EditorialGridSection items={roomEditorialTiles} columns={3} />
 
       <HomeProductShowcase
-        items={homeCutouts}
+        items={homeNewArrivals}
         limit={PRODUCT_ROW_LIMIT}
       />
 
@@ -2458,6 +2380,8 @@ const Index: React.FC = () => {
         </div>
       </section>
       */}
+
+      <MoodThemeCollectionsSection />
 
       <NewsletterPopup
         open={newsletterOpen}
