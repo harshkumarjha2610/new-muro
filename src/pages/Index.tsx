@@ -392,7 +392,34 @@ const getHomeProductBrand = (item?: HomeProduct | null) => {
     return "CutOut";
   return item?.category || "Muro Poster";
 };
+const getHomeProductImageClasses = (item?: HomeProduct | null) => {
+  if (item?.product_type === "postcard") {
+    return {
+      containerClass:
+        "relative flex w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] p-[10px] sm:p-[14px] lg:p-[18px]",
+      imageClass:
+        "block h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.025]",
+    };
+  }
 
+  if (
+    item?.product_type === "cutout" ||
+    item?.product_type === "sqft"
+  ) {
+    return {
+      containerClass:
+        "relative flex w-full items-center justify-center overflow-hidden rounded-[12px] bg-[#F4F4F2] p-[18px] sm:p-[24px] lg:p-[30px]",
+      imageClass:
+        "block h-full w-full object-contain transition-transform duration-700 ease-out group-hover:scale-[1.025]",
+    };
+  }
+
+  return {
+    containerClass: productImageBoxClass,
+    imageClass:
+      "max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]",
+  };
+};
 const getHomeProductLink = (item: HomeProduct, fallback: string) => {
   if (item.product_type === "postcard") return `/postcards/${item.id}`;
   if (item.product_type === "cutout" || item.product_type === "sqft")
@@ -985,7 +1012,7 @@ const HomeHeroSlider = () => {
           <div className="absolute inset-x-0 bottom-0 h-[72%] bg-gradient-to-t from-black/72 via-black/28 to-transparent" />
 
           <div className="absolute inset-0 z-10 flex items-end">
-            <div className="mx-auto w-full max-w-[1600px] px-4 pb-10 sm:px-6 md:pb-14 2xl:px-0">
+            <div className="mx-auto w-full max-w-[1600px] px-6 pb-10 sm:px-8 md:px-12 lg:px-16 md:pb-14">
               <div className="max-w-[620px]">
                 <h1
                   className="uppercase text-[30px] font-bold leading-[0.95] tracking-[2px] text-white md:text-[36px]"
@@ -1208,6 +1235,91 @@ const PosterProductCard = ({
   );
 };
 
+// const HomeProductCard = ({
+//   item,
+//   index = 0,
+// }: {
+//   item: HomeProduct;
+//   index?: number;
+// }) => {
+//   const image = getHomeProductImage(item);
+//   const titleText = toTitleCase(getHomeProductTitle(item));
+//   const brandText = toTitleCase(getHomeProductBrand(item));
+//   const finalPrice = getHomeProductPrice(item);
+//   const originalPrice =
+//     safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
+//   const hasOffer = originalPrice > 0 && originalPrice > finalPrice;
+//   const offerLabel = String(
+//     (item as any)?.active_offer?.label || (item as any)?.offer_label || "",
+//   ).trim();
+
+//   if (!image) return null;
+
+//   return (
+//     <motion.div variants={fadeInUp} custom={index}>
+//       <Link
+//         to={getHomeProductLink(item, "/products")}
+//         className="group block w-full"
+//       >
+//         <article className="w-full">
+//           <div className={productImageBoxClass} style={productImageBoxStyle}>
+//             <button
+//               type="button"
+//               aria-label="Add to wishlist"
+//               className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
+//               onClick={(e) => e.preventDefault()}
+//             >
+//               <Heart className="h-4 w-4" strokeWidth={1.45} />
+//             </button>
+
+//             <img
+//               src={getFullImageUrl(image)}
+//               alt={titleText}
+//               className="max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+//               loading="lazy"
+//             />
+//           </div>
+
+//           <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
+//             <div className="min-w-0 muro-product-font">
+//               <p className="muro-product-category truncate text-[13px] leading-none">
+//                 {brandText}
+//               </p>
+
+//               <h3 className="muro-product-title mt-2 min-h-[40px] text-[14px] leading-snug md:text-[14px]">
+//                 {titleText}
+//               </h3>
+//             </div>
+
+//             <div className="w-[104px] shrink-0 text-right">
+//               <p className="mb-2 text-[13px] font-medium leading-none text-[#A19D96]">
+//                 {toTitleCase("New")}
+//               </p>
+
+//               <div className="flex flex-wrap items-center justify-end gap-2">
+//                 <span className="muro-product-price text-[13px] text-[#101010] md:text-[14px]">
+//                   {formatPrice(finalPrice)}
+//                 </span>
+
+//                 {hasOffer && (
+//                   <span className="muro-product-old-price text-[12px] text-[#A19D96] line-through">
+//                     {formatPrice(originalPrice)}
+//                   </span>
+//                 )}
+//               </div>
+
+//               {hasOffer && offerLabel && (
+//                 <p className="muro-offer-label mt-2 text-[10px] uppercase tracking-[0.18em] text-[#006039]">
+//                   {toUpperText(offerLabel)}
+//                 </p>
+//               )}
+//             </div>
+//           </div>
+//         </article>
+//       </Link>
+//     </motion.div>
+//   );
+// };
 const HomeProductCard = ({
   item,
   index = 0,
@@ -1219,12 +1331,25 @@ const HomeProductCard = ({
   const titleText = toTitleCase(getHomeProductTitle(item));
   const brandText = toTitleCase(getHomeProductBrand(item));
   const finalPrice = getHomeProductPrice(item);
+
   const originalPrice =
-    safeNumber(item.original_price) || safeNumber((item as any).originalPrice);
-  const hasOffer = originalPrice > 0 && originalPrice > finalPrice;
+    safeNumber(item.original_price) ||
+    safeNumber((item as any).originalPrice);
+
+  const hasOffer =
+    originalPrice > 0 &&
+    originalPrice > finalPrice;
+
   const offerLabel = String(
-    (item as any)?.active_offer?.label || (item as any)?.offer_label || "",
+    (item as any)?.active_offer?.label ||
+    (item as any)?.offer_label ||
+    "",
   ).trim();
+
+  const {
+    containerClass,
+    imageClass,
+  } = getHomeProductImageClasses(item);
 
   if (!image) return null;
 
@@ -1232,28 +1357,41 @@ const HomeProductCard = ({
     <motion.div variants={fadeInUp} custom={index}>
       <Link
         to={getHomeProductLink(item, "/products")}
+        state={{ productData: item }}
         className="group block w-full"
       >
         <article className="w-full">
-          <div className={productImageBoxClass} style={productImageBoxStyle}>
+
+          <div
+            className={containerClass}
+            style={productImageBoxStyle}
+          >
             <button
               type="button"
               aria-label="Add to wishlist"
               className="absolute right-1 top-1 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full text-[#101010]/70 transition-colors hover:bg-white hover:text-[#006039]"
-              onClick={(e) => e.preventDefault()}
+              onClick={(event) => {
+                event.preventDefault();
+                event.stopPropagation();
+              }}
             >
-              <Heart className="h-4 w-4" strokeWidth={1.45} />
+              <Heart
+                className="h-4 w-4"
+                strokeWidth={1.45}
+              />
             </button>
 
             <img
               src={getFullImageUrl(image)}
               alt={titleText}
-              className="max-h-full max-w-full object-contain drop-shadow-[0_16px_18px_rgba(0,0,0,0.10)] transition-transform duration-700 ease-out group-hover:scale-[1.025]"
+              className={imageClass}
               loading="lazy"
+              draggable={false}
             />
           </div>
 
           <div className="mt-4 grid min-h-[78px] grid-cols-[minmax(0,1fr)_104px] items-start gap-4 px-1">
+
             <div className="min-w-0 muro-product-font">
               <p className="muro-product-category truncate text-[13px] leading-none">
                 {brandText}
@@ -1287,6 +1425,7 @@ const HomeProductCard = ({
                 </p>
               )}
             </div>
+
           </div>
         </article>
       </Link>
